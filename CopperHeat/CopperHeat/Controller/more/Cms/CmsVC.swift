@@ -14,8 +14,8 @@ class CmsVC: BaseVC {
     @IBOutlet weak var lbltitle: UILabel!
     @IBOutlet weak var web: WKWebView!
     
-    var strUrl : String?
-    var strTitle : String?
+    var strUrl: String?
+    var strTitle: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +31,6 @@ class CmsVC: BaseVC {
     }
     
 }
-
 
 extension CmsVC: WKNavigationDelegate {
      

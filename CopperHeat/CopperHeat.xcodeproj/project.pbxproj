@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		65EE0FC32CAFE8DD00D6951C /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 65EE0FC22CAFE8DD00D6951C /* IQKeyboardManagerSwift */; };
 		65EE0FC92CAFE97C00D6951C /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 65EE0FC82CAFE97C00D6951C /* Reachability */; };
 		65EE0FCC2CAFE9B900D6951C /* EmptyDataSet-Swift in Frameworks */ = {isa = PBXBuildFile; productRef = 65EE0FCB2CAFE9B900D6951C /* EmptyDataSet-Swift */; };
 		65FA0DAB2D002FC8001A5DDE /* Functions in Frameworks */ = {isa = PBXBuildFile; productRef = 65FA0DAA2D002FC8001A5DDE /* Functions */; };
@@ -90,6 +89,7 @@
 		766DF6E82D7AC41F00A237E0 /* SingleDigitField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766DF6932D7AC41F00A237E0 /* SingleDigitField.swift */; };
 		766DF6E92D7AC41F00A237E0 /* RemoteViewerCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 766DF6582D7AC41F00A237E0 /* RemoteViewerCore.framework */; };
 		766DF6EA2D7AC41F00A237E0 /* RemoteViewerCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 766DF6582D7AC41F00A237E0 /* RemoteViewerCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		76D2B9C02D7ACD75001FA6B5 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 76D2B9BF2D7ACD75001FA6B5 /* IQKeyboardManagerSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -195,9 +195,9 @@
 				65FA0DAF2D002FC8001A5DDE /* Realtime in Frameworks */,
 				65FA0DAD2D002FC8001A5DDE /* PostgREST in Frameworks */,
 				65FA0DAB2D002FC8001A5DDE /* Functions in Frameworks */,
-				65EE0FC32CAFE8DD00D6951C /* IQKeyboardManagerSwift in Frameworks */,
 				766DF6E92D7AC41F00A237E0 /* RemoteViewerCore.framework in Frameworks */,
 				65FA0DB12D002FC8001A5DDE /* Storage in Frameworks */,
+				76D2B9C02D7ACD75001FA6B5 /* IQKeyboardManagerSwift in Frameworks */,
 				65FA0DB32D002FC8001A5DDE /* Supabase in Frameworks */,
 				65EE0FCC2CAFE9B900D6951C /* EmptyDataSet-Swift in Frameworks */,
 				65EE0FC92CAFE97C00D6951C /* Reachability in Frameworks */,
@@ -517,7 +517,6 @@
 			);
 			name = CopperHeat;
 			packageProductDependencies = (
-				65EE0FC22CAFE8DD00D6951C /* IQKeyboardManagerSwift */,
 				65EE0FC82CAFE97C00D6951C /* Reachability */,
 				65EE0FCB2CAFE9B900D6951C /* EmptyDataSet-Swift */,
 				65FA0DAA2D002FC8001A5DDE /* Functions */,
@@ -525,6 +524,7 @@
 				65FA0DAE2D002FC8001A5DDE /* Realtime */,
 				65FA0DB02D002FC8001A5DDE /* Storage */,
 				65FA0DB22D002FC8001A5DDE /* Supabase */,
+				76D2B9BF2D7ACD75001FA6B5 /* IQKeyboardManagerSwift */,
 			);
 			productName = CopperHeat;
 			productReference = 65B24FFF2CAFB42E005FF459 /* CopperHeat.app */;
@@ -555,10 +555,10 @@
 			mainGroup = 65B24FF62CAFB42E005FF459;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				65EE0FC12CAFE8DD00D6951C /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				65EE0FC72CAFE97C00D6951C /* XCRemoteSwiftPackageReference "Reachability" */,
 				65EE0FCA2CAFE9B900D6951C /* XCRemoteSwiftPackageReference "EmptyDataSet-Swift" */,
 				65FA0DA92D002FC8001A5DDE /* XCRemoteSwiftPackageReference "supabase-swift" */,
+				76D2B9BE2D7ACD75001FA6B5 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 65B250002CAFB42E005FF459 /* Products */;
@@ -695,6 +695,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = ACAK2V9PQK;
 				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = x86_64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/CopperHeat/Frameworks",
@@ -813,6 +814,8 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = x86_64;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -918,14 +921,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		65EE0FC12CAFE8DD00D6951C /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 7.1.1;
-			};
-		};
 		65EE0FC72CAFE97C00D6951C /* XCRemoteSwiftPackageReference "Reachability" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
@@ -950,14 +945,17 @@
 				minimumVersion = 2.5.1;
 			};
 		};
+		76D2B9BE2D7ACD75001FA6B5 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		65EE0FC22CAFE8DD00D6951C /* IQKeyboardManagerSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 65EE0FC12CAFE8DD00D6951C /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
-			productName = IQKeyboardManagerSwift;
-		};
 		65EE0FC82CAFE97C00D6951C /* Reachability */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 65EE0FC72CAFE97C00D6951C /* XCRemoteSwiftPackageReference "Reachability" */;
@@ -992,6 +990,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 65FA0DA92D002FC8001A5DDE /* XCRemoteSwiftPackageReference "supabase-swift" */;
 			productName = Supabase;
+		};
+		76D2B9BF2D7ACD75001FA6B5 /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 76D2B9BE2D7ACD75001FA6B5 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 

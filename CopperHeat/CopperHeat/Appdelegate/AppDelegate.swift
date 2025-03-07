@@ -11,33 +11,35 @@ import CoreData
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
     var window: UIWindow?
-    static var user : [NSManagedObject] = []
-    var currentUser : CurrentUser?
-    var dictGenData : GeneralData?
+    static var user: [NSManagedObject] = []
+    var currentUser: CurrentUser?
+    var dictGenData: GeneralData?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         IQKeyboardManager.shared.resignOnTouchOutside = true
         IQKeyboardManager.shared.toolbarConfiguration.placeholderConfiguration.showPlaceholder = false
-        IQKeyboardManager.shared.enable = true
-        
+        IQKeyboardManager.shared.isEnabled = true
+
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
-            NETWORK.reachability.whenUnreachable = { reachability in
-                if let topVC : UIViewController = UIApplication.topViewController(){
-                    let vc = OfflineVC(nibName: "OfflineVC", bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    vc.modalTransitionStyle = .crossDissolve
-                    topVC.present(vc, animated: true, completion: nil)
+            NETWORK.reachability.whenUnreachable = { _ in
+                if let topVC : UIViewController = UIApplication.topViewController() {
+                    let offlineVC = OfflineVC(nibName: "OfflineVC", bundle: nil)
+                    offlineVC.modalPresentationStyle = .fullScreen
+                    offlineVC.modalTransitionStyle = .crossDissolve
+                    topVC.present(offlineVC, animated: true, completion: nil)
                 }
             }
         })
-        
-        let vc : SplashVC = STB.instantiateViewController(withIdentifier: "SplashVC") as! SplashVC
-        APP_DEL.setRootWindow(vc: vc, isNavigation: false)
-        
+
+        if let splashVC = STB.instantiateViewController(withIdentifier: "SplashVC") as? SplashVC {
+            APP_DEL.setRootWindow(viewController: splashVC, isNavigation: false)
+        } else {
+            print("Failed to instantiate SplashVC")
+        }
+
         return true
     }
     
@@ -67,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          error conditions that could cause the creation of the store to fail.
          */
         let container = NSPersistentContainer(name: "ConnectionList")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+        container.loadPersistentStores(completionHandler: { (_ , error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -103,8 +105,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     
-    //MARK: is Logged In User Found
-    private func isLoggedInUserFound() -> Bool {
+    //MARK: - is Logged In User Found
+    // Old Code
+    /*private func isLoggedInUserFound() -> Bool {
         if  (UD.value(forKey: CONSTANT().currentUser) != nil), let dict  = UD.value(forKey:CONSTANT().currentUser) {
             let dictUser : [String : Any] = dict as! [String : Any]
             if let jsonData = try? JSONSerialization.data(withJSONObject: dictUser, options: [.prettyPrinted]) {
@@ -118,34 +121,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         return false
+    }*/
+    // Updatd Code
+    private func isLoggedInUserFound() -> Bool {
+        if let dict = UD.value(forKey: CONSTANT().currentUser) as? [String: Any] {
+            if let jsonData = try? JSONSerialization.data(withJSONObject: dict, options: [.prettyPrinted]) {
+                do {
+                    let user = try JSONDecoder().decode(CurrentUser.self, from: jsonData)
+                    APP_DEL.currentUser = user
+                    return true
+                } catch {
+                    return false
+                }
+            }
+        }
+        return false
     }
-    
-    //MARK: Set AppRoot
+
+    //MARK: - Set AppRoot
     func setAppRoot() {
         if APP_DEL.isLoggedInUserFound() {
             if APP_DEL.currentUser?.is_email_verify == "1" {
                 let tab = TABBAR().getTabBar()
-                APP_DEL.setRootWindow(vc: tab, isNavigation: true)
-            }else{
-                let vc : LogInVC = STB.instantiateViewController(withIdentifier: "LogInVC") as! LogInVC
-                APP_DEL.setRootWindow(vc: vc, isNavigation: true)
+                APP_DEL.setRootWindow(viewController: tab, isNavigation: true)
+            } else {
+                if let logInVC = STB.instantiateViewController(withIdentifier: "LogInVC") as? LogInVC {
+                    APP_DEL.setRootWindow(viewController: logInVC, isNavigation: false)
+                } else {
+                    print("Failed to instantiate LogInVC")
+                }
             }
         } else {
             let vc : LogInVC = STB.instantiateViewController(withIdentifier: "LogInVC") as! LogInVC
-            APP_DEL.setRootWindow(vc: vc, isNavigation: true)
+            APP_DEL.setRootWindow(viewController: vc, isNavigation: true)
         }
     }
     
-    //MARK: set Root Window
-    func setRootWindow(vc: UIViewController, isNavigation: Bool) {
+    //MARK: - set Root Window
+    func setRootWindow(viewController: UIViewController, isNavigation: Bool) {
         if #available(iOS 13.0, *) {
             APP_DEL.window = UIApplication.shared.windows.first
-            APP_DEL.window?.rootViewController = isNavigation ? UINavigationController(rootViewController: vc) : vc
+            APP_DEL.window?.rootViewController = isNavigation ? UINavigationController(rootViewController: viewController) : viewController
             APP_DEL.window?.makeKeyAndVisible()
         } else {
             // Fallback on earlier versions
             APP_DEL.window = UIWindow(frame: UIScreen.main.bounds)
-            APP_DEL.window?.rootViewController = isNavigation ? UINavigationController(rootViewController: vc) : vc
+            APP_DEL.window?.rootViewController = isNavigation ? UINavigationController(rootViewController: viewController) : viewController
             APP_DEL.window?.makeKeyAndVisible()
         }
     }

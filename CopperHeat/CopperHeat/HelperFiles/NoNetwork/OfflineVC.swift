@@ -27,14 +27,12 @@ class OfflineVC: BaseVC {
           
           indicator.isHidden = true
           
-          NETWORK.reachability.whenReachable = { reachability in
-               
+          NETWORK.reachability.whenReachable = { _ in
+
                self.dismissNoNetwork()
           }
      }
-     
-     
-     
+
      @IBAction func btnRefreshAction(_ sender: UIButton) {
           
           btnRefresh.isHidden = false
@@ -58,7 +56,7 @@ class OfflineVC: BaseVC {
      
      func dismissNoNetwork() {
           
-          if let topVC : UIViewController = UIApplication.topViewController() {
+          if let topVC: UIViewController = UIApplication.topViewController() {
                
                if topVC.isKind(of: OfflineVC.self) {
                     

@@ -46,7 +46,7 @@ class HomeVC: BaseVC {
 
 extension HomeVC : AddNewDel {
     
-    func AddNew(host: String, password: String, deviceName: String) {
+    func addNew(host: String, password: String, deviceName: String) {
         getArray()
         checkNoData()
         navigateToConnect(host: host, password: password)

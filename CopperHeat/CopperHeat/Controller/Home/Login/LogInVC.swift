@@ -11,7 +11,6 @@ import Auth
 
 class LogInVC: BaseVC {
 
-    
     //MARK: Outlets
     @IBOutlet weak var scrllView: UIScrollView!
     @IBOutlet weak var imgLogo: UIImageView!
@@ -25,23 +24,23 @@ class LogInVC: BaseVC {
     @IBOutlet weak var btnLogin: UIButton!
     @IBOutlet weak var btnLoginNext: UIButton!
     
-    var dictObj : DeviceModel?
-    //MARK: - Variables
+    var dictObj: DeviceModel?
+    // MARK: - Variables
     var objLoginVM = LoginVM()
 
  
-    //MARK: LIFE CYCLE
+    // MARK: LIFE CYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
         setUi()
     }
     
-    //MARK: actions
+    // MARK: actions
     @IBAction func actionBtnLogin(_ sender: UIButton) {
         if !txtEmail.hasText {
             self.showAlert(message: "Please enter your Email Id")
-        }else{
-            self.LoginCall()
+        } else {
+            self.loginCall()
         }
     }
 
@@ -50,7 +49,7 @@ class LogInVC: BaseVC {
 
 extension LogInVC {
     
-    func setUi(){
+    func setUi() {
         txtEmail.placeholder = "Enter Email Id"
         btnLogin.round()
         btnLoginNext.round()
@@ -63,7 +62,7 @@ extension LogInVC {
 
 extension LogInVC: LoginResponse {
     
-    func LoginCall(){
+    func loginCall() {
         self.StartLoader()
         objLoginVM.Login(email: txtEmail.text ?? "")
     }
@@ -73,13 +72,13 @@ extension LogInVC: LoginResponse {
             if res == nil {
                 if error == "Invalid login credentials" {
                     signupCall()
-                }else if error == "Email not confirmed" {
+                } else if error == "Email not confirmed" {
                     resendOtpCall()
-                }else {
+                } else {
                     self.StopLoader()
                     self.showAlert(message: error)
                 }
-            }else{
+            } else {
                 self.StopLoader()
                 APP_DEL.currentUser = CurrentUser (
                     id: res?.identities?.first?.id ?? "" ,
@@ -95,7 +94,7 @@ extension LogInVC: LoginResponse {
         }
     }
     
-    func signupCall(){
+    func signupCall() {
         objLoginVM.signUp(email: txtEmail.text ?? "")
     }
     
@@ -116,14 +115,18 @@ extension LogInVC: LoginResponse {
                     is_email_verify: "0"
                 )
                 APP_DEL.currentUser?.syncronize()
-                let vc : EmailVerifyVC = STB.instantiateViewController(withIdentifier: "EmailVerifyVC") as! EmailVerifyVC
-                vc.strEmail = self.txtEmail.text ?? ""
-                self.navigationController?.pushViewController(vc, animated: true)
+                if let emailVC: EmailVerifyVC = STB.instantiateViewController(withIdentifier: "EmailVerifyVC") as? EmailVerifyVC {
+                    emailVC.strEmail = self.txtEmail.text ?? ""
+                    self.navigationController?.pushViewController(emailVC, animated: true)
+                } else {
+                    print("Failed to instantiate EmailVC")
+                }
+
             }
         }
     }
     
-    func resendOtpCall(){
+    func resendOtpCall() {
         objLoginVM.resendOTP(email: txtEmail.text ?? "")
     }
     
@@ -132,10 +135,13 @@ extension LogInVC: LoginResponse {
             self.StopLoader()
             if res == nil {
                 self.showAlert(message: error)
-            }else{
-                let vc : EmailVerifyVC = STB.instantiateViewController(withIdentifier: "EmailVerifyVC") as! EmailVerifyVC
-                vc.strEmail = self.txtEmail.text ?? ""
-                self.navigationController?.pushViewController(vc, animated: true)
+            } else {
+                if let emailVC : EmailVerifyVC = STB.instantiateViewController(withIdentifier: "EmailVerifyVC") as? EmailVerifyVC {
+                    emailVC.strEmail = self.txtEmail.text ?? ""
+                    self.navigationController?.pushViewController(emailVC, animated: true)
+                } else {
+                    print("Failed to instantiate EmailVC")
+                }
             }
         }
     }

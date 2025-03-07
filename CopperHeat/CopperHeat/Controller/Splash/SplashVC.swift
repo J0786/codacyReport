@@ -12,7 +12,7 @@ class SplashVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        SupabaseManager.shared.fetchGeneralData { res , err  in
+        SupabaseManager.shared.fetchGeneralData { res, _  in
             if res != nil {
                 APP_DEL.dictGenData = res?.first
             }

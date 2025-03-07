@@ -8,16 +8,16 @@
 import Foundation
 import Supabase
 
-//MARK: General Data
+// MARK: General Data
 struct GeneralData: Decodable {
     let id: Int?
     let facebook_link: String?
     let insta_link: String?
     let youtube_link: String?
     let linkedin_link: String?
-    let current_version : String?
-    let updated_version : String?
-    let force_update : Bool?
+    let current_version: String?
+    let updated_version: String?
+    let force_update: Bool?
 }
 
 let SUPABASE = SupabaseManager.shared
@@ -36,20 +36,20 @@ class SupabaseManager {
         self.adminClient = SupabaseClient(supabaseURL: supabaseUrl, supabaseKey: serviceRole)
     }
     
-    //MARK: Register With Email
+    // MARK: Register With Email
     func registerWithEmail(email: String, password: String, completion: @escaping (User?, String) -> Void) {
         Task {
             do {
                 let authResponse = try await client.auth.signUp(email: email, password: password)
                 let user = authResponse.user
-                completion(user,"")
+                completion(user, "")
             } catch {
-                completion(nil,error.localizedDescription)
+                completion(nil, error.localizedDescription)
             }
         }
     }
     
-    //MARK: Verify User
+    // MARK: Verify User
     func verifyUser(email: String, otp: String, completion: @escaping (Bool, String) -> Void) {
         Task {
             do {
@@ -58,15 +58,15 @@ class SupabaseManager {
                     token: otp,
                     type: .signup
                 )
-                completion(true,"")
+                completion(true, "")
             } catch {
-                completion(false,error.localizedDescription)
+                completion(false, error.localizedDescription)
             }
         }
     }
     
-    //MARK: Resend OTP
-    func resendOTP(email: String , completion: @escaping (Bool, String) -> Void) {
+    // MARK: Resend OTP
+    func resendOTP(email: String, completion: @escaping (Bool, String) -> Void) {
         Task {
             do {
                 try await client.auth.resend(
@@ -80,7 +80,7 @@ class SupabaseManager {
         }
     }
     
-    //MARK: Login With Email
+    // MARK: Login With Email
     func loginWithEmail(email: String, password: String, completion: @escaping (User?, String) -> Void) {
         Task {
             do {
@@ -93,7 +93,7 @@ class SupabaseManager {
         }
     }
     
-    //MARK: Logout
+    // MARK: Logout
     func logout(completion: @escaping (Bool, String) -> Void) {
         Task {
             do {
@@ -105,8 +105,8 @@ class SupabaseManager {
         }
     }
     
-    //MARK: delete User
-    func deleteUser(id: String,completion: @escaping (Bool, String) -> Void){
+    // MARK: delete User
+    func deleteUser(id: String, completion: @escaping (Bool, String) -> Void){
         Task {
             do {
                 try await adminClient.auth.admin.deleteUser(id: id)
@@ -117,14 +117,14 @@ class SupabaseManager {
         }
     }
     
-    //MARK: General Data
-    func fetchGeneralData(completion: @escaping ([GeneralData]?,String) -> Void) {
+    // MARK: General Data
+    func fetchGeneralData(completion: @escaping ([GeneralData]?, String) -> Void) {
         Task{
             do {
                 let val = try await client.from("general_data").select().execute().value as [GeneralData]
-                completion(val,"")
+                completion(val, "")
             }catch{
-                completion(nil,"")
+                completion(nil, "")
             }
         }
     }

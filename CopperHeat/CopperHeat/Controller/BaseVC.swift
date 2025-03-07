@@ -10,7 +10,6 @@ import IQKeyboardManagerSwift
 import EmptyDataSet_Swift
 
 class BaseVC: UIViewController {
-    
     var isSwipeToBackEnabled: Bool = true
     
     override func viewDidLoad() {
@@ -18,12 +17,12 @@ class BaseVC: UIViewController {
         hideNavigationbar()
     }
     
-    func hideNavigationbar(){
+    func hideNavigationbar() {
         self.navigationController?.navigationBar.isHidden = true
         self.navigationController?.isNavigationBarHidden = true
     }
     
-    //MARK: - Check Application is updated to Latest Version
+    // MARK: - Check Application is updated to Latest Version
     //     func CheckUserUpdateVersionOrNot(dictVersion : Versions?) -> Bool {
     //          if dictVersion?.iphoneFlag ?? false {
     //               if (Double(AppInfo().version) ?? 0) < (Double(dictVersion?.iphoneVerionNumber ?? "0.0") ?? 0) {
@@ -41,16 +40,15 @@ class BaseVC: UIViewController {
     
 }
 
-extension BaseVC : UIPopoverPresentationControllerDelegate, UIGestureRecognizerDelegate {
-    func swipePop(){
+extension BaseVC: UIPopoverPresentationControllerDelegate, UIGestureRecognizerDelegate {
+    func swipePop() {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
 }
 
-
-extension BaseVC : EmptyDataSetSource, EmptyDataSetDelegate {
+extension BaseVC: EmptyDataSetSource, EmptyDataSetDelegate {
     
     func setNoData(scrollView: UIScrollView!) {
         scrollView.emptyDataSetSource = self
@@ -64,10 +62,10 @@ extension BaseVC : EmptyDataSetSource, EmptyDataSetDelegate {
     func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
         let text = "No Devices. \n Click \"Add New\" Button above to add a new device."
         let attributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.lightGray ,
+            NSAttributedString.Key.foregroundColor: UIColor.lightGray,
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16.0)
         ]
-        return NSAttributedString(string: text, attributes: attributes as [NSAttributedString.Key : Any])
+        return NSAttributedString(string: text, attributes: attributes as [NSAttributedString.Key: Any])
     }
     
     func emptyDataSetShouldAllowScroll(_ scrollView: UIScrollView) -> Bool {

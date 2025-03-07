@@ -9,13 +9,12 @@ import UIKit
 import CoreData
 
 protocol AddNewDel {
-    func AddNew(host: String , password: String , deviceName: String)
+    func addNew(host: String, password: String, deviceName: String)
 }
 
 class AddDeviceVC: BaseVC {
-    
-    
-    //MARK: Outlets
+
+    // MARK: Outlets
     @IBOutlet weak var btnBack: UIButton!
     @IBOutlet weak var scrllView: UIScrollView!
     @IBOutlet weak var imgLogo: UIImageView!
@@ -35,10 +34,10 @@ class AddDeviceVC: BaseVC {
     @IBOutlet weak var btnNextConnect: UIButton!
     @IBOutlet weak var btnShow: UIButton!
     
-    var delegate : AddNewDel?
-    var dictObj : DeviceModel?
+    var delegate: AddNewDel?
+    var dictObj: DeviceModel?
  
-    //MARK: LIFE CYCLE
+    // MARK: LIFE CYCLE
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,9 +50,9 @@ class AddDeviceVC: BaseVC {
     @IBAction func actionBtnConnect(_ sender: UIButton) {
         if !txtHost.hasText {
             self.showAlert(message: "Please enter Controller IP address")
-        }else if !txtPassword.hasText{
+        } else if !txtPassword.hasText {
             self.showAlert(message: "Please enter Password")
-        }else{
+        } else {
             arrAddData()
         }
     }
@@ -79,8 +78,8 @@ class AddDeviceVC: BaseVC {
 
 extension AddDeviceVC {
     
-    func setUi(){
-        
+    func setUi() {
+
         txtHost.text = dictObj?.host ?? ""
         txtPassword.text = dictObj?.device_name ?? "111111"
         txtDeviceName.text = dictObj?.device_name ?? ""
@@ -93,8 +92,8 @@ extension AddDeviceVC {
         imgLogo.cornerRadius(cornerRadius: 10)
     }
     
-    func arrAddData(){
-        
+    func arrAddData() {
+
         let entity = NSEntityDescription.entity(forEntityName: "ConnectionItem", in: context)
         
         let newUser = NSManagedObject(entity: entity!, insertInto: context)
@@ -107,7 +106,7 @@ extension AddDeviceVC {
         do {
             try context.save()
             AppDelegate.user.append(newUser)
-            self.delegate?.AddNew(host: self.txtHost.text ?? "", password: self.txtPassword.text ?? "", deviceName: self.txtDeviceName.text ?? "")
+            self.delegate?.addNew(host: self.txtHost.text ?? "", password: self.txtPassword.text ?? "", deviceName: self.txtDeviceName.text ?? "")
             self.dismiss(animated: true, completion: nil)
         } catch {
             debugPrint("Failed saving")

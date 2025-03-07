@@ -34,12 +34,11 @@ class FUNCTION {
         
         return UIColor(red: red/255.0, green: green/255.0, blue: blue/255.0, alpha: alpha)
     }
-    
-          
+
     func isValidEmail(email: String) -> Bool {
         
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
-        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        let emailTest = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
         return emailTest.evaluate(with: email)
     }
     
@@ -50,13 +49,13 @@ class FUNCTION {
         return predicateForPassword.evaluate(with: password)
     }
     
-     func getTotal(arrSubTotal:[String]) -> String {
+     func getTotal(arrSubTotal: [String]) -> String {
          let doubles = arrSubTotal.compactMap(Double.init)
          let sum = doubles.reduce(0, +)
          return "\(sum)"
      }
     
-    func isValidContactNumEditScreen(number: String , lenght : String, crCode : String) -> Bool{
+    func isValidContactNumEditScreen(number: String , lenght: String, crCode: String) -> Bool {
         let count = (crCode.count)+1+(Int(lenght) ?? 8)
         if number.count > count {
             return false
@@ -66,9 +65,7 @@ class FUNCTION {
             return true
         }
     }
-    
-    
-    
+
     func formatedNumber(formate: String, number: String) -> String {
         
         let cleanPhoneNumber = number.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
@@ -76,12 +73,12 @@ class FUNCTION {
         var result = ""
         
         var index = cleanPhoneNumber.startIndex
-        for ch in formate where index < cleanPhoneNumber.endIndex {
-            if ch == "X" {
+        for char in formate where index < cleanPhoneNumber.endIndex {
+            if char == "X" {
                 result.append(cleanPhoneNumber[index])
                 index = cleanPhoneNumber.index(after: index)
             } else {
-                result.append(ch)
+                result.append(char)
             }
         }
         
@@ -125,7 +122,7 @@ class FUNCTION {
                               underlineStyle: NSUnderlineStyle? = nil,
                               font: UIFont? = nil) -> NSAttributedString
     {
-        var newAttribute : [NSAttributedString.Key : Any]? = [:]
+        var newAttribute: [NSAttributedString.Key: Any]? = [:]
         
         if font != nil {
             newAttribute?.updateValue(font as Any, forKey: NSAttributedString.Key.font)
@@ -162,7 +159,7 @@ class FUNCTION {
             newAttribute?.updateValue(underlineStyle!.rawValue, forKey: NSAttributedString.Key.underlineStyle)
         }
         
-        return NSAttributedString(string: string, attributes: newAttribute);
+        return NSAttributedString(string: string, attributes: newAttribute)
     }
     
     func setAttributedStringforStatus(_ str: String) -> NSAttributedString {
@@ -192,28 +189,28 @@ class FUNCTION {
     func getHmsFromCMTime(cmTime: CMTime) -> (h: String, m: String, s: String, secInt: Int) {
         
         let timeSecond = Int(CMTimeGetSeconds(cmTime))
-        let h = (timeSecond / 3600);
-        let m = ((timeSecond % 3600) / 60);
-        let s = ((timeSecond % 3600) % 60);
-        
-        return (h: String(format: "%.02d", h),
-                m: String(format: "%.02d", m),
-                s: String(format: "%.02d", s),
+        let hours = (timeSecond / 3600);
+        let minutes = ((timeSecond % 3600) / 60);
+        let seconds = ((timeSecond % 3600) % 60);
+
+        return (h: String(format: "%.02d", hours),
+                m: String(format: "%.02d", minutes),
+                s: String(format: "%.02d", seconds),
                 secInt: timeSecond)
     }
     
     func getHmsFromCMTime(timeSecond: Int) -> (h: String, m: String, s: String) {
         
-        let h = (timeSecond / 3600);
-        let m = ((timeSecond % 3600) / 60);
-        let s = ((timeSecond % 3600) % 60);
-        
-        return (h: String(format: "%.02d", h),
-                m: String(format: "%.02d", m),
-                s: String(format: "%.02d", s))
+        let hours = (timeSecond / 3600);
+        let minutes = ((timeSecond % 3600) / 60);
+        let seconds = ((timeSecond % 3600) % 60);
+
+        return (h: String(format: "%.02d", hours),
+                m: String(format: "%.02d", minutes),
+                s: String(format: "%.02d", seconds))
     }
     
-    func convertDateFormate(date : Date) -> String {
+    func convertDateFormate(date: Date) -> String {
         
         // Day
         let calendar = Calendar.current
@@ -225,12 +222,12 @@ class FUNCTION {
         let newDate = dateFormate.string(from: date)
         
         var day  = "\(anchorComponents.day!)"
-        switch (day) {
-        case "1" , "21" , "31":
+        switch day {
+        case "1", "21", "31":
             day.append("st")
-        case "2" , "22":
+        case "2", "22":
             day.append("nd")
-        case "3" ,"23":
+        case "3","23":
             day.append("rd")
         default:
             day.append("th")
@@ -245,7 +242,7 @@ class FUNCTION {
         let dateFormatter1 = DateFormatter()
         dateFormatter1.dateFormat = "yyyy-MM-dd HH:mm:ss"
         guard let date = dateFormatter1.date(from: strDateTime) else {
-            return "";
+            return ""
         }
         
         let currentTimeZone = NSTimeZone.local as NSTimeZone
@@ -313,10 +310,10 @@ class FUNCTION {
         }
     }
     
-    func getImages(assets : [PHAsset], completion:@escaping ([UIImage]) -> ()) {
-        
+    func getImages(assets : [PHAsset], completion: @escaping ([UIImage]) -> Void) {
+
         let group = DispatchGroup()
-        var images : [UIImage] = []
+        var images: [UIImage] = []
         
         let options = PHImageRequestOptions()
         options.isSynchronous = false
@@ -329,14 +326,14 @@ class FUNCTION {
         
         for asset in assets {
             
-            let w : CGFloat = CGFloat(asset.pixelWidth)
-            let h : CGFloat = CGFloat(asset.pixelHeight)
-            
-            let size = CGSize(width: w * 0.5, height: h * 0.5)
-            
+            let width : CGFloat = CGFloat(asset.pixelWidth)
+            let height : CGFloat = CGFloat(asset.pixelHeight)
+
+            let size = CGSize(width: width * 0.5, height: height * 0.5)
+
             group.enter()
-            manager.requestImage(for: asset, targetSize: size, contentMode: .aspectFill, options: options) { (image, info) in
-                
+            manager.requestImage(for: asset, targetSize: size, contentMode: .aspectFill, options: options) { (image, _) in
+
                 if let image = image {
                     
                     images.append(image)
@@ -358,8 +355,8 @@ class FUNCTION {
             var result = ""
             repeat {
                 
-                result = String(format:"%04d", arc4random_uniform(10000) )
-                
+                result = String(format: "%04d", arc4random_uniform(10000) )
+
             } while Set<Character>(result).count < 4
             
             
@@ -379,27 +376,27 @@ class FUNCTION {
 
 struct AppInfo {
     
-    var appName : String {
+    var appName: String {
         return readFromInfoPlist(withKey: "CFBundleName") ?? "(unknown app name)"
     }
     
-    var version : String {
+    var version: String {
         return readFromInfoPlist(withKey: "CFBundleShortVersionString") ?? "(unknown app version)"
     }
     
-    var build : String {
+    var build: String {
         return readFromInfoPlist(withKey: "CFBundleVersion") ?? "(unknown build number)"
     }
     
-    var minimumOSVersion : String {
+    var minimumOSVersion: String {
         return readFromInfoPlist(withKey: "MinimumOSVersion") ?? "(unknown minimum OSVersion)"
     }
     
-    var copyrightNotice : String {
+    var copyrightNotice: String {
         return readFromInfoPlist(withKey: "NSHumanReadableCopyright") ?? "(unknown copyright notice)"
     }
     
-    var bundleIdentifier : String {
+    var bundleIdentifier: String {
         return readFromInfoPlist(withKey: "CFBundleIdentifier") ?? "(unknown bundle identifier)"
     }
     

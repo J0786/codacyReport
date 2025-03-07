@@ -13,16 +13,16 @@ class DeskViewVC: BaseVC, IRetrieveConnectionId, UIAlertViewDelegate {
     @IBOutlet weak var btnStop: UIButton!
     @IBOutlet weak var imgLogo: UIImageView!
     
-    var ViewCore : ViewerCore?
-    var desktopView : DesktopView?
+    var ViewCore: ViewerCore?
+    var desktopView: DesktopView?
     
-    var host : String?
-    var port : Int?
-    var password : String?
+    var host: String?
+    var port: Int?
+    var password: String?
     
-    var isConnected : Bool = false
-    var isTiledLayout : Bool?
-    var connectionId : UInt32?
+    var isConnected: Bool = false
+    var isTiledLayout: Bool?
+    var connectionId: UInt32?
     
     var condition = NSCondition()
     
@@ -61,7 +61,7 @@ class DeskViewVC: BaseVC, IRetrieveConnectionId, UIAlertViewDelegate {
     
     func askConnectionId() -> UInt32 {
         desktopView?.hideProgressDialog()
-        if (connectionId == 0) {
+        if connectionId == 0 {
             condition = NSCondition()
             DispatchQueue.main.async {
                 debugPrint("Async1")
@@ -72,15 +72,12 @@ class DeskViewVC: BaseVC, IRetrieveConnectionId, UIAlertViewDelegate {
         }
         return connectionId ?? 0
     }
-    
-    
-    func showAskConnectionIdDialog(condition : NSCondition){
+
+    func showAskConnectionIdDialog(condition: NSCondition){
         
         let alert = UIAlertController(title: "Dispatcher Connection ID", message: "Type dispatcher connection ID below:", preferredStyle: UIAlertController.Style.alert)
-        let acOK = UIAlertAction(title: "Ok".uppercased(), style: UIAlertAction.Style.default) { (action) in
-        }
-        let acCancel = UIAlertAction(title: "Cancel".uppercased(), style: UIAlertAction.Style.default) { (action) in
-        }
+        let acOK = UIAlertAction(title: "Ok".uppercased(), style: UIAlertAction.Style.default) { _ in }
+        let acCancel = UIAlertAction(title: "Cancel".uppercased(), style: UIAlertAction.Style.default) { _ in }
         alert.addAction(acOK)
         alert.addAction(acCancel)
         self.present(alert, animated: true, completion: nil)
@@ -102,7 +99,7 @@ class DeskViewVC: BaseVC, IRetrieveConnectionId, UIAlertViewDelegate {
     
 }
 
-extension DeskViewVC : ViewControllerCallbackDelegate {
+extension DeskViewVC: ViewControllerCallbackDelegate {
     func onEstablished() {
         isConnected = true
 
@@ -110,7 +107,7 @@ extension DeskViewVC : ViewControllerCallbackDelegate {
     
     func onError(_ errorMessage: String!) {
         if isConnected {
-            self.showAlert(message: errorMessage){
+            self.showAlert(message: errorMessage) {
                 self.ViewCore?.stop()
                 self.isConnected = false
                 self.navigationController?.popViewController(animated: true)

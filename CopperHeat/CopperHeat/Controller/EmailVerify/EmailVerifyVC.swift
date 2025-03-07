@@ -38,7 +38,7 @@ class EmailVerifyVC: BaseVC {
     var otp: String = ""
     var expireDate: Date = Date()
     var expireTimer: Timer?
-    var strEmail : String = ""
+    var strEmail: String = ""
     var objEmailVerifyVM = EmailVerifyVM()
     
     override func viewDidLoad() {
@@ -47,12 +47,7 @@ class EmailVerifyVC: BaseVC {
         self.setData()
         self.setTextField()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.expireTimerStop()
@@ -75,7 +70,8 @@ class EmailVerifyVC: BaseVC {
         var strOTP = ""
         [txtOne, txtTwo, txtThree, txtFour, txtFive, txtSix].forEach {
             isValid = true
-            strOTP = strOTP + ($0?.text ?? "")
+            //strOTP = strOTP + ($0?.text ?? "") // Old Code
+            strOTP += $0?.text ?? ""  // New Code
             if $0?.text == "" {
                 isValid = false
                 $0?.becomeFirstResponder()
@@ -92,7 +88,7 @@ class EmailVerifyVC: BaseVC {
 
 extension EmailVerifyVC {
     
-    func setUi(){
+    func setUi() {
         btnVerifyOtp.round()
         constraintTxtOtpHeight.constant = IS_IPAD ? IPAD_TEXTFIELD_HEIGHT : (IPHONE_TEXTFIELD_HEIGHT-15)
         btnEdit.cornerRadius(cornerRadius: 5)
@@ -101,7 +97,7 @@ extension EmailVerifyVC {
         objEmailVerifyVM.delegate = self
     }
     
-    func setTextField(){
+    func setTextField() {
         [txtOne, txtTwo, txtThree, txtFour, txtFive, txtSix].forEach {
             
             $0?.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
@@ -110,7 +106,7 @@ extension EmailVerifyVC {
             
             if IS_IPAD {
                 $0?.font = UIFont.systemFont(ofSize: 30)
-            }else{
+            } else {
                 $0?.font = UIFont.systemFont(ofSize: 20)
             }
             
@@ -135,7 +131,7 @@ extension EmailVerifyVC {
                 textField.text = ""
             } else {
                 switch textField {
-                case txtTwo, txtThree, txtFour,txtFive, txtSix:
+                case txtTwo, txtThree, txtFour, txtFive, txtSix:
                     switch textField {
                     case txtTwo:
                         txtOne.isUserInteractionEnabled = true
@@ -208,7 +204,7 @@ extension EmailVerifyVC {
         updateTextFieldState(isEditing: false, sender: sender)
     }
     
-    private func updateTextFieldState(isEditing: Bool, sender: SingleDigitField){
+    private func updateTextFieldState(isEditing: Bool, sender: SingleDigitField) {
         if isEditing {
             sender.backgroundColor = .colorRed.withAlphaComponent(0.1)
             sender.textColor = .black
@@ -259,12 +255,12 @@ extension EmailVerifyVC {
         }
     }
     
-    func getExpireTime(startDate: Date, endDate: Date) -> String{
-        
+    func getExpireTime(startDate: Date, endDate: Date) -> String {
+
         let strtDate: Date = Calendar.current.date(bySetting: .nanosecond, value: 0, of: startDate) ?? Date()
         
         let edDate: Date = Calendar.current.date(bySetting: .nanosecond, value: 0, of: endDate) ?? Date()
-        var compos:Set<Calendar.Component> = Set<Calendar.Component>()
+        var compos: Set<Calendar.Component> = Set<Calendar.Component>()
         compos.insert(.second)
         let cal = Calendar.current.dateComponents(compos, from: strtDate, to: edDate)
         let diffSeconds = cal.second ?? 0
@@ -275,12 +271,12 @@ extension EmailVerifyVC {
             let hours = diffSeconds / 3600
             
             if hours > 0 {
-                strPace = String(format: "%02d:%02d:%02d",hours,minutes,seconds)
-            }else if minutes > 0 {
-                strPace = String(format: "%02d:%02d",minutes,seconds)
-            }else if seconds > 0 {
-                strPace = String(format: "00:%02d",seconds)
-            }else{
+                strPace = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+            } else if minutes > 0 {
+                strPace = String(format: "%02d:%02d", minutes, seconds)
+            } else if seconds > 0 {
+                strPace = String(format: "00:%02d", seconds)
+            } else {
                 strPace = "00:00"
             }
         }
@@ -289,9 +285,9 @@ extension EmailVerifyVC {
     }
 }
 
-extension EmailVerifyVC : EmailVerifyResponse {
+extension EmailVerifyVC: EmailVerifyResponse {
     
-    func verifyUserCall(otp : String){
+    func verifyUserCall(otp : String) {
         self.StartLoader()
         self.objEmailVerifyVM.verifyUser(email: strEmail, otp: otp)
     }
@@ -308,7 +304,7 @@ extension EmailVerifyVC : EmailVerifyResponse {
         }
     }
     
-    func resendOTPCall(){
+    func resendOTPCall() {
         self.StartLoader()
         self.objEmailVerifyVM.resendOTP(email: strEmail)
     }

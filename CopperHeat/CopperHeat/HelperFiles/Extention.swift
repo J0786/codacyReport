@@ -1,7 +1,6 @@
 //
 //  Extention.swift
 
-
 import UIKit
 import ImageIO
 import PDFKit
@@ -18,7 +17,7 @@ extension UIViewController {
         return instantiateFromNib()
     }
     
-    func backaction(){
+    func backaction() {
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -27,7 +26,7 @@ extension UIViewController {
         return self.presentingViewController?.presentedViewController == self || (self.navigationController != nil && self.navigationController?.presentingViewController?.presentedViewController == self.navigationController) || self.tabBarController?.presentingViewController is UITabBarController
     }
     
-    func showToast(message : String){
+    func showToast(message: String) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         alert.view.backgroundColor = .white
         alert.view.alpha = 1
@@ -49,8 +48,8 @@ extension UIViewController {
     func showPopAlert(message: String) {
         
         let alert = UIAlertController(title: "Copper Master", message: message, preferredStyle: UIAlertController.Style.alert)
-        let acOK = UIAlertAction(title: "Ok".uppercased(), style: UIAlertAction.Style.default) { (action) in
-            
+        let acOK = UIAlertAction(title: "Ok".uppercased(), style: UIAlertAction.Style.default) { _ in
+
             if self.isModal() {
                 self.dismiss(animated: true, completion: nil)
             } else if let navC : UINavigationController = self.navigationController, navC.viewControllers.count > 0 {
@@ -84,8 +83,8 @@ extension UIViewController {
         
         let alertController = UIAlertController(title: "Copper Master", message: message, preferredStyle: .alert)
         
-        for(index, indexTitle) in actionTitles.enumerated(){
-            
+        for(index, indexTitle) in actionTitles.enumerated() {
+
             let action = UIAlertAction(title: indexTitle, style: .default, handler: actions[index])
             
             alertController.addAction(action)
@@ -96,8 +95,8 @@ extension UIViewController {
         
     }
     
-    func showAlert(message: String, completion: @escaping () -> ()) {
-        
+    func showAlert(message: String, completion: @escaping () -> Void) {
+
         let alert = UIAlertController(title: "Copper Master", message: message, preferredStyle: UIAlertController.Style.alert)
         let acOK = UIAlertAction(title: "Ok".uppercased(), style: UIAlertAction.Style.default) { (action) in
             
@@ -107,8 +106,8 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func showAlert(title: String, message: String, completion: @escaping () -> ()) {
-        
+    func showAlert(title: String, message: String, completion: @escaping () -> Void) {
+
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         let acOK = UIAlertAction(title: "Ok".uppercased(), style: UIAlertAction.Style.default) { (action) in
             
@@ -121,10 +120,10 @@ extension UIViewController {
     func showAlert(message: String, yes: @escaping () -> (), no: @escaping () -> ()) {
         
         let alert = UIAlertController(title: "Copper Master", message: message, preferredStyle: UIAlertController.Style.alert)
-        let acYes = UIAlertAction(title: "Yes", style: UIAlertAction.Style.default) { (action) in
+        let acYes = UIAlertAction(title: "Yes", style: UIAlertAction.Style.default) { _ in
             yes()
         }
-        let acNo = UIAlertAction(title:"No", style: UIAlertAction.Style.default) { (action) in
+        let acNo = UIAlertAction(title:"No", style: UIAlertAction.Style.default) { _ in
             no()
         }
         alert.addAction(acYes)
@@ -147,17 +146,17 @@ extension UIViewController {
 }
 
 
-extension UIViewController : NVActivityIndicatorViewable {
+extension UIViewController: NVActivityIndicatorViewable {
 
-    func StartLoaderwithMsg(message : String){
+    func StartLoaderwithMsg(message: String) {
         startAnimating(INDECATOR_SIZE, message: message, type: indicatorType , color: UIColor.colorRed,  backgroundColor: UIColor.clear, fadeInAnimation: nil)
     }
 
-    func StartLoader(){
-         startAnimating(INDECATOR_SIZE, message: "", type: indicatorType , color: UIColor.colorRed,  backgroundColor: UIColor.clear, fadeInAnimation: nil)
+    func StartLoader() {
+         startAnimating(INDECATOR_SIZE, message: "", type: indicatorType, color: UIColor.colorRed,  backgroundColor: UIColor.clear, fadeInAnimation: nil)
     }
 
-    func StopLoader(){
+    func StopLoader() {
         self.stopAnimating(nil)
     }
 
@@ -175,13 +174,13 @@ extension UIApplication {
         
         let alert: UIAlertController =  UIAlertController(title: "Copper Master", message: message, preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction.init(title: "Ok", style: .default, handler: { (alertAction) in
+        alert.addAction(UIAlertAction.init(title: "Ok", style: .default, handler: { _ in
             topWindow?.isHidden = true
             topWindow = nil
         }))
         
         topWindow?.makeKeyAndVisible()
-        topWindow?.rootViewController?.present(alert, animated: true, completion:nil)
+        topWindow?.rootViewController?.present(alert, animated: true, completion: nil)
     }
     
 }
@@ -194,7 +193,7 @@ extension UIView {
     func addDashedBorder() {
         let color = UIColor.black.cgColor
         
-        let shapeLayer:CAShapeLayer = CAShapeLayer()
+        let shapeLayer: CAShapeLayer = CAShapeLayer()
         let frameSize = self.frame.size
         let shapeRect = CGRect(x: 0, y: 0, width: frameSize.width, height: frameSize.height)
         
@@ -204,7 +203,7 @@ extension UIView {
         shapeLayer.strokeColor = color
         shapeLayer.lineWidth = 0.5
         shapeLayer.lineJoin = CAShapeLayerLineJoin.round
-        shapeLayer.lineDashPattern = [6,3]
+        shapeLayer.lineDashPattern = [6, 3]
         shapeLayer.path = UIBezierPath(roundedRect: shapeRect, cornerRadius: 0).cgPath
         
         self.layer.addSublayer(shapeLayer)
@@ -357,8 +356,15 @@ extension UILabel {
     class func textSize(font: UIFont, text: String, extra: CGSize) -> CGSize {
         
         var size = textSize(font: font, text: text)
-        size.width = size.width + extra.width
-        size.height = size.height + extra.height
+
+        // Old Code
+        // size.width = size.width + extra.width
+        // size.height = size.height + extra.height
+
+        // New Code
+        size.width += extra.width
+        size.height += extra.height
+
         return size
     }
     
@@ -395,8 +401,8 @@ extension UILabel {
     func countLines(width: CGFloat = .greatestFiniteMagnitude, height: CGFloat = .greatestFiniteMagnitude) -> Int {
         
         // Call self.layoutIfNeeded() if your view uses auto layout
-        //self.layoutIfNeeded()
-        
+        // self.layoutIfNeeded()
+
         let myText = (self.text ?? "") as NSString
         
         let rect = CGSize(width: width, height: height)
@@ -414,7 +420,7 @@ extension UITapGestureRecognizer {
         
         let targetRange = (lblText as NSString).range(of: targetText)
         
-        //IMPORTANT label correct font for NSTextStorage needed
+        // IMPORTANT label correct font for NSTextStorage needed
         let mutableAttribString = NSMutableAttributedString(attributedString: attributedString)
         mutableAttribString.addAttributes([NSAttributedString.Key.font: label.font ?? UIFont.smallSystemFontSize], range: NSRange(location: 0, length: attributedString.length))
         
@@ -438,7 +444,7 @@ extension UITapGestureRecognizer {
         let locationOfTouchInLabel = self.location(in: label)
         let textBoundingBox = layoutManager.usedRect(for: textContainer)
         let textContainerOffset = CGPoint(x: (labelSize.width - textBoundingBox.size.width) * 0.5 - textBoundingBox.origin.x, y: (labelSize.height - textBoundingBox.size.height) * 0.5 - textBoundingBox.origin.y)
-        let locationOfTouchInTextContainer = CGPoint(x: locationOfTouchInLabel.x - textContainerOffset.x, y: locationOfTouchInLabel.y - textContainerOffset.y);
+        let locationOfTouchInTextContainer = CGPoint(x: locationOfTouchInLabel.x - textContainerOffset.x, y: locationOfTouchInLabel.y - textContainerOffset.y)
         let indexOfCharacter = layoutManager.characterIndex(for: locationOfTouchInTextContainer, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
         
         return NSLocationInRange(indexOfCharacter, targetRange)

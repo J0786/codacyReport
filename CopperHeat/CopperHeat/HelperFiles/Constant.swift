@@ -7,7 +7,7 @@
 import UIKit
 
 let APP_DEL = UIApplication.shared.delegate as! AppDelegate
-let STB : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+let STB: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
 let UD = UserDefaults.standard
 let context = APP_DEL.persistentContainer.viewContext
 
@@ -25,8 +25,8 @@ let IPAD_TEXTFIELD_HEIGHT = 80.0
 let IPHONE_BTN_HEIGHT = 50.0
 let IPAD_BTN_HEIGHT = 70.0
 
-let animationView : UIView = UIView()
-let img : UIImageView = UIImageView()
+let animationView: UIView = UIView()
+let img: UIImageView = UIImageView()
 
 class CONSTANT {
     

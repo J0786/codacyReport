@@ -9,14 +9,13 @@ import UIKit
 import SafariServices
 import AuthenticationServices
 
-
 struct menuModel : Codable {
-    var title : String?
-    var img : String?
-    var url : String?
+    var title: String?
+    var img: String?
+    var url: String?
 }
 
-class MenuVC: BaseVC,ASAuthorizationControllerPresentationContextProviding,SFSafariViewControllerDelegate {
+class MenuVC: BaseVC, ASAuthorizationControllerPresentationContextProviding, SFSafariViewControllerDelegate {
 
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var tblView: UITableView!
@@ -31,7 +30,7 @@ class MenuVC: BaseVC,ASAuthorizationControllerPresentationContextProviding,SFSaf
     @IBOutlet weak var lblCopyRight: UILabel!
     @IBOutlet weak var lblVersion: UILabel!
     
-    var arrMenu : [menuModel] = []
+    var arrMenu: [menuModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,30 +39,30 @@ class MenuVC: BaseVC,ASAuthorizationControllerPresentationContextProviding,SFSaf
     
     
     @IBAction func actionBntYoutube(_ sender: UIButton) {
-        if let url = URL(string: "https://www.youtube.com/@CooperheatEquipment"){
+        if let url = URL(string: "https://www.youtube.com/@CooperheatEquipment") {
             redirectToSafariView(url: url)
         }
     }
     
     @IBAction func actionBtnInsta(_ sender: UIButton) {
-        if let url = URL(string: "https://www.instagram.com/cooperheatequipment/"){
+        if let url = URL(string: "https://www.instagram.com/cooperheatequipment/") {
             redirectToSafariView(url: url)
         }
     }
     
     @IBAction func actionBtnFb(_ sender: UIButton) {
-        if let url = URL(string: "https://www.facebook.com/cooperheatequipment/"){
+        if let url = URL(string: "https://www.facebook.com/cooperheatequipment/") {
             redirectToSafariView(url: url)
         }
     }
     
     @IBAction func actionBtnLinkdin(_ sender: UIButton) {
-        if let url = URL(string: "https://www.linkedin.com/company/cooperheat-equipment-ltd/"){
+        if let url = URL(string: "https://www.linkedin.com/company/cooperheat-equipment-ltd/") {
             redirectToSafariView(url: url)
         }
     }
     
-    func redirectToSafariView( url : URL ){
+    func redirectToSafariView( url: URL ) {
         let config = SFSafariViewController.Configuration()
         config.entersReaderIfAvailable = true
         let vc = SFSafariViewController(url: url, configuration: config)
@@ -84,17 +83,17 @@ class MenuVC: BaseVC,ASAuthorizationControllerPresentationContextProviding,SFSaf
 
 extension MenuVC {
     
-    func setupview(){
+    func setupview() {
         let nib = UINib(nibName: "MenuCell", bundle: nil)
         tblView.register(nib, forCellReuseIdentifier: "MenuCell")
 
         arrMenu.removeAll()
-        arrMenu.append(menuModel(title: "About Us",img: "myaccount_aboutus",url: "https://cooperheatequipment.com/about-us/"))
-        arrMenu.append(menuModel(title: "Terms and Conditions",img: "terms_conditions",url: "https://cooperheatequipment.com/terms-conditions/"))
-        arrMenu.append(menuModel(title: "Privacy Policy",img: "myaccount_privacy",url: "https://cooperheatequipment.com/privacy-policy-2/"))
-        arrMenu.append(menuModel(title: "Contact Us",img: "myaccount_contact_us",url: "https://cooperheatequipment.com/contact-us/"))
-        arrMenu.append(menuModel(title: "Delete Account",img: "delete",url: ""))
-        arrMenu.append(menuModel(title: "Logout",img: "logout",url: ""))
+        arrMenu.append(menuModel(title: "About Us", img: "myaccount_aboutus", url: "https://cooperheatequipment.com/about-us/"))
+        arrMenu.append(menuModel(title: "Terms and Conditions", img: "terms_conditions", url: "https://cooperheatequipment.com/terms-conditions/"))
+        arrMenu.append(menuModel(title: "Privacy Policy", img: "myaccount_privacy", url: "https://cooperheatequipment.com/privacy-policy-2/"))
+        arrMenu.append(menuModel(title: "Contact Us", img: "myaccount_contact_us", url: "https://cooperheatequipment.com/contact-us/"))
+        arrMenu.append(menuModel(title: "Delete Account", img: "delete", url: ""))
+        arrMenu.append(menuModel(title: "Logout", img: "logout", url: ""))
 
         tblView.delegate = self
         tblView.dataSource = self
@@ -110,31 +109,35 @@ extension MenuVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell : MenuCell = tableView.dequeueReusableCell(withIdentifier: "MenuCell", for: indexPath) as! MenuCell
-        
-        if arrMenu[indexPath.row].title == "Logout" {
-            cell.lblTitle.text = arrMenu[indexPath.row].title
-            cell.imgIcon.image = UIImage(named: arrMenu[indexPath.row].img ?? "")
-            cell.imgArrow.isHidden = true
-        } else {
-            cell.lblTitle.text = arrMenu[indexPath.row].title
-            cell.imgIcon.image = UIImage(named: arrMenu[indexPath.row].img ?? "")
-            cell.imgArrow.isHidden = false
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "MenuCell", for: indexPath) as? MenuCell {
+
+            if arrMenu[indexPath.row].title == "Logout" {
+                cell.lblTitle.text = arrMenu[indexPath.row].title
+                cell.imgIcon.image = UIImage(named: arrMenu[indexPath.row].img ?? "")
+                cell.imgArrow.isHidden = true
+            } else {
+                cell.lblTitle.text = arrMenu[indexPath.row].title
+                cell.imgIcon.image = UIImage(named: arrMenu[indexPath.row].img ?? "")
+                cell.imgArrow.isHidden = false
+            }
+
+            cell.selectionStyle = .none
+            return cell
         }
-        
-        cell.selectionStyle = .none
-        return cell
+        else {
+            return UITableViewCell()
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if arrMenu[indexPath.row].title == "Logout" {
             showAlert(message: "Are you sure you want to Logout?") {
-                SupabaseManager.shared.logout { isLogout , error  in
+                SupabaseManager.shared.logout { isLogout, error  in
                     DispatchQueue.main.sync {
                         if isLogout {
                             APP_DEL.currentUser?.logout()
-                        }else{
+                        } else {
                             self.showAlert(message: error)
                         }
                     }
@@ -142,18 +145,20 @@ extension MenuVC: UITableViewDataSource, UITableViewDelegate {
             } no: {
                 
             }
-        }else if arrMenu[indexPath.row].title == "Delete Account" {
-            let vc : DeleteAccountVC = STB.instantiateViewController(withIdentifier: "DeleteAccountVC") as! DeleteAccountVC
-            self.navigationController?.pushViewController(vc, animated: true)
-        }else{
-            let vc : CmsVC = STB.instantiateViewController(withIdentifier: "CmsVC") as! CmsVC
-            vc.strUrl = arrMenu[indexPath.row].url
-            vc.strTitle = arrMenu[indexPath.row].title
-            self.navigationController?.pushViewController(vc, animated: true)
+        } else if arrMenu[indexPath.row].title == "Delete Account" {
+            if let deleteVC = STB.instantiateViewController(withIdentifier: "DeleteAccountVC") as? DeleteAccountVC {
+                self.navigationController?.pushViewController(deleteVC, animated: true)
+            } else {
+                print("Failed to instantiate deleteVC")
+            }
+        } else {
+            if let cmsVC = STB.instantiateViewController(withIdentifier: "CmsVC") as? CmsVC {
+                cmsVC.strUrl = arrMenu[indexPath.row].url
+                cmsVC.strTitle = arrMenu[indexPath.row].title
+                self.navigationController?.pushViewController(cmsVC, animated: true)
+            } else {
+                print("Failed to instantiate deleteVC")
+            }
         }
-        
     }
-    
-    
-    
 }

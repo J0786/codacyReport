@@ -43,7 +43,6 @@ class DeleteAccountVC: BaseVC {
 
 }
 
-
 extension DeleteAccountVC {
     func setUI() {
         objDeleteAccountVM.delegate = self
@@ -56,7 +55,7 @@ extension DeleteAccountVC {
 
 extension DeleteAccountVC : DeleteAccountResponse {
     
-    func accountDelete(){
+    func accountDelete() {
         StartLoader()
         objDeleteAccountVM.deleteAccount(id: APP_DEL.currentUser?.userId ?? "")
     }
@@ -66,7 +65,7 @@ extension DeleteAccountVC : DeleteAccountResponse {
             self.StopLoader()
             if isDeleted ?? false {
                 APP_DEL.currentUser?.logout()
-            }else{
+            } else {
                 self.showAlert(message: error)
             }
         }

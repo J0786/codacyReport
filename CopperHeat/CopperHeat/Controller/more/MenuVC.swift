@@ -18,7 +18,6 @@ struct menuModel: Codable {
 class MenuVC: BaseVC, ASAuthorizationControllerPresentationContextProviding, SFSafariViewControllerDelegate {
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var tblView: UITableView!
-    
     @IBOutlet weak var lblFollowUs: UILabel!
     
     @IBOutlet weak var btnLinkDn: UIButton!
@@ -63,9 +62,9 @@ class MenuVC: BaseVC, ASAuthorizationControllerPresentationContextProviding, SFS
     func redirectToSafariView( url: URL ) {
         let config = SFSafariViewController.Configuration()
         config.entersReaderIfAvailable = true
-        let vc = SFSafariViewController(url: url, configuration: config)
-        vc.delegate = self
-        self.present(vc, animated: true)
+        let safariViewVc = SFSafariViewController(url: url, configuration: config)
+        safariViewVc.delegate = self
+        self.present(safariViewVc, animated: true)
     }
     
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {

@@ -15,7 +15,6 @@ class DeleteAccountVC: BaseVC {
     @IBOutlet weak var btnDelete: UIButton!
     @IBOutlet weak var btnCancel: UIButton!
     @IBOutlet weak var imgLogo: UIImageView!
-    
     var objDeleteAccountVM = DeleteAccountVM()
 
     override func viewDidLoad() {

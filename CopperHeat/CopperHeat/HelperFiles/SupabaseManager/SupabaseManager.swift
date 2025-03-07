@@ -23,7 +23,6 @@ struct GeneralData: Decodable {
 let SUPABASE = SupabaseManager.shared
 class SupabaseManager {
     static let shared = SupabaseManager()
-    
     let client: SupabaseClient
     let adminClient: SupabaseClient
 
@@ -98,9 +97,9 @@ class SupabaseManager {
         Task {
             do {
                 try await client.auth.signOut()
-                completion(true,"")
+                completion(true, "")
             } catch {
-                completion(false,error.localizedDescription)
+                completion(false, error.localizedDescription)
             }
         }
     }

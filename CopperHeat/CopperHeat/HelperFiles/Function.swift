@@ -10,7 +10,6 @@ import PhotosUI
 
 class FUNCTION {
     func getDataFromJsonFile(fileName: String) -> Data? {
-        
         do {
             
             let url = Bundle.main.url(forResource: fileName, withExtension: "json")!
@@ -107,8 +106,7 @@ class FUNCTION {
         
         return (Locale.current as NSLocale).object(forKey: .countryCode) as? String
     }
-    
-    
+
     func  getAttributedString(string: String,
                               color: UIColor? = nil,
                               backgroundColor: UIColor? = nil,
@@ -187,7 +185,7 @@ class FUNCTION {
     func getHmsFromCMTime(cmTime: CMTime) -> (h: String, m: String, s: String, secInt: Int) {
         
         let timeSecond = Int(CMTimeGetSeconds(cmTime))
-        let hours = (timeSecond / 3600);
+        let hours = (timeSecond / 3600)
         let minutes = ((timeSecond % 3600) / 60)
         let seconds = ((timeSecond % 3600) % 60)
 

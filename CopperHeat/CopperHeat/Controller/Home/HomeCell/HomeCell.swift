@@ -14,7 +14,6 @@ class HomeCell: UITableViewCell {
     @IBOutlet weak var lblTitleHost: UILabel!
     @IBOutlet weak var lblHost: UILabel!
     @IBOutlet weak var btnConnect: UIButton!
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         btnConnect.cornerRadius(cornerRadius: 3)

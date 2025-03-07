@@ -24,7 +24,6 @@ class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
           return .lightContent
      }
      override var selectedIndex: Int { // Mark 1
-          
           didSet {
                guard let selectedViewController = viewControllers?[selectedIndex] else { return }
                if IS_IPAD == true {
@@ -86,8 +85,6 @@ class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
                self.arrNavVC.append(tabItem.vc) // UINavigationController(rootViewController: tabItem.vc)
           }
           self.viewControllers = self.arrNavVC
-          
-          
           let tabBar: UITabBar = self.tabBar
           for i in 0..<(tabBar.items ?? []).count {
                
@@ -185,5 +182,3 @@ class TABBAR {
         return tab
     }
 }
-
-

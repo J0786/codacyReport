@@ -15,7 +15,6 @@ class BaseVC: UIViewController {
         super.viewDidLoad()
         hideNavigationbar()
     }
-    
     func hideNavigationbar() {
         self.navigationController?.navigationBar.isHidden = true
         self.navigationController?.isNavigationBarHidden = true

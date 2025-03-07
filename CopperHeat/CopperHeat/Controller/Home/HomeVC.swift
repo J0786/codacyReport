@@ -8,7 +8,7 @@
 import UIKit
 import CoreData
 
-struct DeviceModel : Codable {
+struct DeviceModel: Codable {
     var host: String?
     var password: String?
     var device_name: String?
@@ -19,7 +19,6 @@ class HomeVC: BaseVC {
     @IBOutlet weak var btnAdd: UIButton!
     @IBOutlet weak var img: UIImageView!
     @IBOutlet weak var tblview: UITableView!
-    
     var arrDeviceData: [DeviceModel] = []
     
     override func viewDidLoad() {
@@ -96,7 +95,7 @@ extension HomeVC {
                 for i in 0..<arr.count {
                     let dict = arr[i]
                     let model = DeviceModel(host: (dict["host"] as? String) ?? "",
-                                            password: (dict["password"] as? String) ?? "" ,
+                                             password: (dict["password"] as? String) ?? "" ,
                                             device_name: (dict["device_name"] as? String) ?? "",
                                             id: (dict["id"] as? Int) ?? 0)
                     self.arrDeviceData.append(model)

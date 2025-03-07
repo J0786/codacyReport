@@ -20,7 +20,6 @@ class EmailVerifyVM {
             self.delegate?.verifyUserhandle(isVerify: isOtpVerify, error: err)
         }
     }
-    
     func resendOTP(email: String) {
         SupabaseManager.shared.resendOTP(email: email) { isOtpSend, error  in
             self.delegate?.resendOTPHandle(isSent: isOtpSend, error: error)

@@ -21,14 +21,12 @@ class LoginVM {
             self.delegate?.signupResponsehandle(res: result, error: err)
         }
     }
-    
     func Login(email: String ) {
         SupabaseManager.shared.loginWithEmail(email: email, password: "123456") { result, error  in
             self.delegate?.loginResponseHandle(res: result, error: error)
         }
     }
-    
-    func resendOTP(email: String){
+    func resendOTP(email: String) {
         SupabaseManager.shared.resendOTP(email: email) { isOtpSend, error  in
             self.delegate?.resendOTPHandle(res: isOtpSend, error: error)
         }

@@ -13,7 +13,6 @@ class LogInVC: BaseVC {
     // MARK: Outlets
     @IBOutlet weak var scrllView: UIScrollView!
     @IBOutlet weak var imgLogo: UIImageView!
- 
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblTitleDescription: UILabel!
     
@@ -42,7 +41,6 @@ class LogInVC: BaseVC {
         }
     }
 }
-
 
 extension LogInVC {
     func setUi() {

@@ -8,7 +8,6 @@ let NETWORK = NetworkManager.sharedInstance
 
 class NetworkManager: NSObject {
     var reachability: Reachability!
-    
     static let sharedInstance: NetworkManager = { return NetworkManager() }()
 
     override init() {

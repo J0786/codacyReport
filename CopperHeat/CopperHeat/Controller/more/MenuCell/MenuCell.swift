@@ -12,7 +12,6 @@ class MenuCell: UITableViewCell {
     @IBOutlet weak var imgIcon: UIImageView!
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var imgArrow: UIImageView!
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         mainview.cornerRadius(cornerRadius: 8)

@@ -17,7 +17,6 @@ class AddDeviceVC: BaseVC {
     @IBOutlet weak var btnBack: UIButton!
     @IBOutlet weak var scrllView: UIScrollView!
     @IBOutlet weak var imgLogo: UIImageView!
-    
     @IBOutlet weak var lblTitleDescription: UILabel!
     
     @IBOutlet weak var lblTitleHost: UILabel!

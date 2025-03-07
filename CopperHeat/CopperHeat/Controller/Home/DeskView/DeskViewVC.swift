@@ -11,7 +11,6 @@ class DeskViewVC: BaseVC, IRetrieveConnectionId, UIAlertViewDelegate {
     @IBOutlet weak var scrllView: ScrollView!
     @IBOutlet weak var btnStop: UIButton!
     @IBOutlet weak var imgLogo: UIImageView!
-    
     var ViewCore: ViewerCore?
     var desktopView: DesktopView?
     

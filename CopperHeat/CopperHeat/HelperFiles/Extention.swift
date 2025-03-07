@@ -12,7 +12,6 @@ extension UIViewController {
         func instantiateFromNib<T: UIViewController>() -> T {
             return T.init(nibName: String(describing: T.self), bundle: nil)
         }
-        
         return instantiateFromNib()
     }
     
@@ -51,7 +50,7 @@ extension UIViewController {
 
             if self.isModal() {
                 self.dismiss(animated: true, completion: nil)
-            } else if let navC : UINavigationController = self.navigationController, navC.viewControllers.count > 0 {
+            } else if let navC: UINavigationController = self.navigationController, navC.viewControllers.count > 0 {
                 self.navigationController?.popViewController(animated: true)
             }
         }
@@ -60,9 +59,6 @@ extension UIViewController {
     }
     
     func showAlert(attributedText: NSAttributedString) {
-        
-        
-        
         let alert = UIAlertController(title: "Copper Master", message: "", preferredStyle: UIAlertController.Style.alert)
         
         alert.setValue(attributedText, forKey: "attributedTitle")
@@ -72,14 +68,10 @@ extension UIViewController {
         alert.addAction(acOK)
         
         self.present(alert, animated: true, completion: nil)
-        
     }
     
     
     func showAlert(message: String, actionTitles: [String], actions: [((UIAlertAction) -> Void)]) {
-        
-        
-        
         let alertController = UIAlertController(title: "Copper Master", message: message, preferredStyle: .alert)
         
         for(index, indexTitle) in actionTitles.enumerated() {
@@ -91,14 +83,12 @@ extension UIViewController {
         }
         
         self.present(alertController, animated: true)
-        
     }
     
     func showAlert(message: String, completion: @escaping () -> Void) {
-
         let alert = UIAlertController(title: "Copper Master", message: message, preferredStyle: UIAlertController.Style.alert)
-        let acOK = UIAlertAction(title: "Ok".uppercased(), style: UIAlertAction.Style.default) { (action) in
-            
+        let acOK = UIAlertAction(title: "Ok".uppercased(), style: UIAlertAction.Style.default) { _ in
+
             completion()
         }
         alert.addAction(acOK)
@@ -106,7 +96,6 @@ extension UIViewController {
     }
     
     func showAlert(title: String, message: String, completion: @escaping () -> Void) {
-
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         let acOK = UIAlertAction(title: "Ok".uppercased(), style: UIAlertAction.Style.default) { (action) in
             
@@ -116,13 +105,12 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func showAlert(message: String, yes: @escaping () -> (), no: @escaping () -> ()) {
-        
+    func showAlert(message: String, yes: @escaping () -> Void, no: @escaping () -> Void) {
         let alert = UIAlertController(title: "Copper Master", message: message, preferredStyle: UIAlertController.Style.alert)
         let acYes = UIAlertAction(title: "Yes", style: UIAlertAction.Style.default) { _ in
             yes()
         }
-        let acNo = UIAlertAction(title:"No", style: UIAlertAction.Style.default) { _ in
+        let acNo = UIAlertAction(title: "No", style: UIAlertAction.Style.default) { _ in
             no()
         }
         alert.addAction(acYes)
@@ -132,7 +120,6 @@ extension UIViewController {
     
     
     @objc public func setGradientNavigation() {
-        
         guard let navigationController = navigationController,let flareGradientImage = CAGradientLayer.primaryNavigationGradient(on: navigationController.navigationBar)
         else {
             debugPrint("Error creating gradient color!")
@@ -146,13 +133,12 @@ extension UIViewController {
 
 
 extension UIViewController: NVActivityIndicatorViewable {
-
     func StartLoaderwithMsg(message: String) {
-        startAnimating(INDECATOR_SIZE, message: message, type: indicatorType , color: UIColor.colorRed,  backgroundColor: UIColor.clear, fadeInAnimation: nil)
+        startAnimating(INDECATOR_SIZE, message: message, type: indicatorType, color: UIColor.colorRed, backgroundColor: UIColor.clear, fadeInAnimation: nil)
     }
 
     func StartLoader() {
-         startAnimating(INDECATOR_SIZE, message: "", type: indicatorType, color: UIColor.colorRed,  backgroundColor: UIColor.clear, fadeInAnimation: nil)
+         startAnimating(INDECATOR_SIZE, message: "", type: indicatorType, color: UIColor.colorRed, backgroundColor: UIColor.clear, fadeInAnimation: nil)
     }
 
     func StopLoader() {
@@ -183,9 +169,6 @@ extension UIApplication {
     }
     
 }
-
-
-
 
 extension UIView {
     
@@ -258,8 +241,7 @@ extension UIView {
         self.layer.masksToBounds = false
         
     }
-    
-    
+
     func makeCardView() {
         self.layer.shadowColor = UIColor.lightGray.cgColor
         self.layer.shadowOffset = CGSize(width: 0, height: 1)
@@ -267,18 +249,14 @@ extension UIView {
         self.layer.shadowRadius = 2
         self.layer.masksToBounds = false
     }
-    
-    
-    
+
     func addBorderToView(color: UIColor, width: CGFloat, radius: CGFloat) {
         self.layer.borderWidth = width
         self.layer.borderColor = color.cgColor
         self.layer.cornerRadius = radius
         self.layer.masksToBounds = true
     }
-    
-    
-    
+
     func screenShot() -> UIImage? {
         
         // Begin context
@@ -293,8 +271,7 @@ extension UIView {
         
         return image
     }
-    
-    
+
     class func fromNib(named: String? = nil) -> Self {
         let name = named ?? "\(Self.self)"
         guard
@@ -309,10 +286,6 @@ extension UIView {
         return view
     }
 }
-
-
-
-
 
 extension UILabel {
     
@@ -386,17 +359,14 @@ extension UILabel {
         
         return Int(ceil(CGFloat(labelSize.height) / font.lineHeight))
     }
-    
-    
+
     var numberOfVisibleLines: Int {
         let maxSize = CGSize(width: frame.size.width, height: CGFloat(MAXFLOAT))
         let textHeight = sizeThatFits(maxSize).height
         let lineHeight = font.lineHeight
         return Int(ceil(textHeight / lineHeight))
     }
-    
-    
-    
+
     func countLines(width: CGFloat = .greatestFiniteMagnitude, height: CGFloat = .greatestFiniteMagnitude) -> Int {
         
         // Call self.layoutIfNeeded() if your view uses auto layout
@@ -412,7 +382,6 @@ extension UILabel {
 }
 
 extension UITapGestureRecognizer {
-    
     func didTapAttributedTextInLabel(label: UILabel, targetText: String) -> Bool {
         
         guard let attributedString = label.attributedText, let lblText = label.text else { return false }
@@ -448,11 +417,9 @@ extension UITapGestureRecognizer {
         
         return NSLocationInRange(indexOfCharacter, targetRange)
     }
-    
 }
 
 extension UITableView {
-    
     func reloadWithoutScroll() {
         
         let offset = contentOffset
@@ -461,9 +428,6 @@ extension UITableView {
         setContentOffset(offset, animated: false)
     }
 }
-
-
-
 
 extension UIColor {
     
@@ -588,7 +552,7 @@ extension UIImageView {
     
     
     
-    //For load gif file
+    // For load gif file
     //    public func loadGif(name: String) {
     //
     //        DispatchQueue.global().async {
@@ -621,58 +585,56 @@ extension UIImage {
     
     func compressImage(compressionQuality: CGFloat = 0.5) -> (image: UIImage?, data: Data?) {
         
-        var actualHeight : CGFloat = self.size.height
-        var actualWidth : CGFloat = self.size.width
+        var actualHeight: CGFloat = self.size.height
+        var actualWidth: CGFloat = self.size.width
         
-        let maxHeight : CGFloat = 2524.0
-        let maxWidth : CGFloat = 3532.0
+        let maxHeight: CGFloat = 2524.0
+        let maxWidth: CGFloat = 3532.0
         
-        var currentRatio : CGFloat = actualWidth / actualHeight
-        let maxRatio : CGFloat = maxWidth / maxHeight
+        var currentRatio: CGFloat = actualWidth / actualHeight
+        let maxRatio: CGFloat = maxWidth / maxHeight
         
         
         if actualHeight > maxHeight || actualWidth > maxWidth {
             if currentRatio < maxRatio {
-                //adjust width according to maxHeight
-                currentRatio = maxHeight / actualHeight;
-                actualWidth = currentRatio * actualWidth;
+                // adjust width according to maxHeight
+                currentRatio = maxHeight / actualHeight
+                actualWidth = currentRatio * actualWidth
                 actualHeight = maxHeight;
             } else if currentRatio > maxRatio {
-                //adjust height according to maxWidth
+                // adjust height according to maxWidth
                 currentRatio = maxWidth / actualWidth;
-                actualHeight = currentRatio * actualHeight;
-                actualWidth = maxWidth;
-            } else{
-                actualHeight = maxHeight;
-                actualWidth = maxWidth;
+                actualHeight = currentRatio * actualHeight
+                actualWidth = maxWidth
+            } else {
+                actualHeight = maxHeight
+                actualWidth = maxWidth
             }
         }
         
-        let imageRect : CGRect = CGRect(x: 0, y: 0, width: actualWidth, height: actualHeight)
+        let imageRect: CGRect = CGRect(x: 0, y: 0, width: actualWidth, height: actualHeight)
         UIGraphicsBeginImageContext(imageRect.size)
         self.draw(in: imageRect)
         
-        guard let newImage : UIImage = UIGraphicsGetImageFromCurrentImageContext() else {
+        guard let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext() else {
             
             return (image: self, data: jpegData(compressionQuality: compressionQuality))
         }
         
-        guard let tempData : Data = newImage.jpegData(compressionQuality: compressionQuality) else {
+        guard let tempData: Data = newImage.jpegData(compressionQuality: compressionQuality) else {
             
             UIGraphicsEndImageContext(); return (image: self, data: jpegData(compressionQuality: compressionQuality))
         }
         
         UIGraphicsEndImageContext();
         
-        if let finalImage : UIImage = UIImage(data: tempData) {
+        if let finalImage: UIImage = UIImage(data: tempData) {
             return (image: finalImage, data: tempData)
         } else {
             return (image: self, data: jpegData(compressionQuality: compressionQuality))
         }
     }
-    
-    
-    
+
     //For load gif file
     public class func gif(data: Data) -> UIImage? {
         
@@ -896,10 +858,8 @@ extension UIImage {
 }
 
 extension Data {
-    
-    
+
     var imageType: String {
-        
         let array = [UInt8](self)
         
         let ext: String
@@ -918,7 +878,6 @@ extension Data {
         return ext
     }
 }
-
 
 extension Dictionary {
     var jsonData: Data? {
@@ -941,9 +900,7 @@ extension Dictionary {
 }
 
 extension URL {
-    
     func getInfo() -> (bytes: Double, kb: Double, mb: Double, gb: Double) {
-        
         do {
             
             let res = try self.resourceValues(forKeys: [.fileSizeKey])
@@ -963,7 +920,6 @@ extension URL {
 }
 
 public struct Units {
-    
     public let bytes: Int64
     
     public var kilobytes: Double {
@@ -1002,7 +958,6 @@ public struct Units {
 
 
 extension String {
-    
     func getHtml() -> (string: String?, attributedString: NSAttributedString?) {
         
         guard let data = data(using: .utf8) else { return (string: nil, attributedString: nil) }
@@ -1156,8 +1111,6 @@ extension String {
         
         return ""
     }
-    
-    
 }
 
 extension Double {
@@ -1170,7 +1123,6 @@ extension Double {
     }
 }
 
-
 extension NSMutableAttributedString {
     
     func  appendAttributedString(string: String,
@@ -1182,14 +1134,10 @@ extension NSMutableAttributedString {
                                  shadowColor: UIColor? = nil,
                                  strokeWidth: Int? = nil,
                                  underlineStyle: NSUnderlineStyle? = nil,
-                                 font: UIFont? = nil)
-    {
+                                 font: UIFont? = nil) {
         self.append(FUNCTION().getAttributedString(string: string, color: color, backgroundColor: backgroundColor, strikethroughStyle: strikethroughStyle, shadowBlurRadius: shadowBlurRadius, shadowOffset: shadowOffset, shadowColor: shadowColor, strokeWidth: strokeWidth, underlineStyle: underlineStyle, font: font))
     }
 }
-
-
-
 
 class ActivityLoader: NSObject {
     
@@ -1249,9 +1197,6 @@ extension CAGradientLayer {
     }
 }
 
-
-
-
 extension Character {
     
     var isSimpleEmoji: Bool {
@@ -1277,13 +1222,9 @@ extension String {
             return "0.0"
         }
     }
-    
-    
-    
 }
 
 extension String {
-    
     func getCommaValue()->String{
         
         let formatter = NumberFormatter()
@@ -1301,8 +1242,6 @@ extension String {
         
         return ""
     }
-    
-    
 }
 
 extension NumberFormatter {
@@ -1321,7 +1260,6 @@ extension FloatingPoint {
 }
 
 extension String {
-    
     var isSingleEmoji: Bool {
         return count == 1 && containsEmoji
     }
@@ -1348,7 +1286,6 @@ extension String {
     
     
     var encodeEmoji: String {
-        
         if let encodeStr = NSString(cString: self.cString(using: .nonLossyASCII)!, encoding: String.Encoding.utf8.rawValue) {
             
             return encodeStr as String
@@ -1358,7 +1295,6 @@ extension String {
     }
     
     var decodeEmoji: String {
-        
         let data = self.data(using: String.Encoding.utf8);
         let decodedStr = NSString(data: data!, encoding: String.Encoding.nonLossyASCII.rawValue)
         
@@ -1371,7 +1307,6 @@ extension String {
 }
 
 extension URL {
-    
     var filesize: Int? {
         let set = Set.init([URLResourceKey.fileSizeKey])
         var filesize: Int?
@@ -1397,8 +1332,7 @@ extension URL {
     var queryParameters: QueryParameters {
         return QueryParameters(url: self)
     }
-    
-    
+
     func download(to directory: FileManager.SearchPathDirectory, using fileName: String? = nil, overwrite: Bool = false, completion: @escaping (URL?, Error?) -> Void) throws {
         let directory = try FileManager.default.url(for: directory, in: .userDomainMask, appropriateFor: nil, create: true)
         let destination: URL
@@ -1432,7 +1366,6 @@ extension URL {
                 debugPrint(error)
             }
         }.resume()
-        
     }
 }
 
@@ -1478,7 +1411,6 @@ extension RangeExpression where Bound == String.Index  {
 
 
 extension UIScrollView {
-    
     // Scroll to a specific view so that it's top is at the top our scrollview
     func scrollToView(view:UIView, animated: Bool) {
         if let origin = view.superview {
@@ -1502,11 +1434,9 @@ extension UIScrollView {
             setContentOffset(bottomOffset, animated: true)
         }
     }
-    
 }
 
 extension UIView {
-    
     // Export pdf from Save pdf in drectory and return pdf file path
     func exportAsPdfFromView(strPdfName : String) -> String {
         

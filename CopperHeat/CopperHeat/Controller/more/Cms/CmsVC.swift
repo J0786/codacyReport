@@ -12,7 +12,6 @@ class CmsVC: BaseVC {
     @IBOutlet weak var btnBack: UIButton!
     @IBOutlet weak var lbltitle: UILabel!
     @IBOutlet weak var web: WKWebView!
-    
     var strUrl: String?
     var strTitle: String?
     

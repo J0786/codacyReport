@@ -11,7 +11,6 @@ class EmailVerifyVC: BaseVC {
     @IBOutlet weak var scrllView: UIScrollView!
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var imgLogo: UIImageView!
-    
     @IBOutlet weak var btnBack: UIButton!
     @IBOutlet weak var viewTop: UIView!
     @IBOutlet weak var lblTitle: UILabel!
@@ -70,7 +69,7 @@ class EmailVerifyVC: BaseVC {
         var strOTP = ""
         [txtOne, txtTwo, txtThree, txtFour, txtFive, txtSix].forEach {
             isValid = true
-            //strOTP = strOTP + ($0?.text ?? "") // Old Code
+            // strOTP = strOTP + ($0?.text ?? "") // Old Code
             strOTP += $0?.text ?? ""  // New Code
             if $0?.text == "" {
                 isValid = false
@@ -245,7 +244,7 @@ extension EmailVerifyVC {
     @objc func expireTimerRepeat() {
         if Date().compare(expireDate) == .orderedAscending {
             lblTime.text = "You can request a new verification code in " + self.getExpireTime(startDate: Date(), endDate: expireDate)
-        }else{
+        } else {
             self.expireTimerStop()
             self.btnResend.isHidden = false
             self.lblTime.isHidden = true

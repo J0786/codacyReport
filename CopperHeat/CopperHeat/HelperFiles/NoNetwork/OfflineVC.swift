@@ -9,7 +9,6 @@ class OfflineVC: BaseVC {
      @IBOutlet weak var lblNoInternetCon: UILabel!
      @IBOutlet weak var lblPleaseCheckInternetConnection: UILabel!
      @IBOutlet weak var constraintHeightBtn: NSLayoutConstraint!
-     
      override func viewDidLoad() {
           super.viewDidLoad()
           //        setBtnWithoutView(btn: btnRefresh, cnstrntHeight: constraintHeightBtn)

@@ -16,7 +16,6 @@ class SplashVC: UIViewController {
                 APP_DEL.dictGenData = res?.first
             }
         }
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
             APP_DEL.setAppRoot()
         })

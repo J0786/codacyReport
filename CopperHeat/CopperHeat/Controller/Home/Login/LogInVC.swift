@@ -10,8 +10,7 @@ import CoreData
 import Auth
 
 class LogInVC: BaseVC {
-
-    //MARK: Outlets
+    // MARK: Outlets
     @IBOutlet weak var scrllView: UIScrollView!
     @IBOutlet weak var imgLogo: UIImageView!
  
@@ -28,7 +27,6 @@ class LogInVC: BaseVC {
     // MARK: - Variables
     var objLoginVM = LoginVM()
 
- 
     // MARK: LIFE CYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,12 +41,10 @@ class LogInVC: BaseVC {
             self.loginCall()
         }
     }
-
 }
 
 
 extension LogInVC {
-    
     func setUi() {
         txtEmail.placeholder = "Enter Email Id"
         btnLogin.round()
@@ -56,12 +52,10 @@ extension LogInVC {
         imgLogo.cornerRadius(cornerRadius: 10)
         self.objLoginVM.delegate = self
     }
-    
 }
 
 
 extension LogInVC: LoginResponse {
-    
     func loginCall() {
         self.StartLoader()
         objLoginVM.Login(email: txtEmail.text ?? "")
@@ -105,7 +99,7 @@ extension LogInVC: LoginResponse {
             
             if res == nil {
                 self.showAlert(message: error)
-            }else{
+            } else {
                 APP_DEL.currentUser = CurrentUser (
                     id: res?.identities?.first?.id ?? "" ,
                     identityId: res?.identities?.first?.identityId.uuidString ?? "" ,
@@ -136,7 +130,7 @@ extension LogInVC: LoginResponse {
             if res == nil {
                 self.showAlert(message: error)
             } else {
-                if let emailVC : EmailVerifyVC = STB.instantiateViewController(withIdentifier: "EmailVerifyVC") as? EmailVerifyVC {
+                if let emailVC: EmailVerifyVC = STB.instantiateViewController(withIdentifier: "EmailVerifyVC") as? EmailVerifyVC {
                     emailVC.strEmail = self.txtEmail.text ?? ""
                     self.navigationController?.pushViewController(emailVC, animated: true)
                 } else {
@@ -145,5 +139,4 @@ extension LogInVC: LoginResponse {
             }
         }
     }
-        
 }

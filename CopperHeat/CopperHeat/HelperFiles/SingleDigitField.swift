@@ -24,4 +24,3 @@ class SingleDigitField: UITextField {
         sendActions(for: .editingChanged)
     }
 }
-

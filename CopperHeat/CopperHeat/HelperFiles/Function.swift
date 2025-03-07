@@ -9,7 +9,6 @@ import Photos
 import PhotosUI
 
 class FUNCTION {
-    
     func getDataFromJsonFile(fileName: String) -> Data? {
         
         do {
@@ -55,7 +54,7 @@ class FUNCTION {
          return "\(sum)"
      }
     
-    func isValidContactNumEditScreen(number: String , lenght: String, crCode: String) -> Bool {
+    func isValidContactNumEditScreen(number: String, lenght: String, crCode: String) -> Bool {
         let count = (crCode.count)+1+(Int(lenght) ?? 8)
         if number.count > count {
             return false
@@ -103,8 +102,7 @@ class FUNCTION {
 //        
 //        return sizeNew
 //    }
-    
-    
+
     func getLocalCountryCode() -> String? {
         
         return (Locale.current as NSLocale).object(forKey: .countryCode) as? String
@@ -190,8 +188,8 @@ class FUNCTION {
         
         let timeSecond = Int(CMTimeGetSeconds(cmTime))
         let hours = (timeSecond / 3600);
-        let minutes = ((timeSecond % 3600) / 60);
-        let seconds = ((timeSecond % 3600) % 60);
+        let minutes = ((timeSecond % 3600) / 60)
+        let seconds = ((timeSecond % 3600) % 60)
 
         return (h: String(format: "%.02d", hours),
                 m: String(format: "%.02d", minutes),
@@ -201,9 +199,9 @@ class FUNCTION {
     
     func getHmsFromCMTime(timeSecond: Int) -> (h: String, m: String, s: String) {
         
-        let hours = (timeSecond / 3600);
-        let minutes = ((timeSecond % 3600) / 60);
-        let seconds = ((timeSecond % 3600) % 60);
+        let hours = (timeSecond / 3600)
+        let minutes = ((timeSecond % 3600) / 60)
+        let seconds = ((timeSecond % 3600) % 60)
 
         return (h: String(format: "%.02d", hours),
                 m: String(format: "%.02d", minutes),
@@ -227,7 +225,7 @@ class FUNCTION {
             day.append("st")
         case "2", "22":
             day.append("nd")
-        case "3","23":
+        case "3", "23":
             day.append("rd")
         default:
             day.append("th")
@@ -310,7 +308,7 @@ class FUNCTION {
         }
     }
     
-    func getImages(assets : [PHAsset], completion: @escaping ([UIImage]) -> Void) {
+    func getImages(assets: [PHAsset], completion: @escaping ([UIImage]) -> Void) {
 
         let group = DispatchGroup()
         var images: [UIImage] = []
@@ -326,8 +324,8 @@ class FUNCTION {
         
         for asset in assets {
             
-            let width : CGFloat = CGFloat(asset.pixelWidth)
-            let height : CGFloat = CGFloat(asset.pixelHeight)
+            let width: CGFloat = CGFloat(asset.pixelWidth)
+            let height: CGFloat = CGFloat(asset.pixelHeight)
 
             let size = CGSize(width: width * 0.5, height: height * 0.5)
 
@@ -375,7 +373,6 @@ class FUNCTION {
 
 
 struct AppInfo {
-    
     var appName: String {
         return readFromInfoPlist(withKey: "CFBundleName") ?? "(unknown app name)"
     }

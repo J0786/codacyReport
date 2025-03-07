@@ -8,7 +8,6 @@
 import UIKit
 
 class DeleteAccountVC: BaseVC {
-
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var btnBack: UIButton!
     @IBOutlet weak var lblTitleDel: UILabel!
@@ -40,7 +39,6 @@ class DeleteAccountVC: BaseVC {
     @IBAction func actionBtnCencel(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
-
 }
 
 extension DeleteAccountVC {
@@ -53,8 +51,7 @@ extension DeleteAccountVC {
     }
 }
 
-extension DeleteAccountVC : DeleteAccountResponse {
-    
+extension DeleteAccountVC: DeleteAccountResponse {
     func accountDelete() {
         StartLoader()
         objDeleteAccountVM.deleteAccount(id: APP_DEL.currentUser?.userId ?? "")

@@ -8,7 +8,6 @@
 import UIKit
 
 class HomeCell: UITableViewCell {
-
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var btnDel: UIButton!
     @IBOutlet weak var lblTitle: UILabel!
@@ -28,5 +27,4 @@ class HomeCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
     }
-    
 }

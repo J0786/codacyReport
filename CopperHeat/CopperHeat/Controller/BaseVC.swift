@@ -11,7 +11,6 @@ import EmptyDataSet_Swift
 
 class BaseVC: UIViewController {
     var isSwipeToBackEnabled: Bool = true
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         hideNavigationbar()
@@ -49,7 +48,6 @@ extension BaseVC: UIPopoverPresentationControllerDelegate, UIGestureRecognizerDe
 }
 
 extension BaseVC: EmptyDataSetSource, EmptyDataSetDelegate {
-    
     func setNoData(scrollView: UIScrollView!) {
         scrollView.emptyDataSetSource = self
         scrollView.emptyDataSetDelegate = self
@@ -71,5 +69,4 @@ extension BaseVC: EmptyDataSetSource, EmptyDataSetDelegate {
     func emptyDataSetShouldAllowScroll(_ scrollView: UIScrollView) -> Bool {
         return true
     }
-    
 }

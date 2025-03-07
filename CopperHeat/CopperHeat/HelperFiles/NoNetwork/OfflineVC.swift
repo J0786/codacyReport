@@ -4,7 +4,6 @@
 import UIKit
 
 class OfflineVC: BaseVC {
-     
      @IBOutlet weak var btnRefresh: UIButton!
      @IBOutlet weak var indicator: UIActivityIndicatorView!
      @IBOutlet weak var lblNoInternetCon: UILabel!
@@ -66,7 +65,6 @@ class OfflineVC: BaseVC {
      }
      
 }
-
 
 extension UIApplication {
     class func topViewController(controller: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {

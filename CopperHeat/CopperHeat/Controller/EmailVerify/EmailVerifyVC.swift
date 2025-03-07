@@ -82,12 +82,9 @@ class EmailVerifyVC: BaseVC {
             self.verifyUserCall(otp: strOTP)
         }
     }
-    
 }
 
-
 extension EmailVerifyVC {
-    
     func setUi() {
         btnVerifyOtp.round()
         constraintTxtOtpHeight.constant = IS_IPAD ? IPAD_TEXTFIELD_HEIGHT : (IPHONE_TEXTFIELD_HEIGHT-15)
@@ -208,7 +205,7 @@ extension EmailVerifyVC {
         if isEditing {
             sender.backgroundColor = .colorRed.withAlphaComponent(0.1)
             sender.textColor = .black
-        }else{
+        } else {
             sender.backgroundColor = .clear
         }
     }
@@ -286,8 +283,7 @@ extension EmailVerifyVC {
 }
 
 extension EmailVerifyVC: EmailVerifyResponse {
-    
-    func verifyUserCall(otp : String) {
+    func verifyUserCall(otp: String) {
         self.StartLoader()
         self.objEmailVerifyVM.verifyUser(email: strEmail, otp: otp)
     }
@@ -318,5 +314,4 @@ extension EmailVerifyVC: EmailVerifyResponse {
             }
         }
     }
-    
 }

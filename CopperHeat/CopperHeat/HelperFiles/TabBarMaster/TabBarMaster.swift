@@ -8,19 +8,16 @@
 
 import UIKit
 
-fileprivate struct TabItemVC {
+private struct TabItemVC {
      var vc: UIViewController
      var title: String
      var selected_image: String
      var normal_image: String
 }
 
-
-
 var lastSelTabIndex = 0
 
 class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
-     
      fileprivate var arrTabItemVC: [TabItemVC] = []
      fileprivate var arrNavVC: [UIViewController] = [] // UINavigationController
      override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -155,13 +152,9 @@ class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
           
           return self
      }
-     
-     
-     
 }
 
 extension TabBarMaster: UITabBarControllerDelegate {
-     
      func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
           
           let arrVC = tabBarController.viewControllers ?? []
@@ -176,17 +169,17 @@ extension TabBarMaster: UITabBarControllerDelegate {
 }
 
 class TABBAR {
-     
     func getTabBar(selected_index: Int = 0) -> UITabBarController {
         let tabbar = TabBarMaster()
-        
-        let home : HomeVC = STB.instantiateViewController(withIdentifier: "HomeVC") as! HomeVC
-        let more : MenuVC = STB.instantiateViewController(withIdentifier: "MenuVC") as! MenuVC
-        
-        tabbar.addVC(vc: home, title: "Home", selected_image: "home", normal_image: "home")
-        
-        tabbar.addVC(vc: more, title: "More", selected_image: "more", normal_image: "more")
-        
+
+        if let home = STB.instantiateViewController(withIdentifier: "HomeVC") as? HomeVC {
+            tabbar.addVC(vc: home, title: "Home", selected_image: "home", normal_image: "home")
+        }
+
+        if let more = STB.instantiateViewController(withIdentifier: "MenuVC") as? MenuVC {
+            tabbar.addVC(vc: more, title: "More", selected_image: "more", normal_image: "more")
+        }
+
         let tab = tabbar.getTabBar(selected_index: selected_index, selected_color: .colorRed, normal_color: .white)
         
         return tab

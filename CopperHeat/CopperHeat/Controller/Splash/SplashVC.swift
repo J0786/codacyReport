@@ -9,7 +9,6 @@ import UIKit
 import Supabase
 
 class SplashVC: UIViewController {
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         SupabaseManager.shared.fetchGeneralData { res, _  in
@@ -22,7 +21,4 @@ class SplashVC: UIViewController {
             APP_DEL.setAppRoot()
         })
     }
-    
 }
-
-

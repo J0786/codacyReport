@@ -8,7 +8,6 @@
 import UIKit
 
 class DeskViewVC: BaseVC, IRetrieveConnectionId, UIAlertViewDelegate {
-    
     @IBOutlet weak var scrllView: ScrollView!
     @IBOutlet weak var btnStop: UIButton!
     @IBOutlet weak var imgLogo: UIImageView!
@@ -73,8 +72,8 @@ class DeskViewVC: BaseVC, IRetrieveConnectionId, UIAlertViewDelegate {
         return connectionId ?? 0
     }
 
-    func showAskConnectionIdDialog(condition: NSCondition){
-        
+    func showAskConnectionIdDialog(condition: NSCondition) {
+
         let alert = UIAlertController(title: "Dispatcher Connection ID", message: "Type dispatcher connection ID below:", preferredStyle: UIAlertController.Style.alert)
         let acOK = UIAlertAction(title: "Ok".uppercased(), style: UIAlertAction.Style.default) { _ in }
         let acCancel = UIAlertAction(title: "Cancel".uppercased(), style: UIAlertAction.Style.default) { _ in }
@@ -83,12 +82,11 @@ class DeskViewVC: BaseVC, IRetrieveConnectionId, UIAlertViewDelegate {
         self.present(alert, animated: true, completion: nil)
         
     }
-    
-    
+
       func ask() -> UInt32 {
 
         desktopView?.hideProgressDialog()
-        if (connectionId == 0) {
+        if connectionId == 0 {
             condition = NSCondition()
             condition.lock()
             condition.wait()
@@ -136,5 +134,4 @@ extension DeskViewVC: ViewControllerCallbackDelegate {
         }
         return password
     }
-    
 }

@@ -9,7 +9,6 @@ import UIKit
 import WebKit
 
 class CmsVC: BaseVC {
-    
     @IBOutlet weak var btnBack: UIButton!
     @IBOutlet weak var lbltitle: UILabel!
     @IBOutlet weak var web: WKWebView!
@@ -29,11 +28,9 @@ class CmsVC: BaseVC {
     @IBAction func actionBtnBack(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
-    
 }
 
 extension CmsVC: WKNavigationDelegate {
-     
      func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
           self.StopLoader()
      }
@@ -41,5 +38,4 @@ extension CmsVC: WKNavigationDelegate {
      func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
           self.StopLoader()
      }
-     
 }

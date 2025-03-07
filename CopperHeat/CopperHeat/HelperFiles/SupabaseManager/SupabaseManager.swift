@@ -73,9 +73,9 @@ class SupabaseManager {
                     email: email,
                     type: .signup
                 )
-                completion(true,"")
+                completion(true, "")
             } catch {
-                completion(false,error.localizedDescription)
+                completion(false, error.localizedDescription)
             }
         }
     }
@@ -86,9 +86,9 @@ class SupabaseManager {
             do {
                 let authResponse = try await client.auth.signIn(email: email, password: password)
                 let user = authResponse.user
-                completion(user,"")
+                completion(user, "")
             } catch {
-                completion(nil,error.localizedDescription)
+                completion(nil, error.localizedDescription)
             }
         }
     }
@@ -106,7 +106,7 @@ class SupabaseManager {
     }
     
     // MARK: delete User
-    func deleteUser(id: String, completion: @escaping (Bool, String) -> Void){
+    func deleteUser(id: String, completion: @escaping (Bool, String) -> Void) {
         Task {
             do {
                 try await adminClient.auth.admin.deleteUser(id: id)
@@ -119,14 +119,13 @@ class SupabaseManager {
     
     // MARK: General Data
     func fetchGeneralData(completion: @escaping ([GeneralData]?, String) -> Void) {
-        Task{
+        Task {
             do {
                 let val = try await client.from("general_data").select().execute().value as [GeneralData]
                 completion(val, "")
-            }catch{
+            } catch {
                 completion(nil, "")
             }
         }
     }
-    
 }

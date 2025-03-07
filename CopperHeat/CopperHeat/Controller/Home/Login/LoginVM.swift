@@ -33,9 +33,7 @@ class LoginVM {
             self.delegate?.resendOTPHandle(res: isOtpSend, error: error)
         }
     }
-    
 }
-
 
 // MARK: Current User Model
 struct CurrentUser: Codable {
@@ -48,7 +46,7 @@ struct CurrentUser: Codable {
 
     func syncronize() {
         do {
-            if let jsonData = try JSONSerialization.jsonObject(with: JSONEncoder().encode(self), options: []) as? [String : Any] {
+            if let jsonData = try JSONSerialization.jsonObject(with: JSONEncoder().encode(self), options: []) as? [String: Any] {
                 UD.set(jsonData, forKey: CONSTANT().currentUser)
                 UD.synchronize()
             }
@@ -65,5 +63,4 @@ struct CurrentUser: Codable {
         UD.synchronize()
         APP_DEL.setAppRoot()
     }
-    
 }

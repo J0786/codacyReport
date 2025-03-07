@@ -9,14 +9,13 @@ import UIKit
 import SafariServices
 import AuthenticationServices
 
-struct menuModel : Codable {
+struct menuModel: Codable {
     var title: String?
     var img: String?
     var url: String?
 }
 
 class MenuVC: BaseVC, ASAuthorizationControllerPresentationContextProviding, SFSafariViewControllerDelegate {
-
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var tblView: UITableView!
     
@@ -36,8 +35,7 @@ class MenuVC: BaseVC, ASAuthorizationControllerPresentationContextProviding, SFS
         super.viewDidLoad()
         setupview()
     }
-    
-    
+
     @IBAction func actionBntYoutube(_ sender: UIButton) {
         if let url = URL(string: "https://www.youtube.com/@CooperheatEquipment") {
             redirectToSafariView(url: url)
@@ -77,12 +75,9 @@ class MenuVC: BaseVC, ASAuthorizationControllerPresentationContextProviding, SFS
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return self.view.window!
     }
-    
-    
 }
 
 extension MenuVC {
-    
     func setupview() {
         let nib = UINib(nibName: "MenuCell", bundle: nil)
         tblView.register(nib, forCellReuseIdentifier: "MenuCell")
@@ -99,11 +94,9 @@ extension MenuVC {
         tblView.dataSource = self
         tblView.reloadData()
     }
-    
 }
 
 extension MenuVC: UITableViewDataSource, UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return arrMenu.count
     }
@@ -123,8 +116,7 @@ extension MenuVC: UITableViewDataSource, UITableViewDelegate {
 
             cell.selectionStyle = .none
             return cell
-        }
-        else {
+        } else {
             return UITableViewCell()
         }
     }

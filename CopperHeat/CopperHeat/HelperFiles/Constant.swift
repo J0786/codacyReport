@@ -29,7 +29,6 @@ let animationView: UIView = UIView()
 let img: UIImageView = UIImageView()
 
 class CONSTANT {
-    
     let currentUser = "currentUser"
     let apiDateFormate_ymd_hms = "yyyy-MM-dd HH:mm:ss"
     let apiDateFormate_hms = "HH:mm:ss"
@@ -37,5 +36,4 @@ class CONSTANT {
     let appDateFormate_ymd_hm_a = "yyyy-MM-dd hh:mm a"
     let appDateFormate_hma = "hh:mm a"
     let appDateFormate_dd_mmm_yyyy = "dd MMM, yyyy"
-    
 }

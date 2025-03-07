@@ -13,7 +13,6 @@ protocol AddNewDel {
 }
 
 class AddDeviceVC: BaseVC {
-
     // MARK: Outlets
     @IBOutlet weak var btnBack: UIButton!
     @IBOutlet weak var scrllView: UIScrollView!
@@ -38,15 +37,12 @@ class AddDeviceVC: BaseVC {
     var dictObj: DeviceModel?
  
     // MARK: LIFE CYCLE
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setUi()
     }
-    
-    
-    //MARK: actions
 
+    // MARK: actions
     @IBAction func actionBtnConnect(_ sender: UIButton) {
         if !txtHost.hasText {
             self.showAlert(message: "Please enter Controller IP address")
@@ -62,24 +58,20 @@ class AddDeviceVC: BaseVC {
         if txtPassword.isSecureTextEntry {
             txtPassword.isSecureTextEntry = false
             btnShow.setTitle("Hide", for: .normal)
-        }else{
+        } else {
             txtPassword.isSecureTextEntry = true
             btnShow.setTitle("Show", for: .normal)
         }
         
     }
     
-    
     @IBAction func actionBtnBack(_ sender: UIButton) {
         self.dismiss(animated: false)
     }
-
 }
 
 extension AddDeviceVC {
-    
     func setUi() {
-
         txtHost.text = dictObj?.host ?? ""
         txtPassword.text = dictObj?.device_name ?? "111111"
         txtDeviceName.text = dictObj?.device_name ?? ""
@@ -93,7 +85,6 @@ extension AddDeviceVC {
     }
     
     func arrAddData() {
-
         let entity = NSEntityDescription.entity(forEntityName: "ConnectionItem", in: context)
         
         let newUser = NSManagedObject(entity: entity!, insertInto: context)
@@ -111,7 +102,5 @@ extension AddDeviceVC {
         } catch {
             debugPrint("Failed saving")
         }
-        
     }
-    
 }

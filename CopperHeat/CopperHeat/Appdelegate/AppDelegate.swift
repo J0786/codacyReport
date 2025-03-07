@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
             NETWORK.reachability.whenUnreachable = { _ in
-                if let topVC : UIViewController = UIApplication.topViewController() {
+                if let topVC: UIViewController = UIApplication.topViewController() {
                     let offlineVC = OfflineVC(nibName: "OfflineVC", bundle: nil)
                     offlineVC.modalPresentationStyle = .fullScreen
                     offlineVC.modalTransitionStyle = .crossDissolve
@@ -105,7 +105,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     
-    //MARK: - is Logged In User Found
+    // MARK: - is Logged In User Found
     // Old Code
     /*private func isLoggedInUserFound() -> Bool {
         if  (UD.value(forKey: CONSTANT().currentUser) != nil), let dict  = UD.value(forKey:CONSTANT().currentUser) {
@@ -138,7 +138,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return false
     }
 
-    //MARK: - Set AppRoot
+    // MARK: - Set AppRoot
     func setAppRoot() {
         if APP_DEL.isLoggedInUserFound() {
             if APP_DEL.currentUser?.is_email_verify == "1" {
@@ -152,8 +152,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
         } else {
-            let vc : LogInVC = STB.instantiateViewController(withIdentifier: "LogInVC") as! LogInVC
-            APP_DEL.setRootWindow(viewController: vc, isNavigation: true)
+            if let logInVC = STB.instantiateViewController(withIdentifier: "LogInVC") as? LogInVC {
+                APP_DEL.setRootWindow(viewController: logInVC, isNavigation: true)
+            } else {
+                print("Failed to instantiate LogInVC")
+            }
         }
     }
     

@@ -1,0 +1,6 @@
+framework module RemoteViewerCore {
+  umbrella header "RemoteViewerCore.h"
+
+  export *
+  module * { export * }
+}

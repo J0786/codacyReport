@@ -41,7 +41,6 @@ class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
      }
      override var selectedViewController: UIViewController? { // Mark 2
           didSet {
-               
                guard let viewControllers = viewControllers else { return }
                for viewController in viewControllers {
                     if viewController == selectedViewController {
@@ -72,7 +71,6 @@ class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
                }
           }
      }
-     
      override func viewDidLoad() {
           super.viewDidLoad()
           self.navigationController?.setNavigationBarHidden(true, animated: false)
@@ -80,15 +78,10 @@ class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
           self.delegate = self
           
      }
-     
      override func viewDidAppear(_ animated: Bool) {
-          
           super.viewDidAppear(animated)
-          
      }
-
      public func addVC(vc: UIViewController, title: String, selected_image: String, normal_image: String) {
-          
           self.arrTabItemVC.append(
             TabItemVC(
                 vc: vc,
@@ -98,22 +91,17 @@ class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
             )
           )
      }
-     
      public func getTabBar(selected_index: Int, selected_color: UIColor, normal_color: UIColor) -> UITabBarController {
-          
           self.tabBar.tintColor = selected_color
           self.tabBar.unselectedItemTintColor = normal_color
-          
           for tabItem in self.arrTabItemVC {
                self.arrNavVC.append(tabItem.vc) // UINavigationController(rootViewController: tabItem.vc)
           }
           self.viewControllers = self.arrNavVC
           let tabBar: UITabBar = self.tabBar
           for index in 0..<(tabBar.items ?? []).count {
-
                let tabBarItem: UITabBarItem = tabBar.items![index]
                let tab = self.arrTabItemVC[index]
-
                tabBarItem.image = UIImage(named: tab.normal_image) ?? UIImage()
                tabBarItem.title = tab.title
                if IS_IPAD {
@@ -122,9 +110,7 @@ class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
                    tabBarItem.setTitleTextAttributes([.font: UIFont.systemFont(ofSize: 12.0)], for: .normal)
                }
           }
-          
           self.selectedIndex = selected_index
-          
          self.tabBar.barTintColor = UIColor.colorRed
          self.tabBar.backgroundColor = .black
           self.tabBar.layer.borderWidth = 0.0
@@ -135,17 +121,12 @@ class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
           self.tabBar.layer.shadowRadius = 10.0
           self.tabBar.layer.shadowPath = UIBezierPath(rect: self.tabBar.bounds).cgPath
           self.tabBar.layer.masksToBounds = false
-
           if #available(iOS 15.0, *) {
                let tabBarAppearance: UITabBarAppearance = UITabBarAppearance()
                tabBarAppearance.configureWithOpaqueBackground()
-               
                tabBarAppearance.backgroundColor = .black
-               
-               
                var tab_font = UIFont()
               tab_font = UIFont.systemFont(ofSize: 12.0)
-               
                tabBarAppearance.compactInlineLayoutAppearance.normal.titleTextAttributes = [
                 NSAttributedString.Key.font: tab_font,
                     .foregroundColor: normal_color
@@ -158,7 +139,6 @@ class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
                 NSAttributedString.Key.font: tab_font,
                     .foregroundColor: normal_color
                ]
-
                tabBarAppearance.stackedLayoutAppearance.selected.titleTextAttributes = [
                 NSAttributedString.Key.font: tab_font,
                     .foregroundColor: selected_color
@@ -171,21 +151,15 @@ class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
                 NSAttributedString.Key.font: tab_font,
                     .foregroundColor: selected_color
                ]
-
                tabBar.tintColor = selected_color
-               
                tabBar.scrollEdgeAppearance = tabBar.standardAppearance
-               
                tabBar.standardAppearance = tabBarAppearance
                tabBar.scrollEdgeAppearance = tabBarAppearance
-               
           }
-          
           UITabBarItem.appearance().setTitleTextAttributes(
             [NSAttributedString.Key.foregroundColor: selected_color],
             for: .selected
           )
-
           UITabBarItem.appearance().setTitleTextAttributes(
             [NSAttributedString.Key.foregroundColor: normal_color],
             for: .normal
@@ -198,32 +172,24 @@ extension TabBarMaster: UITabBarControllerDelegate {
      func tabBarController(_ tabBarController: UITabBarController,
                            shouldSelect viewController: UIViewController
      ) -> Bool {
-
           let arrVC = tabBarController.viewControllers ?? []
           let selIndex = arrVC.firstIndex(of: viewController)!
-          
           return true
      }
-     
      override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-          
      }
 }
 
 class TABBAR {
     func getTabBar(selected_index: Int = 0) -> UITabBarController {
         let tabbar = TabBarMaster()
-
         if let home = STB.instantiateViewController(withIdentifier: "HomeVC") as? HomeVC {
             tabbar.addVC(vc: home, title: "Home", selected_image: "home", normal_image: "home")
         }
-
         if let more = STB.instantiateViewController(withIdentifier: "MenuVC") as? MenuVC {
             tabbar.addVC(vc: more, title: "More", selected_image: "more", normal_image: "more")
         }
-
         let tab = tabbar.getTabBar(selected_index: selected_index, selected_color: .colorRed, normal_color: .white)
-        
         return tab
     }
 }

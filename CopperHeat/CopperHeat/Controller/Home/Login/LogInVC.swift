@@ -17,19 +17,16 @@ class LogInVC: BaseVC {
     @IBOutlet weak var lblTitleDescription: UILabel!
     @IBOutlet weak var lblTitleEmail: UILabel!
     @IBOutlet weak var txtEmail: UITextField!
-
     @IBOutlet weak var btnLogin: UIButton!
     @IBOutlet weak var btnLoginNext: UIButton!
     var dictObj: DeviceModel?
     // MARK: - Variables
     var objLoginVM = LoginVM()
-
     // MARK: LIFE CYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
         setUi()
     }
-    
     // MARK: actions
     @IBAction func actionBtnLogin(_ sender: UIButton) {
         if !txtEmail.hasText {
@@ -55,7 +52,6 @@ extension LogInVC: LoginResponse {
         self.StartLoader()
         objLoginVM.logIn(email: txtEmail.text ?? "")
     }
-    
     func loginResponseHandle(res: User?, error: String) {
         DispatchQueue.main.sync {
             if res == nil {
@@ -80,16 +76,12 @@ extension LogInVC: LoginResponse {
             }
         }
     }
-    
     func signupCall() {
         objLoginVM.signUp(email: txtEmail.text ?? "")
     }
-    
     func signupResponsehandle(res: User?, error: String) {
-       
         DispatchQueue.main.sync {
             self.StopLoader()
-            
             if res == nil {
                 self.showAlert(message: error)
             } else {
@@ -108,15 +100,12 @@ extension LogInVC: LoginResponse {
                 } else {
                     print("Failed to instantiate EmailVC")
                 }
-
             }
         }
     }
-    
     func resendOtpCall() {
         objLoginVM.resendOTP(email: txtEmail.text ?? "")
     }
-    
     func resendOTPHandle(res: Bool?, error: String) {
         DispatchQueue.main.sync {
             self.StopLoader()

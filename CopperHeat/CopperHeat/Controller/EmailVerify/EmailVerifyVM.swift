@@ -14,7 +14,6 @@ protocol EmailVerifyResponse {
 
 class EmailVerifyVM {
     var delegate: EmailVerifyResponse?
-
     func verifyUser(email: String, otp: String) {
         SupabaseManager.shared.verifyUser(email: email, otp: otp) { isOtpVerify, err  in
             self.delegate?.verifyUserhandle(isVerify: isOtpVerify, error: err)

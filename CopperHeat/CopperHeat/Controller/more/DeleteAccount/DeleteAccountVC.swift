@@ -16,7 +16,6 @@ class DeleteAccountVC: BaseVC {
     @IBOutlet weak var btnCancel: UIButton!
     @IBOutlet weak var imgLogo: UIImageView!
     var objDeleteAccountVM = DeleteAccountVM()
-
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -32,7 +31,6 @@ class DeleteAccountVC: BaseVC {
             
         }
     }
-    
     @IBAction func actionBtnCencel(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
@@ -53,7 +51,6 @@ extension DeleteAccountVC: DeleteAccountResponse {
         StartLoader()
         objDeleteAccountVM.deleteAccount(id: APP_DEL!.currentUser?.userId ?? "")
     }
-    
     func accountDeleteHandle(isDeleted: Bool?, error: String) {
         DispatchQueue.main.sync {
             self.StopLoader()

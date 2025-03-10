@@ -16,21 +16,16 @@ class DeskViewVC: BaseVC, IRetrieveConnectionId, UIAlertViewDelegate {
     var host: String?
     var port: Int?
     var password: String?
-    
     var isConnected: Bool = false
     var isTiledLayout: Bool?
     var connectionId: UInt32?
-    
     var condition = NSCondition()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         imgLogo.cornerRadius(cornerRadius: 5)
         DesktopView.setTiledLayerOn(false)
         desktopView = DesktopView(viewController: self)
-        
         let mousePointerView = MousePointerView(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
-        
         scrllView.addSubview(desktopView!)
         scrllView.setMousePointer(mousePointerView)
         viewCore = ViewerCore(desktopView: desktopView,
@@ -41,11 +36,8 @@ class DeskViewVC: BaseVC, IRetrieveConnectionId, UIAlertViewDelegate {
                               jpegQuality: 9,
                               encoding: EncodingDefsWrapper.tight(),
                               retrieveConnectionId: self)
-        
     }
-
     @IBAction func actionBtnStop(_ sender: UIButton) {
-        
         self.showAlert(message: "Are you sure you want to disconnect?") {
             self.viewCore?.stop()
             self.isConnected = false
@@ -53,9 +45,7 @@ class DeskViewVC: BaseVC, IRetrieveConnectionId, UIAlertViewDelegate {
         } no: {
             
         }
-        
     }
-    
     func askConnectionId() -> UInt32 {
         desktopView?.hideProgressDialog()
         if connectionId == 0 {
@@ -69,9 +59,7 @@ class DeskViewVC: BaseVC, IRetrieveConnectionId, UIAlertViewDelegate {
         }
         return connectionId ?? 0
     }
-
     func showAskConnectionIdDialog(condition: NSCondition) {
-
         let alert = UIAlertController(
             title: "Dispatcher Connection ID",
             message: "Type dispatcher connection ID below:",
@@ -82,11 +70,8 @@ class DeskViewVC: BaseVC, IRetrieveConnectionId, UIAlertViewDelegate {
         alert.addAction(acOK)
         alert.addAction(acCancel)
         self.present(alert, animated: true, completion: nil)
-        
     }
-
       func ask() -> UInt32 {
-
         desktopView?.hideProgressDialog()
         if connectionId == 0 {
             condition = NSCondition()
@@ -96,15 +81,12 @@ class DeskViewVC: BaseVC, IRetrieveConnectionId, UIAlertViewDelegate {
         }
         return connectionId ?? 0
     }
-    
 }
 
 extension DeskViewVC: ViewControllerCallbackDelegate {
     func onEstablished() {
         isConnected = true
-
     }
-    
     func onError(_ errorMessage: String!) {
         if isConnected {
             self.showAlert(message: errorMessage) {
@@ -114,22 +96,16 @@ extension DeskViewVC: ViewControllerCallbackDelegate {
             }
         }
     }
-    
     func onDisconnect(_ message: String!) {
         print(message as Any)
     }
-    
     func updateMouseToolPosition(_ position: CGPoint) {
-        
     }
-    
     func askPassword() -> String! {
         desktopView?.hideProgressDialog()
         if password == nil || password == "" {
             condition = NSCondition()
-            DispatchQueue.main.async {
-
-            }
+            DispatchQueue.main.async {}
             condition.lock()
             condition.wait()
             condition.unlock()

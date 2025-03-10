@@ -25,7 +25,6 @@ class SupabaseManager {
     static let shared = SupabaseManager()
     let client: SupabaseClient
     let adminClient: SupabaseClient
-
     private init() {
         let supabaseUrl = URL(string: "https://uvozcksmenipoloidntr.supabase.co")! // Replace with your Supabase URL
         let supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV2b3pja3NtZW5pcG9sb2lkbnRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI3OTIzMzYsImV4cCI6MjA0ODM2ODMzNn0.w5Bpw4rCJIiX7-A6ZccByvU85RuhV3ibLMQoIMOgoUk" // Replace with your Supabase public API key
@@ -33,7 +32,6 @@ class SupabaseManager {
         self.client = SupabaseClient(supabaseURL: supabaseUrl, supabaseKey: supabaseKey)
         self.adminClient = SupabaseClient(supabaseURL: supabaseUrl, supabaseKey: serviceRole)
     }
-    
     // MARK: Register With Email
     func registerWithEmail(email: String, password: String, completion: @escaping (User?, String) -> Void) {
         Task {
@@ -46,7 +44,6 @@ class SupabaseManager {
             }
         }
     }
-    
     // MARK: Verify User
     func verifyUser(email: String, otp: String, completion: @escaping (Bool, String) -> Void) {
         Task {
@@ -62,7 +59,6 @@ class SupabaseManager {
             }
         }
     }
-    
     // MARK: Resend OTP
     func resendOTP(email: String, completion: @escaping (Bool, String) -> Void) {
         Task {
@@ -77,7 +73,6 @@ class SupabaseManager {
             }
         }
     }
-    
     // MARK: Login With Email
     func loginWithEmail(email: String, password: String, completion: @escaping (User?, String) -> Void) {
         Task {
@@ -90,7 +85,6 @@ class SupabaseManager {
             }
         }
     }
-    
     // MARK: Logout
     func logout(completion: @escaping (Bool, String) -> Void) {
         Task {
@@ -102,7 +96,6 @@ class SupabaseManager {
             }
         }
     }
-    
     // MARK: delete User
     func deleteUser(id: String, completion: @escaping (Bool, String) -> Void) {
         Task {
@@ -114,7 +107,6 @@ class SupabaseManager {
             }
         }
     }
-    
     // MARK: General Data
     func fetchGeneralData(completion: @escaping ([GeneralData]?, String) -> Void) {
         Task {

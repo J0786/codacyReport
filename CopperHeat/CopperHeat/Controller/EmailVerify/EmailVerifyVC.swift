@@ -141,7 +141,6 @@ extension EmailVerifyVC {
                 }
             }
         }
-        
         guard textField.text?.count == 1, textField.text?.last?.isWholeNumber == true else {
             textField.text = ""
             return

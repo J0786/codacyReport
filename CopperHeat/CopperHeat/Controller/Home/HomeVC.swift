@@ -30,7 +30,6 @@ class HomeVC: BaseVC {
         setupView()
         self.navigationController?.isNavigationBarHidden = true
     }
-    
     @IBAction func actionBtnAdd(_ sender: UIButton) {
         if let addDeviceVC = STB.instantiateViewController(withIdentifier: "AddDeviceVC") as? AddDeviceVC {
             addDeviceVC.delegate = self
@@ -52,21 +51,17 @@ extension HomeVC {
         arrDeviceData.removeAll()
         let nib = UINib(nibName: "HomeCell", bundle: nil)
         tblview.register(nib, forCellReuseIdentifier: "HomeCell")
-        
         tblview.delegate = self
         tblview.dataSource = self
-        
         btnAdd.round()
         getArray()
     }
-    
     func checkNoData() {
         if arrDeviceData.count <= 0 {
             self.setNoData(scrollView: tblview)
         }
         tblview.reloadData()
     }
-
     func navigateToConnect(host: String, password: String) {
         if let deskViewVC = STB.instantiateViewController(withIdentifier: "DeskViewVC") as? DeskViewVC {
             deskViewVC.host = host
@@ -75,10 +70,8 @@ extension HomeVC {
             self.navigationController?.pushViewController(deskViewVC, animated: true)
         }
     }
-
     func getArray() {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "ConnectionItem")
-      
         request.returnsObjectsAsFaults = false
         do {
             let result = try context.fetch(request)
@@ -89,7 +82,6 @@ extension HomeVC {
                 print("Failed to cast result to [NSManagedObject]")
             }
             AppDelegate.user.reverse()
-
             print(convertToJSONArray(moArray: AppDelegate.user))
             let arr = convertToJSONArray(moArray: AppDelegate.user)
             self.arrDeviceData.removeAll()
@@ -116,9 +108,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return arrDeviceData.count
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
         if let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell", for: indexPath) as? HomeCell {
             if arrDeviceData[indexPath.row].deviceName ?? "" == "" {
                 cell.lblTitle.text = "Device \(indexPath.row + 1)"
@@ -135,12 +125,9 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         } else {
             return UITableViewCell()
         }
-
     }
-    
     @IBAction func ationBtnDelete(_ sender: UIButton) {
         self.showAlert(message: "Are you sure you want to delete this device?") {
-            
             self.arrDeviceData.remove(at: sender.tag)
             let data = AppDelegate.user.remove(at: sender.tag)
             context.delete(data)
@@ -154,9 +141,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         } no: {
 
         }
-
     }
-
     func convertToJSONArray(moArray: [NSManagedObject]) -> [[String: Any]] {
         var jsonArray: [[String: Any]] = []
         for item in moArray {
@@ -171,14 +156,12 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         }
         return jsonArray.reversed()
     }
-
     @IBAction func ationBtnConnect(_ sender: UIButton) {
         navigateToConnect(
             host: arrDeviceData[sender.tag].host ?? "",
             password: arrDeviceData[sender.tag].password ?? ""
         )
     }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }

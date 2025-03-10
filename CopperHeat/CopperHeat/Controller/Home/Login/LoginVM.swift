@@ -15,7 +15,6 @@ protocol LoginResponse {
 
 class LoginVM {
     var delegate: LoginResponse?
-
     func signUp(email: String) {
         SupabaseManager.shared.registerWithEmail(email: email, password: "123456") { result, err  in
             self.delegate?.signupResponsehandle(res: result, error: err)
@@ -41,7 +40,6 @@ struct CurrentUser: Codable {
     var email: String?
     var token: String?
     var isEmailVerify: String?
-
     func syncronize() {
         do {
             if let jsonData = try JSONSerialization.jsonObject(
@@ -51,12 +49,10 @@ struct CurrentUser: Codable {
                 UD.set(jsonData, forKey: CONSTANT().currentUser)
                 UD.synchronize()
             }
-
         } catch {
             debugPrint("ERROR.User")
         }
     }
-
     func logout() {
         debugPrint("Logout:- Done")
         APP_DEL!.currentUser = nil

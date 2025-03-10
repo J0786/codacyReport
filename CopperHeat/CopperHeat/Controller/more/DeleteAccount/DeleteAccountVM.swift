@@ -13,7 +13,6 @@ protocol DeleteAccountResponse {
 
 class DeleteAccountVM {
     var delegate: DeleteAccountResponse?
-
     func deleteAccount(id: String) {
         SupabaseManager.shared.deleteUser(id: id) { isDelete, err in
             self.delegate?.accountDeleteHandle(isDeleted: isDelete, error: err)

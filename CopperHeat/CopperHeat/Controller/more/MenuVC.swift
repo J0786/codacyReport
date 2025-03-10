@@ -102,7 +102,6 @@ extension MenuVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return arrMenu.count
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "MenuCell", for: indexPath) as? MenuCell {
             if arrMenu[indexPath.row].title == "Logout" {
@@ -120,7 +119,6 @@ extension MenuVC: UITableViewDataSource, UITableViewDelegate {
             return UITableViewCell()
         }
     }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if arrMenu[indexPath.row].title == "Logout" {
             showAlert(message: "Are you sure you want to Logout?") {
@@ -133,11 +131,11 @@ extension MenuVC: UITableViewDataSource, UITableViewDelegate {
                         }
                     }
                 }
-            } no: {
-                
-            }
+            } no: { }
         } else if arrMenu[indexPath.row].title == "Delete Account" {
-            if let deleteVC = storyBoard.instantiateViewController(withIdentifier: "DeleteAccountVC") as? DeleteAccountVC {
+            if let deleteVC = storyBoard.instantiateViewController(
+                withIdentifier: "DeleteAccountVC"
+            ) as? DeleteAccountVC {
                 self.navigationController?.pushViewController(deleteVC, animated: true)
             } else {
                 print("Failed to instantiate deleteVC")

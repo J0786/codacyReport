@@ -76,10 +76,6 @@ class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
           self.navigationController?.setNavigationBarHidden(true, animated: false)
           // Do any additional setup after loading the view.
           self.delegate = self
-          
-     }
-     override func viewDidAppear(_ animated: Bool) {
-          super.viewDidAppear(animated)
      }
      public func addVC(viewController: UIViewController, title: String, selectedImage: String, normalImage: String) {
           self.arrTabItemVC.append(

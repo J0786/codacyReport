@@ -21,7 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.resignOnTouchOutside = true
         IQKeyboardManager.shared.toolbarConfiguration.placeholderConfiguration.showPlaceholder = false
         IQKeyboardManager.shared.isEnabled = true
-
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
             NETWORK.reachability.whenUnreachable = { _ in
                 if let topVC: UIViewController = UIApplication.topViewController() {
@@ -38,7 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             print("Failed to instantiate SplashVC")
         }
-
         return true
     }
     // MARK: UISceneSession Lifecycle
@@ -55,7 +53,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
            this will be called shortly after application:didFinishLaunchingWithOptions.*/
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
-
     // MARK: - Core Data stack
     lazy var persistentContainer: NSPersistentContainer = {
         /*
@@ -86,7 +83,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         return container
     }()
-    
     // MARK: - Core Data Saving support
     func saveContext () {
         let context = persistentContainer.viewContext
@@ -103,7 +99,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
     // MARK: - is Logged In User Found
     // Old Code
     /*private func isLoggedInUserFound() -> Bool {
@@ -136,7 +131,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return false
     }
-
     // MARK: - Set AppRoot
     func setAppRoot() {
         if APP_DEL!.isLoggedInUserFound() {
@@ -158,7 +152,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-    
     // MARK: - set Root Window
     func setRootWindow(viewController: UIViewController, isNavigation: Bool) {
         if #available(iOS 13.0, *) {

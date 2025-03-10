@@ -13,11 +13,11 @@ class SplashVC: UIViewController {
         super.viewDidLoad()
         SupabaseManager.shared.fetchGeneralData { res, _  in
             if res != nil {
-                APP_DEL!.dictGenData = res?.first
+                appDelegate!.dictGenData = res?.first
             }
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-            APP_DEL!.setAppRoot()
+            appDelegate!.setAppRoot()
         })
     }
 }

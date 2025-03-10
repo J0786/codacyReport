@@ -65,14 +65,14 @@ extension LogInVC: LoginResponse {
                 }
             } else {
                 self.StopLoader()
-                APP_DEL!.currentUser = CurrentUser (
+                appDelegate!.currentUser = CurrentUser (
                     id: res?.identities?.first?.id ?? "",
                     identityId: res?.identities?.first?.identityId.uuidString ?? "",
                     userId: res?.identities?.first?.userId.uuidString ?? "", email: txtEmail.text ?? "",
                     token: "123456",
                     isEmailVerify: "1")
-                APP_DEL!.currentUser?.syncronize()
-                APP_DEL!.setAppRoot()
+                appDelegate!.currentUser?.syncronize()
+                appDelegate!.setAppRoot()
             }
         }
     }
@@ -85,15 +85,15 @@ extension LogInVC: LoginResponse {
             if res == nil {
                 self.showAlert(message: error)
             } else {
-                APP_DEL!.currentUser = CurrentUser (
+                appDelegate!.currentUser = CurrentUser (
                     id: res?.identities?.first?.id ?? "",
                     identityId: res?.identities?.first?.identityId.uuidString ?? "",
                     userId: res?.identities?.first?.userId.uuidString ?? "",
                     email: txtEmail.text ?? "",
                     token: "123456",
                     isEmailVerify: "0")
-                APP_DEL!.currentUser?.syncronize()
-                if let emailVC: EmailVerifyVC = STB.instantiateViewController(
+                appDelegate!.currentUser?.syncronize()
+                if let emailVC: EmailVerifyVC = storyBoard.instantiateViewController(
                     withIdentifier: "EmailVerifyVC") as? EmailVerifyVC {
                     emailVC.strEmail = self.txtEmail.text ?? ""
                     self.navigationController?.pushViewController(emailVC, animated: true)
@@ -112,7 +112,9 @@ extension LogInVC: LoginResponse {
             if res == nil {
                 self.showAlert(message: error)
             } else {
-                if let emailVC: EmailVerifyVC = STB.instantiateViewController(withIdentifier: "EmailVerifyVC") as? EmailVerifyVC {
+                if let emailVC: EmailVerifyVC = storyBoard.instantiateViewController(
+                    withIdentifier: "EmailVerifyVC"
+                ) as? EmailVerifyVC {
                     emailVC.strEmail = self.txtEmail.text ?? ""
                     self.navigationController?.pushViewController(emailVC, animated: true)
                 } else {

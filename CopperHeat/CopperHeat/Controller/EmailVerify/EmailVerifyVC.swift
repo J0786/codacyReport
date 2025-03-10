@@ -75,7 +75,7 @@ class EmailVerifyVC: BaseVC {
 extension EmailVerifyVC {
     func setUi() {
         btnVerifyOtp.round()
-        constraintTxtOtpHeight.constant = IS_IPAD ? IPAD_TEXTFIELD_HEIGHT : (IPHONE_TEXTFIELD_HEIGHT-15)
+        constraintTxtOtpHeight.constant = isIPAD ? iPadTextFieldHeight : (iPhoneTextFieldHeight-15)
         btnEdit.cornerRadius(cornerRadius: 5)
         imgLogo.cornerRadius(cornerRadius: 10)
         lblEmailOrPhone.text = strEmail
@@ -86,7 +86,7 @@ extension EmailVerifyVC {
             $0?.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
             $0?.layer.cornerRadius = 5
             $0?.clipsToBounds = true
-            if IS_IPAD {
+            if isIPAD {
                 $0?.font = UIFont.systemFont(ofSize: 30)
             } else {
                 $0?.font = UIFont.systemFont(ofSize: 20)
@@ -268,9 +268,9 @@ extension EmailVerifyVC: EmailVerifyResponse {
         DispatchQueue.main.async {
             self.StopLoader()
             if isVerify ?? false {
-                APP_DEL!.currentUser?.isEmailVerify = "1"
-                APP_DEL!.currentUser?.syncronize()
-                APP_DEL!.setAppRoot()
+                appDelegate!.currentUser?.isEmailVerify = "1"
+                appDelegate!.currentUser?.syncronize()
+                appDelegate!.setAppRoot()
             } else {
                 self.showAlert(message: "Please Enter Valid OTP Or OTP is Expired.")
             }

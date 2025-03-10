@@ -99,8 +99,7 @@ extension DeskViewVC: ViewControllerCallbackDelegate {
     func onDisconnect(_ message: String!) {
         print(message as Any)
     }
-    func updateMouseToolPosition(_ position: CGPoint) {
-    }
+    func updateMouseToolPosition(_ position: CGPoint) { }
     func askPassword() -> String! {
         desktopView?.hideProgressDialog()
         if password == nil || password == "" {

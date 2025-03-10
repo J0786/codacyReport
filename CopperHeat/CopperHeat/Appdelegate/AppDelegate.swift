@@ -32,8 +32,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         })
 
-        if let splashVC = STB.instantiateViewController(withIdentifier: "SplashVC") as? SplashVC {
-            APP_DEL!.setRootWindow(viewController: splashVC, isNavigation: false)
+        if let splashVC = storyBoard.instantiateViewController(withIdentifier: "SplashVC") as? SplashVC {
+            appDelegate!.setRootWindow(viewController: splashVC, isNavigation: false)
         } else {
             print("Failed to instantiate SplashVC")
         }
@@ -118,11 +118,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }*/
     // Updatd Code
     private func isLoggedInUserFound() -> Bool {
-        if let dict = UD.value(forKey: CONSTANT().currentUser) as? [String: Any] {
+        if let dict = userDefaults.value(forKey: CONSTANT().currentUser) as? [String: Any] {
             if let jsonData = try? JSONSerialization.data(withJSONObject: dict, options: [.prettyPrinted]) {
                 do {
                     let user = try JSONDecoder().decode(CurrentUser.self, from: jsonData)
-                    APP_DEL!.currentUser = user
+                    appDelegate!.currentUser = user
                     return true
                 } catch {
                     return false
@@ -133,20 +133,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     // MARK: - Set AppRoot
     func setAppRoot() {
-        if APP_DEL!.isLoggedInUserFound() {
-            if APP_DEL!.currentUser?.isEmailVerify == "1" {
+        if appDelegate!.isLoggedInUserFound() {
+            if appDelegate!.currentUser?.isEmailVerify == "1" {
                 let tab = TABBAR().getTabBar()
-                APP_DEL!.setRootWindow(viewController: tab, isNavigation: true)
+                appDelegate!.setRootWindow(viewController: tab, isNavigation: true)
             } else {
-                if let logInVC = STB.instantiateViewController(withIdentifier: "LogInVC") as? LogInVC {
-                    APP_DEL!.setRootWindow(viewController: logInVC, isNavigation: false)
+                if let logInVC = storyBoard.instantiateViewController(withIdentifier: "LogInVC") as? LogInVC {
+                    appDelegate!.setRootWindow(viewController: logInVC, isNavigation: false)
                 } else {
                     print("Failed to instantiate LogInVC")
                 }
             }
         } else {
-            if let logInVC = STB.instantiateViewController(withIdentifier: "LogInVC") as? LogInVC {
-                APP_DEL!.setRootWindow(viewController: logInVC, isNavigation: true)
+            if let logInVC = storyBoard.instantiateViewController(withIdentifier: "LogInVC") as? LogInVC {
+                appDelegate!.setRootWindow(viewController: logInVC, isNavigation: true)
             } else {
                 print("Failed to instantiate LogInVC")
             }
@@ -155,16 +155,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - set Root Window
     func setRootWindow(viewController: UIViewController, isNavigation: Bool) {
         if #available(iOS 13.0, *) {
-            APP_DEL!.window = UIApplication.shared.windows.first
-            APP_DEL!.window?.rootViewController = isNavigation ?
+            appDelegate!.window = UIApplication.shared.windows.first
+            appDelegate!.window?.rootViewController = isNavigation ?
             UINavigationController(rootViewController: viewController) : viewController
-            APP_DEL!.window?.makeKeyAndVisible()
+            appDelegate!.window?.makeKeyAndVisible()
         } else {
             // Fallback on earlier versions
-            APP_DEL!.window = UIWindow(frame: UIScreen.main.bounds)
-            APP_DEL!.window?.rootViewController = isNavigation ?
+            appDelegate!.window = UIWindow(frame: UIScreen.main.bounds)
+            appDelegate!.window?.rootViewController = isNavigation ?
             UINavigationController(rootViewController: viewController) : viewController
-            APP_DEL!.window?.makeKeyAndVisible()
+            appDelegate!.window?.makeKeyAndVisible()
         }
     }
 }

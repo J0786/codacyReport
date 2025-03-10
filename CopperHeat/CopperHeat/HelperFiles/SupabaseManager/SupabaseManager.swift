@@ -11,13 +11,13 @@ import Supabase
 // MARK: General Data
 struct GeneralData: Decodable {
     let id: Int?
-    let facebook_link: String?
-    let insta_link: String?
-    let youtube_link: String?
-    let linkedin_link: String?
-    let current_version: String?
-    let updated_version: String?
-    let force_update: Bool?
+    let facebookLink: String?
+    let instaLink: String?
+    let youtubeLink: String?
+    let linkedinLink: String?
+    let currentVersion: String?
+    let updatedVersion: String?
+    let forceUpdate: Bool?
 }
 
 let SUPABASE = SupabaseManager.shared

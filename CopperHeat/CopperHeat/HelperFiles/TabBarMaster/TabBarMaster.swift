@@ -9,10 +9,10 @@
 import UIKit
 
 private struct TabItemVC {
-     var vc: UIViewController
+     var viewController: UIViewController
      var title: String
-     var selected_image: String
-     var normal_image: String
+     var selectedImage: String
+     var normalImage: String
 }
 
 var lastSelTabIndex = 0
@@ -26,7 +26,7 @@ class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
      override var selectedIndex: Int { // Mark 1
           didSet {
                guard let selectedViewController = viewControllers?[selectedIndex] else { return }
-               if IS_IPAD == true {
+               if isIPAD == true {
                    selectedViewController.tabBarItem.setTitleTextAttributes(
                     [.font: UIFont.systemFont(ofSize: 14.0)],
                     for: .normal
@@ -44,7 +44,7 @@ class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
                guard let viewControllers = viewControllers else { return }
                for viewController in viewControllers {
                     if viewController == selectedViewController {
-                         if IS_IPAD == true {
+                         if isIPAD == true {
                              viewController.tabBarItem.setTitleTextAttributes(
                                 [.font: UIFont.systemFont(ofSize: 14.0)],
                                 for: .normal
@@ -56,7 +56,7 @@ class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
                              )
                          }
                     } else {
-                         if IS_IPAD == true {
+                         if isIPAD == true {
                              viewController.tabBarItem.setTitleTextAttributes(
                                 [.font: UIFont.systemFont(ofSize: 14.0)],
                                 for: .normal
@@ -81,36 +81,36 @@ class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
      override func viewDidAppear(_ animated: Bool) {
           super.viewDidAppear(animated)
      }
-     public func addVC(vc: UIViewController, title: String, selected_image: String, normal_image: String) {
+     public func addVC(viewController: UIViewController, title: String, selectedImage: String, normalImage: String) {
           self.arrTabItemVC.append(
             TabItemVC(
-                vc: vc,
+                viewController: viewController,
                 title: title,
-                selected_image: selected_image,
-                normal_image: normal_image
+                selectedImage: selectedImage,
+                normalImage: normalImage
             )
           )
      }
-     public func getTabBar(selected_index: Int, selected_color: UIColor, normal_color: UIColor) -> UITabBarController {
-          self.tabBar.tintColor = selected_color
-          self.tabBar.unselectedItemTintColor = normal_color
+     public func getTabBar(selectedIndex: Int, selectedColor: UIColor, normalColor: UIColor) -> UITabBarController {
+          self.tabBar.tintColor = selectedColor
+          self.tabBar.unselectedItemTintColor = normalColor
           for tabItem in self.arrTabItemVC {
-               self.arrNavVC.append(tabItem.vc) // UINavigationController(rootViewController: tabItem.vc)
+               self.arrNavVC.append(tabItem.viewController) // UINavigationController(rootViewController: tabItem.vc)
           }
           self.viewControllers = self.arrNavVC
           let tabBar: UITabBar = self.tabBar
           for index in 0..<(tabBar.items ?? []).count {
                let tabBarItem: UITabBarItem = tabBar.items![index]
                let tab = self.arrTabItemVC[index]
-               tabBarItem.image = UIImage(named: tab.normal_image) ?? UIImage()
+               tabBarItem.image = UIImage(named: tab.normalImage) ?? UIImage()
                tabBarItem.title = tab.title
-               if IS_IPAD {
+               if isIPAD {
                    tabBarItem.setTitleTextAttributes([.font: UIFont.systemFont(ofSize: 14.0)], for: .normal)
                } else {
                    tabBarItem.setTitleTextAttributes([.font: UIFont.systemFont(ofSize: 12.0)], for: .normal)
                }
           }
-          self.selectedIndex = selected_index
+          self.selectedIndex = selectedIndex
          self.tabBar.barTintColor = UIColor.colorRed
          self.tabBar.backgroundColor = .black
           self.tabBar.layer.borderWidth = 0.0
@@ -125,43 +125,43 @@ class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
                let tabBarAppearance: UITabBarAppearance = UITabBarAppearance()
                tabBarAppearance.configureWithOpaqueBackground()
                tabBarAppearance.backgroundColor = .black
-               var tab_font = UIFont()
-              tab_font = UIFont.systemFont(ofSize: 12.0)
+              var tabFont = UIFont()
+              tabFont = UIFont.systemFont(ofSize: 12.0)
                tabBarAppearance.compactInlineLayoutAppearance.normal.titleTextAttributes = [
-                NSAttributedString.Key.font: tab_font,
-                    .foregroundColor: normal_color
+                NSAttributedString.Key.font: tabFont,
+                    .foregroundColor: normalColor
                ]
                tabBarAppearance.inlineLayoutAppearance.normal.titleTextAttributes = [
-                NSAttributedString.Key.font: tab_font,
-                    .foregroundColor: normal_color
+                NSAttributedString.Key.font: tabFont,
+                    .foregroundColor: normalColor
                ]
                tabBarAppearance.stackedLayoutAppearance.normal.titleTextAttributes = [
-                NSAttributedString.Key.font: tab_font,
-                    .foregroundColor: normal_color
+                NSAttributedString.Key.font: tabFont,
+                    .foregroundColor: normalColor
                ]
                tabBarAppearance.stackedLayoutAppearance.selected.titleTextAttributes = [
-                NSAttributedString.Key.font: tab_font,
-                    .foregroundColor: selected_color
+                NSAttributedString.Key.font: tabFont,
+                    .foregroundColor: selectedColor
                ]
                tabBarAppearance.compactInlineLayoutAppearance.selected.titleTextAttributes = [
-                NSAttributedString.Key.font: tab_font,
-                    .foregroundColor: selected_color
+                NSAttributedString.Key.font: tabFont,
+                    .foregroundColor: selectedColor
                ]
                tabBarAppearance.inlineLayoutAppearance.selected.titleTextAttributes = [
-                NSAttributedString.Key.font: tab_font,
-                    .foregroundColor: selected_color
+                NSAttributedString.Key.font: tabFont,
+                    .foregroundColor: selectedColor
                ]
-               tabBar.tintColor = selected_color
+               tabBar.tintColor = selectedColor
                tabBar.scrollEdgeAppearance = tabBar.standardAppearance
                tabBar.standardAppearance = tabBarAppearance
                tabBar.scrollEdgeAppearance = tabBarAppearance
           }
           UITabBarItem.appearance().setTitleTextAttributes(
-            [NSAttributedString.Key.foregroundColor: selected_color],
+            [NSAttributedString.Key.foregroundColor: selectedColor],
             for: .selected
           )
           UITabBarItem.appearance().setTitleTextAttributes(
-            [NSAttributedString.Key.foregroundColor: normal_color],
+            [NSAttributedString.Key.foregroundColor: normalColor],
             for: .normal
           )
           return self
@@ -181,15 +181,15 @@ extension TabBarMaster: UITabBarControllerDelegate {
 }
 
 class TABBAR {
-    func getTabBar(selected_index: Int = 0) -> UITabBarController {
+    func getTabBar(selectedIndex: Int = 0) -> UITabBarController {
         let tabbar = TabBarMaster()
-        if let home = STB.instantiateViewController(withIdentifier: "HomeVC") as? HomeVC {
-            tabbar.addVC(vc: home, title: "Home", selected_image: "home", normal_image: "home")
+        if let home = storyBoard.instantiateViewController(withIdentifier: "HomeVC") as? HomeVC {
+            tabbar.addVC(viewController: home, title: "Home", selectedImage: "home", normalImage: "home")
         }
-        if let more = STB.instantiateViewController(withIdentifier: "MenuVC") as? MenuVC {
-            tabbar.addVC(vc: more, title: "More", selected_image: "more", normal_image: "more")
+        if let more = storyBoard.instantiateViewController(withIdentifier: "MenuVC") as? MenuVC {
+            tabbar.addVC(viewController: more, title: "More", selectedImage: "more", normalImage: "more")
         }
-        let tab = tabbar.getTabBar(selected_index: selected_index, selected_color: .colorRed, normal_color: .white)
+        let tab = tabbar.getTabBar(selectedIndex: selectedIndex, selectedColor: .colorRed, normalColor: .white)
         return tab
     }
 }

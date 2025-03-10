@@ -27,9 +27,7 @@ class DeleteAccountVC: BaseVC {
     @IBAction func actionBtnDelete(_ sender: UIButton) {
         showAlert(message: "Are you sure you want to delete your account?") {
             self.accountDelete()
-        } no: {
-            
-        }
+        } no: { }
     }
     @IBAction func actionBtnCencel(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
@@ -49,13 +47,13 @@ extension DeleteAccountVC {
 extension DeleteAccountVC: DeleteAccountResponse {
     func accountDelete() {
         StartLoader()
-        objDeleteAccountVM.deleteAccount(id: APP_DEL!.currentUser?.userId ?? "")
+        objDeleteAccountVM.deleteAccount(id: appDelegate!.currentUser?.userId ?? "")
     }
     func accountDeleteHandle(isDeleted: Bool?, error: String) {
         DispatchQueue.main.sync {
             self.StopLoader()
             if isDeleted ?? false {
-                APP_DEL!.currentUser?.logout()
+                appDelegate!.currentUser?.logout()
             } else {
                 self.showAlert(message: error)
             }

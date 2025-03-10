@@ -127,7 +127,7 @@ extension MenuVC: UITableViewDataSource, UITableViewDelegate {
                 SupabaseManager.shared.logout { isLogout, error  in
                     DispatchQueue.main.sync {
                         if isLogout {
-                            APP_DEL!.currentUser?.logout()
+                            appDelegate!.currentUser?.logout()
                         } else {
                             self.showAlert(message: error)
                         }
@@ -137,13 +137,13 @@ extension MenuVC: UITableViewDataSource, UITableViewDelegate {
                 
             }
         } else if arrMenu[indexPath.row].title == "Delete Account" {
-            if let deleteVC = STB.instantiateViewController(withIdentifier: "DeleteAccountVC") as? DeleteAccountVC {
+            if let deleteVC = storyBoard.instantiateViewController(withIdentifier: "DeleteAccountVC") as? DeleteAccountVC {
                 self.navigationController?.pushViewController(deleteVC, animated: true)
             } else {
                 print("Failed to instantiate deleteVC")
             }
         } else {
-            if let cmsVC = STB.instantiateViewController(withIdentifier: "CmsVC") as? CmsVC {
+            if let cmsVC = storyBoard.instantiateViewController(withIdentifier: "CmsVC") as? CmsVC {
                 cmsVC.strUrl = arrMenu[indexPath.row].url
                 cmsVC.strTitle = arrMenu[indexPath.row].title
                 self.navigationController?.pushViewController(cmsVC, animated: true)

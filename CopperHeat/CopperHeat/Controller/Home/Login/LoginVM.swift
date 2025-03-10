@@ -46,8 +46,8 @@ struct CurrentUser: Codable {
                 with: JSONEncoder().encode(self),
                 options: []
             ) as? [String: Any] {
-                UD.set(jsonData, forKey: CONSTANT().currentUser)
-                UD.synchronize()
+                userDefaults.set(jsonData, forKey: CONSTANT().currentUser)
+                userDefaults.synchronize()
             }
         } catch {
             debugPrint("ERROR.User")
@@ -55,9 +55,9 @@ struct CurrentUser: Codable {
     }
     func logout() {
         debugPrint("Logout:- Done")
-        APP_DEL!.currentUser = nil
-        UD.removeObject(forKey: CONSTANT().currentUser)
-        UD.synchronize()
-        APP_DEL!.setAppRoot()
+        appDelegate!.currentUser = nil
+        userDefaults.removeObject(forKey: CONSTANT().currentUser)
+        userDefaults.synchronize()
+        appDelegate!.setAppRoot()
     }
 }

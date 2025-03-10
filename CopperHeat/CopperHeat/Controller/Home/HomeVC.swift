@@ -31,7 +31,7 @@ class HomeVC: BaseVC {
         self.navigationController?.isNavigationBarHidden = true
     }
     @IBAction func actionBtnAdd(_ sender: UIButton) {
-        if let addDeviceVC = STB.instantiateViewController(withIdentifier: "AddDeviceVC") as? AddDeviceVC {
+        if let addDeviceVC = storyBoard.instantiateViewController(withIdentifier: "AddDeviceVC") as? AddDeviceVC {
             addDeviceVC.delegate = self
             self.present(addDeviceVC, animated: true)
         }
@@ -63,7 +63,7 @@ extension HomeVC {
         tblview.reloadData()
     }
     func navigateToConnect(host: String, password: String) {
-        if let deskViewVC = STB.instantiateViewController(withIdentifier: "DeskViewVC") as? DeskViewVC {
+        if let deskViewVC = storyBoard.instantiateViewController(withIdentifier: "DeskViewVC") as? DeskViewVC {
             deskViewVC.host = host
             deskViewVC.password = password
             deskViewVC.port = 5900
@@ -162,7 +162,5 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
             password: arrDeviceData[sender.tag].password ?? ""
         )
     }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { }
 }

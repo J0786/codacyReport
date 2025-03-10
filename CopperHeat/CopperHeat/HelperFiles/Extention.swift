@@ -106,10 +106,10 @@ extension UIViewController {
 
 extension UIViewController: NVActivityIndicatorViewable {
     func StartLoaderwithMsg(message: String) {
-        startAnimating(INDECATOR_SIZE, message: message, type: indicatorType, color: UIColor.colorRed, backgroundColor: UIColor.clear, fadeInAnimation: nil)
+        startAnimating(indecatorSize, message: message, type: indicatorType, color: UIColor.colorRed, backgroundColor: UIColor.clear, fadeInAnimation: nil)
     }
     func StartLoader() {
-         startAnimating(INDECATOR_SIZE, message: "", type: indicatorType, color: UIColor.colorRed, backgroundColor: UIColor.clear, fadeInAnimation: nil)
+         startAnimating(indecatorSize, message: "", type: indicatorType, color: UIColor.colorRed, backgroundColor: UIColor.clear, fadeInAnimation: nil)
     }
     func StopLoader() {
         self.stopAnimating(nil)

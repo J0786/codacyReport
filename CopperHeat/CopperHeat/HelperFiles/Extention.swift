@@ -6,6 +6,8 @@ import ImageIO
 import PDFKit
 import QuickLookThumbnailing
 import WebKit
+import NVActivityIndicatorView
+import NVActivityIndicatorViewExtended
 
 extension UIViewController {
     static func loadFromNib() -> Self {

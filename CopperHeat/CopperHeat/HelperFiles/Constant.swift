@@ -5,6 +5,7 @@
 //
 
 import UIKit
+import NVActivityIndicatorView
 
 let APP_DEL = UIApplication.shared.delegate as? AppDelegate
 let STB: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)

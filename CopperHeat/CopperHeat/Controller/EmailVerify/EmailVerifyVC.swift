@@ -86,13 +86,11 @@ extension EmailVerifyVC {
             $0?.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
             $0?.layer.cornerRadius = 5
             $0?.clipsToBounds = true
-            
             if IS_IPAD {
                 $0?.font = UIFont.systemFont(ofSize: 30)
             } else {
                 $0?.font = UIFont.systemFont(ofSize: 20)
             }
-            
             $0?.tintColor = .black
             $0?.backgroundColor = .clear
             $0?.layer.borderWidth = 1
@@ -100,7 +98,6 @@ extension EmailVerifyVC {
             $0?.addTarget(self, action: #selector(self.txtEditingDidBeginAction(_:)), for: .editingDidBegin)
             $0?.addTarget(self, action: #selector(self.txtEditingDidEndAction(_:)), for: .editingDidEnd)
         }
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.txtOne.isUserInteractionEnabled = true
             self.txtOne.becomeFirstResponder()
@@ -237,9 +234,7 @@ extension EmailVerifyVC {
         }
     }
     func getExpireTime(startDate: Date, endDate: Date) -> String {
-
         let strtDate: Date = Calendar.current.date(bySetting: .nanosecond, value: 0, of: startDate) ?? Date()
-        
         let edDate: Date = Calendar.current.date(bySetting: .nanosecond, value: 0, of: endDate) ?? Date()
         var compos: Set<Calendar.Component> = Set<Calendar.Component>()
         compos.insert(.second)

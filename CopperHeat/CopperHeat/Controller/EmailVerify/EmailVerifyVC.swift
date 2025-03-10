@@ -83,7 +83,6 @@ extension EmailVerifyVC {
     }
     func setTextField() {
         [txtOne, txtTwo, txtThree, txtFour, txtFive, txtSix].forEach {
-            
             $0?.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
             $0?.layer.cornerRadius = 5
             $0?.clipsToBounds = true

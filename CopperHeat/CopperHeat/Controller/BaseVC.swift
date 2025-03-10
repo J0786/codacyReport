@@ -48,11 +48,9 @@ extension BaseVC: EmptyDataSetSource, EmptyDataSetDelegate {
         scrollView.emptyDataSetSource = self
         scrollView.emptyDataSetDelegate = self
     }
-    
     func image(forEmptyDataSet scrollView: UIScrollView) -> UIImage? {
         return .monitor
     }
-    
     func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
         let text = "No Devices. \n Click \"Add New\" Button above to add a new device."
         let attributes = [
@@ -61,7 +59,6 @@ extension BaseVC: EmptyDataSetSource, EmptyDataSetDelegate {
         ]
         return NSAttributedString(string: text, attributes: attributes as [NSAttributedString.Key: Any])
     }
-    
     func emptyDataSetShouldAllowScroll(_ scrollView: UIScrollView) -> Bool {
         return true
     }

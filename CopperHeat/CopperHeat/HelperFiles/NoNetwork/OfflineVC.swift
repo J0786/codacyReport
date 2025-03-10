@@ -13,7 +13,6 @@ class OfflineVC: BaseVC {
           super.viewDidLoad()
           //        setBtnWithoutView(btn: btnRefresh, cnstrntHeight: constraintHeightBtn)
 //          btnRefresh.appThemeFill()
-          
           lblNoInternetCon.text = "No Internet connection"
           lblPleaseCheckInternetConnection.text = "Please check your internet connection"
           btnRefresh.setTitle("Retry".uppercased(), for: .normal)
@@ -66,8 +65,10 @@ class OfflineVC: BaseVC {
 }
 
 extension UIApplication {
-    class func topViewController(controller: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
-        
+    class func topViewController(
+        controller: UIViewController? = UIApplication.shared.keyWindow?.rootViewController
+    ) -> UIViewController? {
+
         if let navigationController = controller as? UINavigationController {
             return topViewController(controller: navigationController.visibleViewController)
         }

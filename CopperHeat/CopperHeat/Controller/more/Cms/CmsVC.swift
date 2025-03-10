@@ -14,7 +14,6 @@ class CmsVC: BaseVC {
     @IBOutlet weak var web: WKWebView!
     var strUrl: String?
     var strTitle: String?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.StartLoader()

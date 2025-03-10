@@ -22,7 +22,6 @@ class DeleteAccountVC: BaseVC {
         // Do any additional setup after loading the view.
         setUI()
     }
-    
     @IBAction func actionBtnBack(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }

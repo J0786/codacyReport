@@ -44,7 +44,10 @@ struct CurrentUser: Codable {
 
     func syncronize() {
         do {
-            if let jsonData = try JSONSerialization.jsonObject(with: JSONEncoder().encode(self), options: []) as? [String: Any] {
+            if let jsonData = try JSONSerialization.jsonObject(
+                with: JSONEncoder().encode(self),
+                options: []
+            ) as? [String: Any] {
                 UD.set(jsonData, forKey: CONSTANT().currentUser)
                 UD.synchronize()
             }

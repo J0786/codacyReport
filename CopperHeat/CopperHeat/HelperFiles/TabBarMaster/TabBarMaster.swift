@@ -27,13 +27,18 @@ class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
           didSet {
                guard let selectedViewController = viewControllers?[selectedIndex] else { return }
                if IS_IPAD == true {
-                   selectedViewController.tabBarItem.setTitleTextAttributes([.font: UIFont.systemFont(ofSize: 14.0)], for: .normal)
+                   selectedViewController.tabBarItem.setTitleTextAttributes(
+                    [.font: UIFont.systemFont(ofSize: 14.0)],
+                    for: .normal
+                   )
                } else {
-                   selectedViewController.tabBarItem.setTitleTextAttributes([.font: UIFont.systemFont(ofSize: 12.0)], for: .normal)
+                   selectedViewController.tabBarItem.setTitleTextAttributes(
+                    [.font: UIFont.systemFont(ofSize: 12.0)],
+                    for: .normal
+                   )
                }
           }
      }
-     
      override var selectedViewController: UIViewController? { // Mark 2
           didSet {
                
@@ -41,16 +46,27 @@ class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
                for viewController in viewControllers {
                     if viewController == selectedViewController {
                          if IS_IPAD == true {
-                             viewController.tabBarItem.setTitleTextAttributes([.font: UIFont.systemFont(ofSize: 14.0)], for: .normal)
+                             viewController.tabBarItem.setTitleTextAttributes(
+                                [.font: UIFont.systemFont(ofSize: 14.0)],
+                                for: .normal
+                             )
                          } else {
-                             viewController.tabBarItem.setTitleTextAttributes([.font: UIFont.systemFont(ofSize: 12.0)], for: .normal)
+                             viewController.tabBarItem.setTitleTextAttributes(
+                                [.font: UIFont.systemFont(ofSize: 12.0)],
+                                for: .normal
+                             )
                          }
                     } else {
                          if IS_IPAD == true {
-                             viewController.tabBarItem.setTitleTextAttributes([.font: UIFont.systemFont(ofSize: 14.0)], for: .normal)
+                             viewController.tabBarItem.setTitleTextAttributes(
+                                [.font: UIFont.systemFont(ofSize: 14.0)],
+                                for: .normal
+                             )
                          } else {
-                             viewController.tabBarItem.setTitleTextAttributes([.font: UIFont.systemFont(ofSize: 12.0)], for: .normal)
-
+                             viewController.tabBarItem.setTitleTextAttributes(
+                                [.font: UIFont.systemFont(ofSize: 12.0)],
+                                for: .normal
+                             )
                          }
                     }
                }
@@ -73,7 +89,14 @@ class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
 
      public func addVC(vc: UIViewController, title: String, selected_image: String, normal_image: String) {
           
-          self.arrTabItemVC.append(TabItemVC(vc: vc, title: title, selected_image: selected_image, normal_image: normal_image))
+          self.arrTabItemVC.append(
+            TabItemVC(
+                vc: vc,
+                title: title,
+                selected_image: selected_image,
+                normal_image: normal_image
+            )
+          )
      }
      
      public func getTabBar(selected_index: Int, selected_color: UIColor, normal_color: UIColor) -> UITabBarController {
@@ -86,11 +109,11 @@ class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
           }
           self.viewControllers = self.arrNavVC
           let tabBar: UITabBar = self.tabBar
-          for i in 0..<(tabBar.items ?? []).count {
-               
-               let tabBarItem: UITabBarItem = tabBar.items![i]
-               let tab = self.arrTabItemVC[i]
-               
+          for index in 0..<(tabBar.items ?? []).count {
+
+               let tabBarItem: UITabBarItem = tabBar.items![index]
+               let tab = self.arrTabItemVC[index]
+
                tabBarItem.image = UIImage(named: tab.normal_image) ?? UIImage()
                tabBarItem.title = tab.title
                if IS_IPAD {
@@ -112,8 +135,7 @@ class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
           self.tabBar.layer.shadowRadius = 10.0
           self.tabBar.layer.shadowPath = UIBezierPath(rect: self.tabBar.bounds).cgPath
           self.tabBar.layer.masksToBounds = false
-          
-          
+
           if #available(iOS 15.0, *) {
                let tabBarAppearance: UITabBarAppearance = UITabBarAppearance()
                tabBarAppearance.configureWithOpaqueBackground()
@@ -124,13 +146,31 @@ class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
                var tab_font = UIFont()
               tab_font = UIFont.systemFont(ofSize: 12.0)
                
-               tabBarAppearance.compactInlineLayoutAppearance.normal.titleTextAttributes = [NSAttributedString.Key.font: tab_font, .foregroundColor: normal_color]
-               tabBarAppearance.inlineLayoutAppearance.normal.titleTextAttributes = [NSAttributedString.Key.font: tab_font, .foregroundColor: normal_color]
-               tabBarAppearance.stackedLayoutAppearance.normal.titleTextAttributes = [NSAttributedString.Key.font: tab_font, .foregroundColor: normal_color]
+               tabBarAppearance.compactInlineLayoutAppearance.normal.titleTextAttributes = [
+                NSAttributedString.Key.font: tab_font,
+                    .foregroundColor: normal_color
+               ]
+               tabBarAppearance.inlineLayoutAppearance.normal.titleTextAttributes = [
+                NSAttributedString.Key.font: tab_font,
+                    .foregroundColor: normal_color
+               ]
+               tabBarAppearance.stackedLayoutAppearance.normal.titleTextAttributes = [
+                NSAttributedString.Key.font: tab_font,
+                    .foregroundColor: normal_color
+               ]
 
-               tabBarAppearance.stackedLayoutAppearance.selected.titleTextAttributes = [NSAttributedString.Key.font: tab_font, .foregroundColor: selected_color]
-               tabBarAppearance.compactInlineLayoutAppearance.selected.titleTextAttributes = [NSAttributedString.Key.font: tab_font, .foregroundColor: selected_color]
-               tabBarAppearance.inlineLayoutAppearance.selected.titleTextAttributes = [NSAttributedString.Key.font: tab_font, .foregroundColor: selected_color]
+               tabBarAppearance.stackedLayoutAppearance.selected.titleTextAttributes = [
+                NSAttributedString.Key.font: tab_font,
+                    .foregroundColor: selected_color
+               ]
+               tabBarAppearance.compactInlineLayoutAppearance.selected.titleTextAttributes = [
+                NSAttributedString.Key.font: tab_font,
+                    .foregroundColor: selected_color
+               ]
+               tabBarAppearance.inlineLayoutAppearance.selected.titleTextAttributes = [
+                NSAttributedString.Key.font: tab_font,
+                    .foregroundColor: selected_color
+               ]
 
                tabBar.tintColor = selected_color
                
@@ -141,19 +181,24 @@ class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
                
           }
           
-          UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: selected_color], for: .selected)
-          
-          UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: normal_color], for: .normal)
+          UITabBarItem.appearance().setTitleTextAttributes(
+            [NSAttributedString.Key.foregroundColor: selected_color],
+            for: .selected
+          )
 
-          
-          
+          UITabBarItem.appearance().setTitleTextAttributes(
+            [NSAttributedString.Key.foregroundColor: normal_color],
+            for: .normal
+          )
           return self
      }
 }
 
 extension TabBarMaster: UITabBarControllerDelegate {
-     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-          
+     func tabBarController(_ tabBarController: UITabBarController,
+                           shouldSelect viewController: UIViewController
+     ) -> Bool {
+
           let arrVC = tabBarController.viewControllers ?? []
           let selIndex = arrVC.firstIndex(of: viewController)!
           

@@ -73,7 +73,11 @@ class DeskViewVC: BaseVC, IRetrieveConnectionId, UIAlertViewDelegate {
 
     func showAskConnectionIdDialog(condition: NSCondition) {
 
-        let alert = UIAlertController(title: "Dispatcher Connection ID", message: "Type dispatcher connection ID below:", preferredStyle: UIAlertController.Style.alert)
+        let alert = UIAlertController(
+            title: "Dispatcher Connection ID",
+            message: "Type dispatcher connection ID below:",
+            preferredStyle: UIAlertController.Style.alert
+        )
         let acOK = UIAlertAction(title: "Ok".uppercased(), style: UIAlertAction.Style.default) { _ in }
         let acCancel = UIAlertAction(title: "Cancel".uppercased(), style: UIAlertAction.Style.default) { _ in }
         alert.addAction(acOK)

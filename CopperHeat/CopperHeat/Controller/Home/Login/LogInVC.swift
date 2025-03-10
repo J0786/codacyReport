@@ -15,7 +15,6 @@ class LogInVC: BaseVC {
     @IBOutlet weak var imgLogo: UIImageView!
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblTitleDescription: UILabel!
-    
     @IBOutlet weak var lblTitleEmail: UILabel!
     @IBOutlet weak var txtEmail: UITextField!
 
@@ -52,7 +51,6 @@ extension LogInVC {
     }
 }
 
-
 extension LogInVC: LoginResponse {
     func loginCall() {
         self.StartLoader()
@@ -73,11 +71,11 @@ extension LogInVC: LoginResponse {
             } else {
                 self.StopLoader()
                 APP_DEL.currentUser = CurrentUser (
-                    id: res?.identities?.first?.id ?? "" ,
-                    identityId: res?.identities?.first?.identityId.uuidString ?? "" ,
-                    userId: res?.identities?.first?.userId.uuidString ?? "" ,
-                    email: txtEmail.text ?? "" ,
-                    token: "123456",
+                    id: res?.identities?.first?.id ?? "",
+                    identityId: res?.identities?.first?.identityId.uuidString ?? "",
+                    userId: res?.identities?.first?.userId.uuidString ?? "",
+                    email: txtEmail.text ?? "",
+                    token: "123456", 
                     is_email_verify: "1"
                 )
                 APP_DEL.currentUser?.syncronize()

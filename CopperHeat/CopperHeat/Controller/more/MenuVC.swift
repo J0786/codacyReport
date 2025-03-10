@@ -19,7 +19,6 @@ class MenuVC: BaseVC, ASAuthorizationControllerPresentationContextProviding, SFS
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var tblView: UITableView!
     @IBOutlet weak var lblFollowUs: UILabel!
-    
     @IBOutlet weak var btnLinkDn: UIButton!
     @IBOutlet weak var btnFaceboook: UIButton!
     @IBOutlet weak var btnInsta: UIButton!
@@ -82,10 +81,26 @@ extension MenuVC {
         tblView.register(nib, forCellReuseIdentifier: "MenuCell")
 
         arrMenu.removeAll()
-        arrMenu.append(menuModel(title: "About Us", img: "myaccount_aboutus", url: "https://cooperheatequipment.com/about-us/"))
-        arrMenu.append(menuModel(title: "Terms and Conditions", img: "terms_conditions", url: "https://cooperheatequipment.com/terms-conditions/"))
-        arrMenu.append(menuModel(title: "Privacy Policy", img: "myaccount_privacy", url: "https://cooperheatequipment.com/privacy-policy-2/"))
-        arrMenu.append(menuModel(title: "Contact Us", img: "myaccount_contact_us", url: "https://cooperheatequipment.com/contact-us/"))
+        arrMenu.append(menuModel(
+            title: "About Us",
+            img: "myaccount_aboutus",
+            url: "https://cooperheatequipment.com/about-us/")
+        )
+        arrMenu.append(menuModel(
+            title: "Terms and Conditions",
+            img: "terms_conditions",
+            url: "https://cooperheatequipment.com/terms-conditions/")
+        )
+        arrMenu.append(menuModel(
+            title: "Privacy Policy",
+            img: "myaccount_privacy",
+            url: "https://cooperheatequipment.com/privacy-policy-2/")
+        )
+        arrMenu.append(menuModel(
+            title: "Contact Us",
+            img: "myaccount_contact_us",
+            url: "https://cooperheatequipment.com/contact-us/")
+        )
         arrMenu.append(menuModel(title: "Delete Account", img: "delete", url: ""))
         arrMenu.append(menuModel(title: "Logout", img: "logout", url: ""))
 

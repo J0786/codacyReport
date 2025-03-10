@@ -20,7 +20,6 @@ class HomeVC: BaseVC {
     @IBOutlet weak var img: UIImageView!
     @IBOutlet weak var tblview: UITableView!
     var arrDeviceData: [DeviceModel] = []
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         img.cornerRadius(cornerRadius: 5)
@@ -84,20 +83,26 @@ extension HomeVC {
         request.returnsObjectsAsFaults = false
         do {
             let result = try context.fetch(request)
-            print(result as! [NSManagedObject])
-            AppDelegate.user = result as! [NSManagedObject]
+            if let userResult = result as? [NSManagedObject] {
+                print(userResult)
+                AppDelegate.user = userResult
+            } else {
+                print("Failed to cast result to [NSManagedObject]")
+            }
             AppDelegate.user.reverse()
 
             print(convertToJSONArray(moArray: AppDelegate.user))
             let arr = convertToJSONArray(moArray: AppDelegate.user)
             self.arrDeviceData.removeAll()
             if arr.count > 0 {
-                for i in 0..<arr.count {
-                    let dict = arr[i]
-                    let model = DeviceModel(host: (dict["host"] as? String) ?? "",
-                                             password: (dict["password"] as? String) ?? "" ,
-                                            device_name: (dict["device_name"] as? String) ?? "",
-                                            id: (dict["id"] as? Int) ?? 0)
+                for index in 0..<arr.count {
+                    let dict = arr[index]
+                    let model = DeviceModel(
+                        host: (dict["host"] as? String) ?? "",
+                        password: (dict["password"] as? String) ?? "",
+                        device_name: (dict["device_name"] as? String) ?? "",
+                        id: (dict["id"] as? Int) ?? 0
+                    )
                     self.arrDeviceData.append(model)
                 }
             }
@@ -169,7 +174,10 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     }
 
     @IBAction func ationBtnConnect(_ sender: UIButton) {
-        navigateToConnect(host: arrDeviceData[sender.tag].host ?? "", password: arrDeviceData[sender.tag].password ?? "")
+        navigateToConnect(
+            host: arrDeviceData[sender.tag].host ?? "",
+            password: arrDeviceData[sender.tag].password ?? ""
+        )
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

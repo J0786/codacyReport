@@ -16,8 +16,12 @@ class NetworkManager: NSObject {
         reachability = try! Reachability()
         reachability.allowsCellularConnection = true
 
-        NotificationCenter.default.addObserver(self, selector: #selector(networkStatusChanged(_:)), name: .reachabilityChanged, object: reachability)
-        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(networkStatusChanged(_:)),
+            name: .reachabilityChanged,
+            object: reachability
+        )
         do {
             try reachability.startNotifier()
         } catch {
@@ -29,7 +33,7 @@ class NetworkManager: NSObject {
         // Do something globally here!
     }
     
-    static func stopNotifier() -> Void {
+    static func stopNotifier() {
         do {
             try (NetworkManager.sharedInstance.reachability).startNotifier()
         } catch {

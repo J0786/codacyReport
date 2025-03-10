@@ -14,7 +14,6 @@ class EmailVerifyVC: BaseVC {
     @IBOutlet weak var btnBack: UIButton!
     @IBOutlet weak var viewTop: UIView!
     @IBOutlet weak var lblTitle: UILabel!
-    
     @IBOutlet weak var viewOtp: UIView!
     @IBOutlet weak var btnEdit: UIButton!
     @IBOutlet weak var lblEmailOrPhone: UILabel!
@@ -230,11 +229,18 @@ extension EmailVerifyVC {
     }
     
     func timerStart() {
-        lblTime.text = "You can request a new verification code in " + self.getExpireTime(startDate: Date(), endDate: expireDate)
+        let strTemp = "You can request a new verification code in "
+        lblTime.text = strTemp + self.getExpireTime(startDate: Date(), endDate: expireDate)
         self.lblTime.isHidden = false
         self.btnResend.isHidden = true
         expireTimer?.invalidate()
-        expireTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(expireTimerRepeat), userInfo: nil, repeats: true)
+        expireTimer = Timer.scheduledTimer(
+            timeInterval: 1,
+            target: self,
+            selector: #selector(expireTimerRepeat),
+            userInfo: nil,
+            repeats: true
+        )
     }
     
     func expireTimerStop() {
@@ -293,7 +299,7 @@ extension EmailVerifyVC: EmailVerifyResponse {
                 APP_DEL.currentUser?.is_email_verify = "1"
                 APP_DEL.currentUser?.syncronize()
                 APP_DEL.setAppRoot()
-            }else{
+            } else {
                 self.showAlert(message: "Please Enter Valid OTP Or OTP is Expired.")
             }
         }

@@ -19,7 +19,6 @@ class BaseVC: UIViewController {
         self.navigationController?.navigationBar.isHidden = true
         self.navigationController?.isNavigationBarHidden = true
     }
-    
     // MARK: - Check Application is updated to Latest Version
     //     func CheckUserUpdateVersionOrNot(dictVersion : Versions?) -> Bool {
     //          if dictVersion?.iphoneFlag ?? false {
@@ -35,7 +34,6 @@ class BaseVC: UIViewController {
     //         }
     //         return true
     //     }
-    
 }
 
 extension BaseVC: UIPopoverPresentationControllerDelegate, UIGestureRecognizerDelegate {

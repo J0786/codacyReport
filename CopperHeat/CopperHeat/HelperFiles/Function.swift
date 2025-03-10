@@ -11,7 +11,6 @@ import PhotosUI
 class FUNCTION {
     func getDataFromJsonFile(fileName: String) -> Data? {
         do {
-            
             let url = Bundle.main.url(forResource: fileName, withExtension: "json")!
             let jsonData = try Data(contentsOf: url)
             return jsonData
@@ -29,19 +28,16 @@ class FUNCTION {
 //    }
     
     func getColorFromRGB(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) -> UIColor {
-        
         return UIColor(red: red/255.0, green: green/255.0, blue: blue/255.0, alpha: alpha)
     }
 
     func isValidEmail(email: String) -> Bool {
-        
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
         let emailTest = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
         return emailTest.evaluate(with: email)
     }
     
     func isValidPassword(password: String) -> Bool {
-        
         let passwordRegex: String = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,15}$"
         let predicateForPassword: NSPredicate = NSPredicate(format: "SELF MATCHES %@", passwordRegex)
         return predicateForPassword.evaluate(with: password)
@@ -116,8 +112,8 @@ class FUNCTION {
                               shadowColor: UIColor? = nil,
                               strokeWidth: Int? = nil,
                               underlineStyle: NSUnderlineStyle? = nil,
-                              font: UIFont? = nil) -> NSAttributedString
-    {
+                              font: UIFont? = nil
+    ) -> NSAttributedString {
         var newAttribute: [NSAttributedString.Key: Any]? = [:]
         
         if font != nil {
@@ -143,8 +139,7 @@ class FUNCTION {
         }
         
         newAttribute?.updateValue(shadow, forKey: NSAttributedString.Key.shadow)
-        
-        
+
         if strokeWidth != nil {
             newAttribute?.updateValue(strokeWidth as Any, forKey: NSAttributedString.Key.strokeWidth)
         }
@@ -252,8 +247,7 @@ class FUNCTION {
         let currentDate = Date()
         let timeDifference = currentDate.timeIntervalSince(destinationDate)
         let time = Int(round(timeDifference))
-        
-        
+
         let daycount = (Double(time) / 86400.00)
         if daycount <= 0.50 {
             
@@ -262,8 +256,7 @@ class FUNCTION {
             
             dateFormatters.timeZone = NSTimeZone.system
             strDateTime = dateFormatters.string(from: destinationDate)
-            
-            
+
             if isFromChatDetails {
                 strDateTime = "Today \(strDateTime)"
             } else {
@@ -278,8 +271,7 @@ class FUNCTION {
             
             dateFormatters.timeZone = NSTimeZone.system
             strDateTime = dateFormatters.string(from: destinationDate)
-            
-            
+
             if isFromChatDetails {
                 strDateTime = "Yesterday \(strDateTime)"
             } else {
@@ -288,8 +280,7 @@ class FUNCTION {
             
             return strDateTime
         } else {
-            
-            
+
             let dateFormatters = DateFormatter()
             
             if isFromChatDetails {
@@ -328,7 +319,12 @@ class FUNCTION {
             let size = CGSize(width: width * 0.5, height: height * 0.5)
 
             group.enter()
-            manager.requestImage(for: asset, targetSize: size, contentMode: .aspectFill, options: options) { (image, _) in
+            manager.requestImage(
+                for: asset,
+                targetSize: size,
+                contentMode: .aspectFill,
+                options: options
+            ) { (image, _) in
 
                 if let image = image {
                     
@@ -361,15 +357,12 @@ class FUNCTION {
         
         return unique
     }
-    
 //    func textToHtml(str: String) -> String {
 //        let htmlString = str.stringByDecodingHTMLEntities
 //        return htmlString
 //    }
     
 }
-
-
 struct AppInfo {
     var appName: String {
         return readFromInfoPlist(withKey: "CFBundleName") ?? "(unknown app name)"

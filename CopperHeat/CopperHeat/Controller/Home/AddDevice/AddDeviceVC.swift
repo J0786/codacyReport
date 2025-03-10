@@ -18,7 +18,6 @@ class AddDeviceVC: BaseVC {
     @IBOutlet weak var scrllView: UIScrollView!
     @IBOutlet weak var imgLogo: UIImageView!
     @IBOutlet weak var lblTitleDescription: UILabel!
-    
     @IBOutlet weak var lblTitleHost: UILabel!
     @IBOutlet weak var txtHost: UITextField!
     
@@ -96,7 +95,11 @@ extension AddDeviceVC {
         do {
             try context.save()
             AppDelegate.user.append(newUser)
-            self.delegate?.addNew(host: self.txtHost.text ?? "", password: self.txtPassword.text ?? "", deviceName: self.txtDeviceName.text ?? "")
+            self.delegate?.addNew(
+                host: self.txtHost.text ?? "",
+                password: self.txtPassword.text ?? "",
+                deviceName: self.txtDeviceName.text ?? ""
+            )
             self.dismiss(animated: true, completion: nil)
         } catch {
             debugPrint("Failed saving")

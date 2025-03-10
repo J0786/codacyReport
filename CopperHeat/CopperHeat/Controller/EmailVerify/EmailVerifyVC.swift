@@ -29,37 +29,30 @@ class EmailVerifyVC: BaseVC {
     @IBOutlet weak var lblTitleDescriptions: UILabel!
     @IBOutlet weak var btnVerifyOtp: UIButton!
     @IBOutlet weak var constraintVerifyOtpButton: NSLayoutConstraint!
-    
     var otp: String = ""
     var expireDate: Date = Date()
     var expireTimer: Timer?
     var strEmail: String = ""
     var objEmailVerifyVM = EmailVerifyVM()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUi()
         self.setData()
         self.setTextField()
     }
-
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.expireTimerStop()
     }
-    
     @IBAction func actionBtnBack(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
-    
     @IBAction func actionBtnEdit(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
-    
     @IBAction func actionBtnResendOtp(_ sender: UIButton) {
         self.resendOTPCall()
     }
-    
     @IBAction func actionBtnVerifyOtp(_ sender: UIButton) {
         var isValid = false
         var strOTP = ""
@@ -88,7 +81,6 @@ extension EmailVerifyVC {
         lblEmailOrPhone.text = strEmail
         objEmailVerifyVM.delegate = self
     }
-    
     func setTextField() {
         [txtOne, txtTwo, txtThree, txtFour, txtFive, txtSix].forEach {
             
@@ -115,7 +107,6 @@ extension EmailVerifyVC {
             self.txtOne.becomeFirstResponder()
         }
     }
-    
     @objc func editingChanged(_ textField: SingleDigitField) {
         if textField.pressedDelete {
             textField.pressedDelete = false
@@ -187,15 +178,12 @@ extension EmailVerifyVC {
         default: break
         }
     }
-    
     @objc private func txtEditingDidBeginAction(_ sender: SingleDigitField) {
         updateTextFieldState(isEditing: true, sender: sender)
     }
-    
     @objc private func txtEditingDidEndAction(_ sender: SingleDigitField) {
         updateTextFieldState(isEditing: false, sender: sender)
     }
-    
     private func updateTextFieldState(isEditing: Bool, sender: SingleDigitField) {
         if isEditing {
             sender.backgroundColor = .colorRed.withAlphaComponent(0.1)
@@ -204,7 +192,6 @@ extension EmailVerifyVC {
             sender.backgroundColor = .clear
         }
     }
-    
     func setData() {
         txtOne.text = ""
         txtTwo.text = ""
@@ -217,14 +204,12 @@ extension EmailVerifyVC {
         expireDate = coolerFutureDate
         timerStart()
     }
-    
     func convertToLocalFormat(str: String) -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone?
         dateFormatter.dateFormat = "dd-MM-yyyy HH:mm:ss"
         return dateFormatter.date(from: str)
     }
-    
     func timerStart() {
         let strTemp = "You can request a new verification code in "
         lblTime.text = strTemp + self.getExpireTime(startDate: Date(), endDate: expireDate)
@@ -239,11 +224,9 @@ extension EmailVerifyVC {
             repeats: true
         )
     }
-    
     func expireTimerStop() {
         expireTimer?.invalidate()
     }
-    
     @objc func expireTimerRepeat() {
         if Date().compare(expireDate) == .orderedAscending {
             let strTemp = "You can request a new verification code in "
@@ -254,7 +237,6 @@ extension EmailVerifyVC {
             self.lblTime.isHidden = true
         }
     }
-    
     func getExpireTime(startDate: Date, endDate: Date) -> String {
 
         let strtDate: Date = Calendar.current.date(bySetting: .nanosecond, value: 0, of: startDate) ?? Date()
@@ -302,7 +284,6 @@ extension EmailVerifyVC: EmailVerifyResponse {
             }
         }
     }
-    
     func resendOTPCall() {
         self.StartLoader()
         self.objEmailVerifyVM.resendOTP(email: strEmail)

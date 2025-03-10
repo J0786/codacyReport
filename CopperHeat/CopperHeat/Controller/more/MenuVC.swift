@@ -9,7 +9,7 @@ import UIKit
 import SafariServices
 import AuthenticationServices
 
-struct menuModel: Codable {
+struct MenuModel: Codable {
     var title: String?
     var img: String?
     var url: String?
@@ -23,12 +23,11 @@ class MenuVC: BaseVC, ASAuthorizationControllerPresentationContextProviding, SFS
     @IBOutlet weak var btnFaceboook: UIButton!
     @IBOutlet weak var btnInsta: UIButton!
     @IBOutlet weak var btnYoutube: UIButton!
-    
     @IBOutlet weak var lblCopyRight: UILabel!
     @IBOutlet weak var lblVersion: UILabel!
     
-    var arrMenu: [menuModel] = []
-    
+    var arrMenu: [MenuModel] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupview()
@@ -81,28 +80,28 @@ extension MenuVC {
         tblView.register(nib, forCellReuseIdentifier: "MenuCell")
 
         arrMenu.removeAll()
-        arrMenu.append(menuModel(
+        arrMenu.append(MenuModel(
             title: "About Us",
             img: "myaccount_aboutus",
             url: "https://cooperheatequipment.com/about-us/")
         )
-        arrMenu.append(menuModel(
+        arrMenu.append(MenuModel(
             title: "Terms and Conditions",
             img: "terms_conditions",
             url: "https://cooperheatequipment.com/terms-conditions/")
         )
-        arrMenu.append(menuModel(
+        arrMenu.append(MenuModel(
             title: "Privacy Policy",
             img: "myaccount_privacy",
             url: "https://cooperheatequipment.com/privacy-policy-2/")
         )
-        arrMenu.append(menuModel(
+        arrMenu.append(MenuModel(
             title: "Contact Us",
             img: "myaccount_contact_us",
             url: "https://cooperheatequipment.com/contact-us/")
         )
-        arrMenu.append(menuModel(title: "Delete Account", img: "delete", url: ""))
-        arrMenu.append(menuModel(title: "Logout", img: "logout", url: ""))
+        arrMenu.append(MenuModel(title: "Delete Account", img: "delete", url: ""))
+        arrMenu.append(MenuModel(title: "Logout", img: "logout", url: ""))
 
         tblView.delegate = self
         tblView.dataSource = self
@@ -142,7 +141,7 @@ extension MenuVC: UITableViewDataSource, UITableViewDelegate {
                 SupabaseManager.shared.logout { isLogout, error  in
                     DispatchQueue.main.sync {
                         if isLogout {
-                            APP_DEL.currentUser?.logout()
+                            APP_DEL!.currentUser?.logout()
                         } else {
                             self.showAlert(message: error)
                         }

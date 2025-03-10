@@ -17,7 +17,6 @@ class EmailVerifyVC: BaseVC {
     @IBOutlet weak var viewOtp: UIView!
     @IBOutlet weak var btnEdit: UIButton!
     @IBOutlet weak var lblEmailOrPhone: UILabel!
-    
     @IBOutlet weak var constraintTxtOtpHeight: NSLayoutConstraint!
     @IBOutlet weak var txtOne: SingleDigitField!
     @IBOutlet weak var txtTwo: SingleDigitField!
@@ -25,10 +24,8 @@ class EmailVerifyVC: BaseVC {
     @IBOutlet weak var txtFour: SingleDigitField!
     @IBOutlet weak var txtFive: SingleDigitField!
     @IBOutlet weak var txtSix: SingleDigitField!
-    
     @IBOutlet weak var lblTime: UILabel!
     @IBOutlet weak var btnResend: UIButton!
-    
     @IBOutlet weak var lblTitleDescriptions: UILabel!
     @IBOutlet weak var btnVerifyOtp: UIButton!
     @IBOutlet weak var constraintVerifyOtpButton: NSLayoutConstraint!
@@ -249,7 +246,8 @@ extension EmailVerifyVC {
     
     @objc func expireTimerRepeat() {
         if Date().compare(expireDate) == .orderedAscending {
-            lblTime.text = "You can request a new verification code in " + self.getExpireTime(startDate: Date(), endDate: expireDate)
+            let strTemp = "You can request a new verification code in "
+            lblTime.text = strTemp + self.getExpireTime(startDate: Date(), endDate: expireDate)
         } else {
             self.expireTimerStop()
             self.btnResend.isHidden = false
@@ -296,9 +294,9 @@ extension EmailVerifyVC: EmailVerifyResponse {
         DispatchQueue.main.async {
             self.StopLoader()
             if isVerify ?? false {
-                APP_DEL.currentUser?.is_email_verify = "1"
-                APP_DEL.currentUser?.syncronize()
-                APP_DEL.setAppRoot()
+                APP_DEL!.currentUser?.isEmailVerify = "1"
+                APP_DEL!.currentUser?.syncronize()
+                APP_DEL!.setAppRoot()
             } else {
                 self.showAlert(message: "Please Enter Valid OTP Or OTP is Expired.")
             }
@@ -314,7 +312,7 @@ extension EmailVerifyVC: EmailVerifyResponse {
             self.StopLoader()
             if isSent ?? false {
                 self.setData()
-            }else{
+            } else {
                 self.showAlert(message: error)
             }
         }

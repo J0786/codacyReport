@@ -6,10 +6,10 @@
 
 import UIKit
 
-let APP_DEL = UIApplication.shared.delegate as! AppDelegate
+let APP_DEL = UIApplication.shared.delegate as? AppDelegate
 let STB: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
 let UD = UserDefaults.standard
-let context = APP_DEL.persistentContainer.viewContext
+let context = APP_DEL!.persistentContainer.viewContext
 
 let IS_IPAD = UIDevice.current.userInterfaceIdiom == .pad ? true : false
 

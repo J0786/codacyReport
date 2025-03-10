@@ -22,7 +22,6 @@ class CmsVC: BaseVC {
         self.web.navigationDelegate = self
         self.web.load(URLRequest(url: url!))
     }
-    
     @IBAction func actionBtnBack(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }

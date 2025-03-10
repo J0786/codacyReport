@@ -20,7 +20,6 @@ class LogInVC: BaseVC {
 
     @IBOutlet weak var btnLogin: UIButton!
     @IBOutlet weak var btnLoginNext: UIButton!
-    
     var dictObj: DeviceModel?
     // MARK: - Variables
     var objLoginVM = LoginVM()
@@ -54,7 +53,7 @@ extension LogInVC {
 extension LogInVC: LoginResponse {
     func loginCall() {
         self.StartLoader()
-        objLoginVM.Login(email: txtEmail.text ?? "")
+        objLoginVM.logIn(email: txtEmail.text ?? "")
     }
     
     func loginResponseHandle(res: User?, error: String) {
@@ -70,16 +69,14 @@ extension LogInVC: LoginResponse {
                 }
             } else {
                 self.StopLoader()
-                APP_DEL.currentUser = CurrentUser (
+                APP_DEL!.currentUser = CurrentUser (
                     id: res?.identities?.first?.id ?? "",
                     identityId: res?.identities?.first?.identityId.uuidString ?? "",
-                    userId: res?.identities?.first?.userId.uuidString ?? "",
-                    email: txtEmail.text ?? "",
-                    token: "123456", 
-                    is_email_verify: "1"
-                )
-                APP_DEL.currentUser?.syncronize()
-                APP_DEL.setAppRoot()
+                    userId: res?.identities?.first?.userId.uuidString ?? "", email: txtEmail.text ?? "",
+                    token: "123456",
+                    isEmailVerify: "1")
+                APP_DEL!.currentUser?.syncronize()
+                APP_DEL!.setAppRoot()
             }
         }
     }
@@ -96,16 +93,16 @@ extension LogInVC: LoginResponse {
             if res == nil {
                 self.showAlert(message: error)
             } else {
-                APP_DEL.currentUser = CurrentUser (
-                    id: res?.identities?.first?.id ?? "" ,
-                    identityId: res?.identities?.first?.identityId.uuidString ?? "" ,
-                    userId: res?.identities?.first?.userId.uuidString ?? "" ,
-                    email: txtEmail.text ?? "" ,
+                APP_DEL!.currentUser = CurrentUser (
+                    id: res?.identities?.first?.id ?? "",
+                    identityId: res?.identities?.first?.identityId.uuidString ?? "",
+                    userId: res?.identities?.first?.userId.uuidString ?? "",
+                    email: txtEmail.text ?? "",
                     token: "123456",
-                    is_email_verify: "0"
-                )
-                APP_DEL.currentUser?.syncronize()
-                if let emailVC: EmailVerifyVC = STB.instantiateViewController(withIdentifier: "EmailVerifyVC") as? EmailVerifyVC {
+                    isEmailVerify: "0")
+                APP_DEL!.currentUser?.syncronize()
+                if let emailVC: EmailVerifyVC = STB.instantiateViewController(
+                    withIdentifier: "EmailVerifyVC") as? EmailVerifyVC {
                     emailVC.strEmail = self.txtEmail.text ?? ""
                     self.navigationController?.pushViewController(emailVC, animated: true)
                 } else {

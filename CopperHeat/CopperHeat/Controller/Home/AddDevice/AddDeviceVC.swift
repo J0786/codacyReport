@@ -20,13 +20,10 @@ class AddDeviceVC: BaseVC {
     @IBOutlet weak var lblTitleDescription: UILabel!
     @IBOutlet weak var lblTitleHost: UILabel!
     @IBOutlet weak var txtHost: UITextField!
-    
     @IBOutlet weak var lblTitlePassword: UILabel!
     @IBOutlet weak var txtPassword: UITextField!
-    
     @IBOutlet weak var lblTitleDeviceName: UILabel!
     @IBOutlet weak var txtDeviceName: UITextField!
-    
     @IBOutlet weak var btnConnect: UIButton!
     @IBOutlet weak var btnNextConnect: UIButton!
     @IBOutlet weak var btnShow: UIButton!
@@ -71,8 +68,8 @@ class AddDeviceVC: BaseVC {
 extension AddDeviceVC {
     func setUi() {
         txtHost.text = dictObj?.host ?? ""
-        txtPassword.text = dictObj?.device_name ?? "111111"
-        txtDeviceName.text = dictObj?.device_name ?? ""
+        txtPassword.text = dictObj?.deviceName ?? "111111"
+        txtDeviceName.text = dictObj?.deviceName ?? ""
         
         txtHost.placeholder = "Enter Controller IP address"
         txtDeviceName.placeholder = "Enter Device Name"

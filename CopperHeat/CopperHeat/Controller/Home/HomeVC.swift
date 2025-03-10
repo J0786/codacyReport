@@ -11,7 +11,7 @@ import CoreData
 struct DeviceModel: Codable {
     var host: String?
     var password: String?
-    var device_name: String?
+    var deviceName: String?
     var id: Int?
 }
 
@@ -25,7 +25,6 @@ class HomeVC: BaseVC {
         img.cornerRadius(cornerRadius: 5)
         setupView()
     }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupView()
@@ -100,7 +99,7 @@ extension HomeVC {
                     let model = DeviceModel(
                         host: (dict["host"] as? String) ?? "",
                         password: (dict["password"] as? String) ?? "",
-                        device_name: (dict["device_name"] as? String) ?? "",
+                        deviceName: (dict["device_name"] as? String) ?? "",
                         id: (dict["id"] as? Int) ?? 0
                     )
                     self.arrDeviceData.append(model)
@@ -121,10 +120,10 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         if let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell", for: indexPath) as? HomeCell {
-            if arrDeviceData[indexPath.row].device_name ?? "" == "" {
+            if arrDeviceData[indexPath.row].deviceName ?? "" == "" {
                 cell.lblTitle.text = "Device \(indexPath.row + 1)"
             } else {
-                cell.lblTitle.text = arrDeviceData[indexPath.row].device_name ?? ""
+                cell.lblTitle.text = arrDeviceData[indexPath.row].deviceName ?? ""
             }
             cell.lblHost.text = arrDeviceData[indexPath.row].host ?? ""
             cell.btnConnect.tag = indexPath.row

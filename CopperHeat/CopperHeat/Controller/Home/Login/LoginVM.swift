@@ -21,7 +21,7 @@ class LoginVM {
             self.delegate?.signupResponsehandle(res: result, error: err)
         }
     }
-    func Login(email: String ) {
+    func logIn(email: String ) {
         SupabaseManager.shared.loginWithEmail(email: email, password: "123456") { result, error  in
             self.delegate?.loginResponseHandle(res: result, error: error)
         }
@@ -40,7 +40,7 @@ struct CurrentUser: Codable {
     var userId: String?
     var email: String?
     var token: String?
-    var is_email_verify: String?
+    var isEmailVerify: String?
 
     func syncronize() {
         do {
@@ -59,9 +59,9 @@ struct CurrentUser: Codable {
 
     func logout() {
         debugPrint("Logout:- Done")
-        APP_DEL.currentUser = nil
+        APP_DEL!.currentUser = nil
         UD.removeObject(forKey: CONSTANT().currentUser)
         UD.synchronize()
-        APP_DEL.setAppRoot()
+        APP_DEL!.setAppRoot()
     }
 }

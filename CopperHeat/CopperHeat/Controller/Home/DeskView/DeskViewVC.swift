@@ -11,9 +11,8 @@ class DeskViewVC: BaseVC, IRetrieveConnectionId, UIAlertViewDelegate {
     @IBOutlet weak var scrllView: ScrollView!
     @IBOutlet weak var btnStop: UIButton!
     @IBOutlet weak var imgLogo: UIImageView!
-    var ViewCore: ViewerCore?
+    var viewCore: ViewerCore?
     var desktopView: DesktopView?
-    
     var host: String?
     var port: Int?
     var password: String?
@@ -34,7 +33,7 @@ class DeskViewVC: BaseVC, IRetrieveConnectionId, UIAlertViewDelegate {
         
         scrllView.addSubview(desktopView!)
         scrllView.setMousePointer(mousePointerView)
-        ViewCore = ViewerCore(desktopView: desktopView,
+        viewCore = ViewerCore(desktopView: desktopView,
                               mousePointerView: mousePointerView,
                               host: host,
                               port: Int32(port ?? 5900),
@@ -48,7 +47,7 @@ class DeskViewVC: BaseVC, IRetrieveConnectionId, UIAlertViewDelegate {
     @IBAction func actionBtnStop(_ sender: UIButton) {
         
         self.showAlert(message: "Are you sure you want to disconnect?") {
-            self.ViewCore?.stop()
+            self.viewCore?.stop()
             self.isConnected = false
             self.navigationController?.popViewController(animated: true)
         } no: {
@@ -109,7 +108,7 @@ extension DeskViewVC: ViewControllerCallbackDelegate {
     func onError(_ errorMessage: String!) {
         if isConnected {
             self.showAlert(message: errorMessage) {
-                self.ViewCore?.stop()
+                self.viewCore?.stop()
                 self.isConnected = false
                 self.navigationController?.popViewController(animated: true)
             }

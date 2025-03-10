@@ -41,7 +41,6 @@ extension BaseVC: UIPopoverPresentationControllerDelegate, UIGestureRecognizerDe
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
-    
 }
 
 extension BaseVC: EmptyDataSetSource, EmptyDataSetDelegate {

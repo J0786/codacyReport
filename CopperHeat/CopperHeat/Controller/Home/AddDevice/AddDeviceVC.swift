@@ -27,16 +27,13 @@ class AddDeviceVC: BaseVC {
     @IBOutlet weak var btnConnect: UIButton!
     @IBOutlet weak var btnNextConnect: UIButton!
     @IBOutlet weak var btnShow: UIButton!
-    
     var delegate: AddNewDel?
     var dictObj: DeviceModel?
- 
     // MARK: LIFE CYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
         setUi()
     }
-
     // MARK: actions
     @IBAction func actionBtnConnect(_ sender: UIButton) {
         if !txtHost.hasText {
@@ -47,9 +44,7 @@ class AddDeviceVC: BaseVC {
             arrAddData()
         }
     }
-    
     @IBAction func actionBtnHideShow(_ sender: UIButton) {
-        
         if txtPassword.isSecureTextEntry {
             txtPassword.isSecureTextEntry = false
             btnShow.setTitle("Hide", for: .normal)
@@ -57,9 +52,7 @@ class AddDeviceVC: BaseVC {
             txtPassword.isSecureTextEntry = true
             btnShow.setTitle("Show", for: .normal)
         }
-        
     }
-    
     @IBAction func actionBtnBack(_ sender: UIButton) {
         self.dismiss(animated: false)
     }
@@ -70,25 +63,20 @@ extension AddDeviceVC {
         txtHost.text = dictObj?.host ?? ""
         txtPassword.text = dictObj?.deviceName ?? "111111"
         txtDeviceName.text = dictObj?.deviceName ?? ""
-        
         txtHost.placeholder = "Enter Controller IP address"
         txtDeviceName.placeholder = "Enter Device Name"
-        
         btnConnect.round()
         btnNextConnect.round()
         imgLogo.cornerRadius(cornerRadius: 10)
     }
-    
     func arrAddData() {
         let entity = NSEntityDescription.entity(forEntityName: "ConnectionItem", in: context)
-        
         let newUser = NSManagedObject(entity: entity!, insertInto: context)
         newUser.setValue("\(AppDelegate.user.count + 1)", forKey: "id")
         newUser.setValue(5900, forKey: "port")
         newUser.setValue("\(txtPassword.text ?? "111111")", forKey: "password")
         newUser.setValue("\(txtHost.text ?? "")", forKey: "host")
         newUser.setValue("\(txtDeviceName.text ?? "")", forKey: "device_name")
-
         do {
             try context.save()
             AppDelegate.user.append(newUser)

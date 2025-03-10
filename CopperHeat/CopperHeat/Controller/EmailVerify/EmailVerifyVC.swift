@@ -132,7 +132,6 @@ extension EmailVerifyVC {
                         txtFive.isUserInteractionEnabled = true
                         txtFive.becomeFirstResponder()
                         txtFive.text = ""
-                        
                     default:
                         break
                     }

@@ -20,7 +20,12 @@ extension UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     func isModal() -> Bool {
-        return self.presentingViewController?.presentedViewController == self || (self.navigationController != nil && self.navigationController?.presentingViewController?.presentedViewController == self.navigationController) || self.tabBarController?.presentingViewController is UITabBarController
+        return self.presentingViewController?.presentedViewController == self
+        || (self.navigationController != nil
+            &&
+            self.navigationController?.presentingViewController?.presentedViewController ==
+            self.navigationController)
+        || self.tabBarController?.presentingViewController is UITabBarController
     }
     func showToast(message: String) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
@@ -355,7 +360,9 @@ extension UITapGestureRecognizer {
         let textBoundingBox = layoutManager.usedRect(for: textContainer)
         let textContainerOffset = CGPoint(
             x: (labelSize.width - textBoundingBox.size.width) * 0.5 - textBoundingBox.origin.x,
-                                          y: (labelSize.height - textBoundingBox.size.height) * 0.5 - textBoundingBox.origin.y)
+                                          y: (
+                                            labelSize.height - textBoundingBox.size.height
+                                          ) * 0.5 - textBoundingBox.origin.y)
         let locationOfTouchInTextContainer = CGPoint(
             x: locationOfTouchInLabel.x - textContainerOffset.x,
                                                      y: locationOfTouchInLabel.y - textContainerOffset.y)
@@ -595,7 +602,6 @@ extension UIImage {
         }
         return gif(data: imageData)
     }
-    
     @available(iOS 9.0, *)
     public class func gif(asset: String) -> UIImage? {
         // Create source from assets catalog
@@ -952,7 +958,7 @@ extension NSMutableAttributedString {
 }
 
 class ActivityLoader: NSObject {
-    // MARK:- Start ActivityLoader
+    // MARK: Start ActivityLoader
     class func startActivityLoader(onView: UIView) -> UIView {
         let activityLoaderView = UIView.init(frame: onView.bounds)
         activityLoaderView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
@@ -966,7 +972,7 @@ class ActivityLoader: NSObject {
         }
         return activityLoaderView
     }
-    // MARK:- Stop ActivityLoader
+    // MARK: Stop ActivityLoader
     class func stopActivityLoader(loaderView: UIView) {
         DispatchQueue.main.async {
             loaderView.removeFromSuperview()
@@ -1025,7 +1031,7 @@ extension String {
 }
 
 extension String {
-    func getCommaValue()->String {
+    func getCommaValue() -> String {
         let formatter = NumberFormatter()
         // Set up the NumberFormatter to use a thousands separator
         formatter.usesGroupingSeparator = true
@@ -1034,7 +1040,7 @@ extension String {
         formatter.alwaysShowsDecimalSeparator = true
         formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 2
-        if let string = formatter.string(from: NSNumber(value: Double(self) ?? 0.00)){
+        if let string = formatter.string(from: NSNumber(value: Double(self) ?? 0.00)) {
             return string
         }
         return ""
@@ -1083,7 +1089,7 @@ extension String {
         return self
     }
     var decodeEmoji: String {
-        let data = self.data(using: String.Encoding.utf8);
+        let data = self.data(using: String.Encoding.utf8)
         let decodedStr = NSString(data: data!,
                                   encoding: String.Encoding.nonLossyASCII.rawValue)
         if let str = decodedStr {
@@ -1102,8 +1108,7 @@ extension URL {
             if let theFileSize = values.fileSize {
                 filesize = theFileSize
             }
-        }
-        catch {
+        } catch {
             print("Error: \(error)")
         }
         return filesize
@@ -1198,7 +1203,7 @@ extension StringProtocol {
     }
 }
 
-extension RangeExpression where Bound == String.Index  {
+extension RangeExpression where Bound == String.Index {
     func nsRange<S: StringProtocol>(in string: S) -> NSRange { .init(self, in: string) }
 }
 
@@ -1209,7 +1214,11 @@ extension UIScrollView {
             // Get the Y position of your child view
             let childStartPoint = origin.convert(view.frame.origin, to: self)
             // Scroll to a rectangle starting at the Y of your subview, with a height of the scrollview
-            self.scrollRectToVisible(CGRect(x: 0, y: childStartPoint.y, width: 1, height: self.frame.height), animated: animated)
+            self.scrollRectToVisible(CGRect(x: 0,
+                                            y: childStartPoint.y,
+                                            width: 1,
+                                            height: self.frame.height),
+                                     animated: animated)
         }
     }
     // Bonus: Scroll to top

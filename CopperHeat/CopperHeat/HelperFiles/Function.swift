@@ -88,49 +88,6 @@ class FUNCTION {
     func getLocalCountryCode() -> String? {
         return (Locale.current as NSLocale).object(forKey: .countryCode) as? String
     }
-    func  getAttributedString(string: String,
-                              color: UIColor? = nil,
-                              backgroundColor: UIColor? = nil,
-                              strikethroughStyle: Int? = nil,
-                              shadowBlurRadius: Int? = nil,
-                              shadowOffset: CGSize? = nil,
-                              shadowColor: UIColor? = nil,
-                              strokeWidth: Int? = nil,
-                              underlineStyle: NSUnderlineStyle? = nil,
-                              font: UIFont? = nil
-    ) -> NSAttributedString {
-        var newAttribute: [NSAttributedString.Key: Any]? = [:]
-        if font != nil {
-            newAttribute?.updateValue(font as Any, forKey: NSAttributedString.Key.font)
-        }
-        if color != nil {
-            newAttribute?.updateValue(color as Any, forKey: NSAttributedString.Key.foregroundColor)
-        }
-        if strikethroughStyle != nil {
-            newAttribute?.updateValue(strikethroughStyle as Any, forKey: NSAttributedString.Key.strikethroughStyle)
-        }
-        let shadow = NSShadow()
-        if shadowBlurRadius != nil {
-            shadow.shadowBlurRadius = CGFloat(shadowBlurRadius ?? 0)
-        }
-        if shadowOffset != nil {
-            shadow.shadowOffset = shadowOffset!
-        }
-        if shadowColor != nil {
-            shadow.shadowColor = shadowColor
-        }
-        newAttribute?.updateValue(shadow, forKey: NSAttributedString.Key.shadow)
-        if strokeWidth != nil {
-            newAttribute?.updateValue(strokeWidth as Any, forKey: NSAttributedString.Key.strokeWidth)
-        }
-        if backgroundColor != nil {
-            newAttribute?.updateValue(backgroundColor as Any, forKey: NSAttributedString.Key.backgroundColor)
-        }
-        if underlineStyle != nil {
-            newAttribute?.updateValue(underlineStyle!.rawValue, forKey: NSAttributedString.Key.underlineStyle)
-        }
-        return NSAttributedString(string: string, attributes: newAttribute)
-    }
     func setAttributedStringforStatus(_ str: String) -> NSAttributedString {
         var atrstrStatus = str
         var arr = atrstrStatus.components(separatedBy: " : ")
@@ -148,24 +105,6 @@ class FUNCTION {
         )
         attString.append(attString1)
         return attString
-    }
-    func getHmsFromCMTime(cmTime: CMTime) -> (h: String, m: String, s: String, secInt: Int) {
-        let timeSecond = Int(CMTimeGetSeconds(cmTime))
-        let hours = (timeSecond / 3600)
-        let minutes = ((timeSecond % 3600) / 60)
-        let seconds = ((timeSecond % 3600) % 60)
-        return (h: String(format: "%.02d", hours),
-                m: String(format: "%.02d", minutes),
-                s: String(format: "%.02d", seconds),
-                secInt: timeSecond)
-    }
-    func getHmsFromCMTime(timeSecond: Int) -> (h: String, m: String, s: String) {
-        let hours = (timeSecond / 3600)
-        let minutes = ((timeSecond % 3600) / 60)
-        let seconds = ((timeSecond % 3600) % 60)
-        return (h: String(format: "%.02d", hours),
-                m: String(format: "%.02d", minutes),
-                s: String(format: "%.02d", seconds))
     }
     func convertDateFormate(date: Date) -> String {
         // Day
@@ -188,55 +127,44 @@ class FUNCTION {
         }
         return day + " " + newDate
     }
-    func convertServerDateTime(toLocalDeviceDateTime strDateTime: String, isFromChatDetails: Bool) -> String? {
-        var strDateTime = strDateTime
-        let dateFormatter1 = DateFormatter()
-        dateFormatter1.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        guard let date = dateFormatter1.date(from: strDateTime) else {
-            return ""
+    func convertServerDateTime(toLocalDeviceDateTime strDateTime: String,
+                               isFromChatDetails: Bool) -> String? {
+        guard let date = parseDate(from: strDateTime) else {
+            return nil
         }
-        let currentTimeZone = NSTimeZone.local as NSTimeZone
-        let utcTimeZone = NSTimeZone(abbreviation: "UTC")!
+        let destinationDate = convertToLocalDate(from: date)
+        return formatDate(destinationDate, isFromChatDetails: isFromChatDetails)
+    }
+    private func parseDate(from strDateTime: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return dateFormatter.date(from: strDateTime)
+    }
+    private func convertToLocalDate(from date: Date) -> Date {
+        let currentTimeZone = TimeZone.current
+        let utcTimeZone = TimeZone(abbreviation: "UTC")!
         let currentGMTOffset = currentTimeZone.secondsFromGMT(for: date)
         let gmtOffset = utcTimeZone.secondsFromGMT(for: date)
-        let gmtInterval = TimeInterval((currentGMTOffset) - (gmtOffset))
-        let destinationDate = Date(timeInterval: gmtInterval, since: date)
+        let gmtInterval = TimeInterval(currentGMTOffset - gmtOffset)
+        return Date(timeInterval: gmtInterval, since: date)
+    }
+    private func formatDate(_ date: Date, isFromChatDetails: Bool) -> String {
         let currentDate = Date()
-        let timeDifference = currentDate.timeIntervalSince(destinationDate)
-        let time = Int(round(timeDifference))
-        let daycount = (Double(time) / 86400.00)
-        if daycount <= 0.50 {
-            let dateFormatters = DateFormatter()
-            dateFormatters.dateFormat = "hh:mm a"
-            dateFormatters.timeZone = NSTimeZone.system
-            strDateTime = dateFormatters.string(from: destinationDate)
-            if isFromChatDetails {
-                strDateTime = "Today \(strDateTime)"
-            } else {
-                strDateTime = "\(strDateTime)"
-            }
-            return strDateTime
-        } else if daycount > 0 && daycount < 2 {
-            let dateFormatters = DateFormatter()
-            dateFormatters.dateFormat = "hh:mm a"
-            dateFormatters.timeZone = NSTimeZone.system
-            strDateTime = dateFormatters.string(from: destinationDate)
-            if isFromChatDetails {
-                strDateTime = "Yesterday \(strDateTime)"
-            } else {
-                strDateTime = "Yesterday"
-            }
-            return strDateTime
+        let timeDifference = currentDate.timeIntervalSince(date)
+        let dayCount = timeDifference / 86400.0
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone.current
+        if dayCount <= 0.50 {
+            dateFormatter.dateFormat = "hh:mm a"
+            let timeString = dateFormatter.string(from: date)
+            return isFromChatDetails ? "Today \(timeString)" : timeString
+        } else if dayCount > 0 && dayCount < 2 {
+            dateFormatter.dateFormat = "hh:mm a"
+            let timeString = dateFormatter.string(from: date)
+            return isFromChatDetails ? "Yesterday \(timeString)" : "Yesterday"
         } else {
-            let dateFormatters = DateFormatter()
-            if isFromChatDetails {
-                dateFormatters.dateFormat = "dd MMM yy hh:mm a"
-            } else {
-                dateFormatters.dateFormat = "dd MMM yy"
-            }
-            dateFormatters.timeZone = NSTimeZone.system
-            strDateTime = dateFormatters.string(from: destinationDate)
-            return strDateTime
+            dateFormatter.dateFormat = isFromChatDetails ? "dd MMM yy hh:mm a" : "dd MMM yy"
+            return dateFormatter.string(from: date)
         }
     }
     func getImages(assets: [PHAsset], completion: @escaping ([UIImage]) -> Void) {
@@ -269,17 +197,6 @@ class FUNCTION {
         group.notify(queue: DispatchQueue.main) {
             completion(images)
         }
-    }
-    func getUnique() -> String {
-        var unique: String {
-            var result = ""
-            repeat {
-                result = String(format: "%04d", arc4random_uniform(10000) )
-
-            } while Set<Character>(result).count < 4
-            return ("\(Int(Date().timeIntervalSince1970))" + result)
-        }
-        return unique
     }
 //    func textToHtml(str: String) -> String {
 //        let htmlString = str.stringByDecodingHTMLEntities

@@ -74,7 +74,6 @@ class TabBarController: UITabBarController, UIGestureRecognizerDelegate {
          // New Code
          didSet {
              guard let viewControllers = viewControllers else { return }
-
              // Determine the font size based on the device type
              let fontSize: CGFloat = isIPAD ? 14.0 : 12.0
              let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: fontSize)]
@@ -100,81 +99,74 @@ class TabBarController: UITabBarController, UIGestureRecognizerDelegate {
             )
           )
      }
-     public func getTabBar(selectedIndex: Int, selectedColor: UIColor, normalColor: UIColor) -> UITabBarController {
-          self.tabBar.tintColor = selectedColor
-          self.tabBar.unselectedItemTintColor = normalColor
-          for tabItem in self.arrTabItemVC {
-               self.arrNavVC.append(tabItem.viewController) // UINavigationController(rootViewController: tabItem.vc)
-          }
-          self.viewControllers = self.arrNavVC
-          let tabBar: UITabBar = self.tabBar
-          for index in 0..<(tabBar.items ?? []).count {
-               let tabBarItem: UITabBarItem = tabBar.items![index]
-               let tab = self.arrTabItemVC[index]
-               tabBarItem.image = UIImage(named: tab.normalImage) ?? UIImage()
-               tabBarItem.title = tab.title
-               if isIPAD {
-                   tabBarItem.setTitleTextAttributes([.font: UIFont.systemFont(ofSize: 14.0)], for: .normal)
-               } else {
-                   tabBarItem.setTitleTextAttributes([.font: UIFont.systemFont(ofSize: 12.0)], for: .normal)
-               }
-          }
-          self.selectedIndex = selectedIndex
-         self.tabBar.barTintColor = UIColor.colorRed
-         self.tabBar.backgroundColor = .black
-          self.tabBar.layer.borderWidth = 0.0
-          self.tabBar.layer.borderColor = UIColor.clear.cgColor
-          self.tabBar.layer.shadowColor = UIColor.black.cgColor
-          self.tabBar.layer.shadowOffset = CGSize(width: 0, height: 0)
-          self.tabBar.layer.shadowOpacity = 0.22
-          self.tabBar.layer.shadowRadius = 10.0
-          self.tabBar.layer.shadowPath = UIBezierPath(rect: self.tabBar.bounds).cgPath
-          self.tabBar.layer.masksToBounds = false
-          if #available(iOS 15.0, *) {
-               let tabBarAppearance: UITabBarAppearance = UITabBarAppearance()
-               tabBarAppearance.configureWithOpaqueBackground()
-               tabBarAppearance.backgroundColor = .black
-              var tabFont = UIFont()
-              tabFont = UIFont.systemFont(ofSize: 12.0)
-               tabBarAppearance.compactInlineLayoutAppearance.normal.titleTextAttributes = [
-                NSAttributedString.Key.font: tabFont,
-                    .foregroundColor: normalColor
-               ]
-               tabBarAppearance.inlineLayoutAppearance.normal.titleTextAttributes = [
-                NSAttributedString.Key.font: tabFont,
-                    .foregroundColor: normalColor
-               ]
-               tabBarAppearance.stackedLayoutAppearance.normal.titleTextAttributes = [
-                NSAttributedString.Key.font: tabFont,
-                    .foregroundColor: normalColor
-               ]
-               tabBarAppearance.stackedLayoutAppearance.selected.titleTextAttributes = [
-                NSAttributedString.Key.font: tabFont,
-                    .foregroundColor: selectedColor
-               ]
-               tabBarAppearance.compactInlineLayoutAppearance.selected.titleTextAttributes = [
-                NSAttributedString.Key.font: tabFont,
-                    .foregroundColor: selectedColor
-               ]
-               tabBarAppearance.inlineLayoutAppearance.selected.titleTextAttributes = [
-                NSAttributedString.Key.font: tabFont,
-                    .foregroundColor: selectedColor
-               ]
-               tabBar.tintColor = selectedColor
-               tabBar.scrollEdgeAppearance = tabBar.standardAppearance
-               tabBar.standardAppearance = tabBarAppearance
-               tabBar.scrollEdgeAppearance = tabBarAppearance
-          }
-          UITabBarItem.appearance().setTitleTextAttributes(
-            [NSAttributedString.Key.foregroundColor: selectedColor],
-            for: .selected
-          )
-          UITabBarItem.appearance().setTitleTextAttributes(
-            [NSAttributedString.Key.foregroundColor: normalColor],
-            for: .normal
-          )
-          return self
-     }
+    public func getTabBar(selectedIndex: Int,
+                          selectedColor: UIColor,
+                          normalColor: UIColor) -> UITabBarController {
+        configureTabBarAppearance(selectedColor: selectedColor, normalColor: normalColor)
+        setupViewControllers()
+        configureTabBarItems(selectedColor: selectedColor, normalColor: normalColor)
+        self.selectedIndex = selectedIndex
+        return self
+    }
+    private func configureTabBarAppearance(selectedColor: UIColor, normalColor: UIColor) {
+        self.tabBar.tintColor = selectedColor
+        self.tabBar.unselectedItemTintColor = normalColor
+        self.tabBar.barTintColor = UIColor.colorRed
+        self.tabBar.backgroundColor = .black
+        self.tabBar.layer.borderWidth = 0.0
+        self.tabBar.layer.borderColor = UIColor.clear.cgColor
+        self.tabBar.layer.shadowColor = UIColor.black.cgColor
+        self.tabBar.layer.shadowOffset = CGSize(width: 0, height: 0)
+        self.tabBar.layer.shadowOpacity = 0.22
+        self.tabBar.layer.shadowRadius = 10.0
+        self.tabBar.layer.shadowPath = UIBezierPath(rect: self.tabBar.bounds).cgPath
+        self.tabBar.layer.masksToBounds = false
+        if #available(iOS 15.0, *) {
+            let tabBarAppearance = UITabBarAppearance()
+            tabBarAppearance.configureWithOpaqueBackground()
+            tabBarAppearance.backgroundColor = .black
+            configureTabBarAppearanceAttributes(tabBarAppearance: tabBarAppearance,
+                                                selectedColor: selectedColor,
+                                                normalColor: normalColor)
+            self.tabBar.standardAppearance = tabBarAppearance
+            self.tabBar.scrollEdgeAppearance = tabBarAppearance
+        }
+        UITabBarItem.appearance().setTitleTextAttributes([.foregroundColor: selectedColor],
+                                                         for: .selected)
+        UITabBarItem.appearance().setTitleTextAttributes([.foregroundColor: normalColor],
+                                                         for: .normal)
+    }
+    private func configureTabBarAppearanceAttributes(tabBarAppearance: UITabBarAppearance,
+                                                     selectedColor: UIColor,
+                                                     normalColor: UIColor) {
+        let tabFont = UIFont.systemFont(ofSize: 12.0)
+        tabBarAppearance.compactInlineLayoutAppearance.normal.titleTextAttributes = [.font: tabFont,
+            .foregroundColor: normalColor]
+        tabBarAppearance.inlineLayoutAppearance.normal.titleTextAttributes = [.font: tabFont,
+            .foregroundColor: normalColor]
+        tabBarAppearance.stackedLayoutAppearance.normal.titleTextAttributes = [.font: tabFont,
+            .foregroundColor: normalColor]
+        tabBarAppearance.stackedLayoutAppearance.selected.titleTextAttributes = [.font: tabFont,
+            .foregroundColor: selectedColor]
+        tabBarAppearance.compactInlineLayoutAppearance.selected.titleTextAttributes = [.font: tabFont,
+            .foregroundColor: selectedColor]
+        tabBarAppearance.inlineLayoutAppearance.selected.titleTextAttributes = [.font: tabFont,
+            .foregroundColor: selectedColor]
+    }
+    private func setupViewControllers() {
+        self.arrNavVC = self.arrTabItemVC.map { $0.viewController }
+        self.viewControllers = self.arrNavVC
+    }
+    private func configureTabBarItems(selectedColor: UIColor, normalColor: UIColor) {
+        guard let tabBarItems = self.tabBar.items else { return }
+        for (index, tabBarItem) in tabBarItems.enumerated() {
+            let tab = self.arrTabItemVC[index]
+            tabBarItem.image = UIImage(named: tab.normalImage) ?? UIImage()
+            tabBarItem.title = tab.title
+            let fontSize: CGFloat = isIPAD ? 14.0 : 12.0
+            tabBarItem.setTitleTextAttributes([.font: UIFont.systemFont(ofSize: fontSize)], for: .normal)
+        }
+    }
 }
 
 extension TabBarController: UITabBarControllerDelegate {

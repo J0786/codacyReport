@@ -714,7 +714,6 @@ extension UIImage {
         for index in 0..<count {
             frame = UIImage(cgImage: images[Int(index)])
             frameCount = Int(delays[Int(index)] / gcd)
-            
             for _ in 0..<frameCount {
                 frames.append(frame)
             }
@@ -760,22 +759,6 @@ extension Dictionary {
     }
     func decode<T: Codable>() throws -> T {
         return try JSONDecoder().decode(T.self, from: jsonData ?? Data())
-    }
-}
-
-extension URL {
-    func getInfo() -> (bytes: Double, kb: Double, mb: Double, gb: Double) {
-        do {
-            let res = try self.resourceValues(forKeys: [.fileSizeKey])
-            if let resBytes: Int = res.fileSize {
-                let resBytesInt64: Int64 = Int64(resBytes)
-                return (bytes: Double(Units(bytes: resBytesInt64).bytes),
-                        kb: Double(Units(bytes: resBytesInt64).kilobytes),
-                        mb: Double(Units(bytes: resBytesInt64).megabytes),
-                        gb: Double(Units(bytes: resBytesInt64).gigabytes))
-            }
-        } catch { }
-        return (bytes: 0.0, kb: 0.0, mb: 0.0, gb: 0.0)
     }
 }
 
@@ -889,18 +872,10 @@ extension String {
         }
         return res
     }
-    func validateStringContainAlphabetsOnly() -> Bool {
-        do {
-            let regex = try NSRegularExpression(pattern: ".*[^A-Za-z ].*", options: [])
-            if regex.firstMatch(in: self, options: [], range: NSMakeRange(0, self.count)) != nil {
-                return false
-            } else {
-                return true
-            }
-        } catch {
-            debugPrint("ERROR")
-            return false
-        }
+    func validateStringContainsAlphabetsOnly() -> Bool {
+        let regex = "^[A-Za-z ]+$"
+        let predicate = NSPredicate(format: "SELF MATCHES %@", regex)
+        return predicate.evaluate(with: self)
     }
     func changeDateFormate(iFormate: String, oFormate: String) -> String {
         let inputFormatter = DateFormatter()
@@ -929,30 +904,6 @@ extension Double {
     func roundToPlaces(places: Int) -> Double {
         let divisor = pow(10.0, Double(places))
         return (self * divisor).rounded() / divisor
-    }
-}
-
-extension NSMutableAttributedString {
-    func  appendAttributedString(string: String,
-                                 color: UIColor? = nil,
-                                 backgroundColor: UIColor? = nil,
-                                 strikethroughStyle: Int? = nil,
-                                 shadowBlurRadius: Int? = nil,
-                                 shadowOffset: CGSize? = nil,
-                                 shadowColor: UIColor? = nil,
-                                 strokeWidth: Int? = nil,
-                                 underlineStyle: NSUnderlineStyle? = nil,
-                                 font: UIFont? = nil) {
-        self.append(FUNCTION().getAttributedString(string: string,
-                                                   color: color,
-                                                   backgroundColor: backgroundColor,
-                                                   strikethroughStyle: strikethroughStyle,
-                                                   shadowBlurRadius: shadowBlurRadius,
-                                                   shadowOffset: shadowOffset,
-                                                   shadowColor: shadowColor,
-                                                   strokeWidth: strokeWidth,
-                                                   underlineStyle: underlineStyle,
-                                                   font: font))
     }
 }
 

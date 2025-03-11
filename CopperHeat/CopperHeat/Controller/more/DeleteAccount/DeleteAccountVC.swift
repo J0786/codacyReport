@@ -27,7 +27,7 @@ class DeleteAccountVC: BaseVC {
     @IBAction func actionBtnDelete(_ sender: UIButton) {
         showAlert(message: "Are you sure you want to delete your account?") {
             self.accountDelete()
-        } no: { }
+        } noCompletion: { }
     }
     @IBAction func actionBtnCencel(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)

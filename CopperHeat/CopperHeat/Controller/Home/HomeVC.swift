@@ -136,7 +136,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
                 print(AppDelegate.user.count)
             } catch { }
             self.checkNoData()
-        } no: {
+        } noCompletion: {
 
         }
     }

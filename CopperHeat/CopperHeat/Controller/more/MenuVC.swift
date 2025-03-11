@@ -131,7 +131,7 @@ extension MenuVC: UITableViewDataSource, UITableViewDelegate {
                         }
                     }
                 }
-            } no: { }
+            } noCompletion: { }
         } else if arrMenu[indexPath.row].title == "Delete Account" {
             if let deleteVC = storyBoard.instantiateViewController(
                 withIdentifier: "DeleteAccountVC"

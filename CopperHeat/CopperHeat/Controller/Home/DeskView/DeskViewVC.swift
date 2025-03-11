@@ -42,7 +42,7 @@ class DeskViewVC: BaseVC, IRetrieveConnectionId, UIAlertViewDelegate {
             self.viewCore?.stop()
             self.isConnected = false
             self.navigationController?.popViewController(animated: true)
-        } no: { }
+        } noCompletion: { }
     }
     func askConnectionId() -> UInt32 {
         desktopView?.hideProgressDialog()

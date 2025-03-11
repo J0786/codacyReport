@@ -87,13 +87,13 @@ extension UIViewController {
         let alert = UIAlertController(title: title,
             message: message,
             preferredStyle: UIAlertController.Style.alert)
-        let acOK = UIAlertAction(title: "Ok".uppercased(), style: UIAlertAction.Style.default) { (action) in
+        let acOK = UIAlertAction(title: "Ok".uppercased(), style: UIAlertAction.Style.default) { _ in
             completion()
         }
         alert.addAction(acOK)
         self.present(alert, animated: true, completion: nil)
     }
-    func showAlert(message: String, yes: @escaping () -> Void, no: @escaping () -> Void) {
+    func showAlert(message: String, yes: @escaping () -> Void, noCompletion: @escaping () -> Void) {
         let alert = UIAlertController(title: "Copper Master",
             message: message,
             preferredStyle: UIAlertController.Style.alert)
@@ -101,7 +101,7 @@ extension UIViewController {
             yes()
         }
         let acNo = UIAlertAction(title: "No", style: UIAlertAction.Style.default) { _ in
-            no()
+            noCompletion()
         }
         alert.addAction(acYes)
         alert.addAction(acNo)
@@ -140,8 +140,6 @@ extension UIViewController: NVActivityIndicatorViewable {
         self.stopAnimating(nil)
     }
 }
-
-
 
 extension UIApplication {
     class func windowAlert(message: String) {
@@ -355,9 +353,11 @@ extension UITapGestureRecognizer {
         // Find the tapped character location and compare it to the specified range
         let locationOfTouchInLabel = self.location(in: label)
         let textBoundingBox = layoutManager.usedRect(for: textContainer)
-        let textContainerOffset = CGPoint(x: (labelSize.width - textBoundingBox.size.width) * 0.5 - textBoundingBox.origin.x,
+        let textContainerOffset = CGPoint(
+            x: (labelSize.width - textBoundingBox.size.width) * 0.5 - textBoundingBox.origin.x,
                                           y: (labelSize.height - textBoundingBox.size.height) * 0.5 - textBoundingBox.origin.y)
-        let locationOfTouchInTextContainer = CGPoint(x: locationOfTouchInLabel.x - textContainerOffset.x,
+        let locationOfTouchInTextContainer = CGPoint(
+            x: locationOfTouchInLabel.x - textContainerOffset.x,
                                                      y: locationOfTouchInLabel.y - textContainerOffset.y)
         let indexOfCharacter = layoutManager.characterIndex(for: locationOfTouchInTextContainer,
                                                             in: textContainer,
@@ -492,7 +492,6 @@ extension UIImageView {
     //            }
     //        }
     //    }
-    
     //    @available(iOS 9.0, *)
     //    public func loadGif(asset: String) {
     //
@@ -621,11 +620,14 @@ extension UIImage {
         }
         let gifProperties: CFDictionary = unsafeBitCast(gifPropertiesPointer.pointee, to: CFDictionary.self)
         // Get delay time
-        var delayObject: AnyObject = unsafeBitCast(CFDictionaryGetValue(gifProperties, Unmanaged.passUnretained(kCGImagePropertyGIFUnclampedDelayTime).toOpaque()),
+        var delayObject: AnyObject = unsafeBitCast(CFDictionaryGetValue(gifProperties,
+                                                                        Unmanaged.passUnretained(
+            kCGImagePropertyGIFUnclampedDelayTime).toOpaque()),
                                                    to: AnyObject.self)
         if delayObject.doubleValue == 0 {
             delayObject = unsafeBitCast(CFDictionaryGetValue(gifProperties,
-                                                             Unmanaged.passUnretained(kCGImagePropertyGIFDelayTime).toOpaque()),
+                                                             Unmanaged.passUnretained(
+                                                                kCGImagePropertyGIFDelayTime).toOpaque()),
                                         to: AnyObject.self)
         }
         if let delayObject = delayObject as? Double, delayObject > 0 {
@@ -761,7 +763,7 @@ extension URL {
         do {
             let res = try self.resourceValues(forKeys: [.fileSizeKey])
             if let resBytes: Int = res.fileSize {
-                let resBytesInt64 : Int64 = Int64(resBytes)
+                let resBytesInt64: Int64 = Int64(resBytes)
                 return (bytes: Double(Units(bytes: resBytesInt64).bytes),
                         kb: Double(Units(bytes: resBytesInt64).kilobytes),
                         mb: Double(Units(bytes: resBytesInt64).megabytes),
@@ -807,7 +809,8 @@ extension String {
         guard let data = data(using: .utf8) else { return (string: nil, attributedString: nil) }
         do {
             let attStr = try NSAttributedString(data: data,
-                                                options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue],
+                                                options: [.documentType: NSAttributedString.DocumentType.html,
+                                                    .characterEncoding: String.Encoding.utf8.rawValue],
                                                 documentAttributes: nil)
             return (string: attStr.string, attributedString: attStr)
         } catch {
@@ -879,9 +882,9 @@ extension String {
         for digit in arDigit {
             res = res.replacingOccurrences(of: digit.arabic, with: digit.english)
         }
-        return res;
+        return res
     }
-    func validateStringContainAlphabetsOnly() -> Bool{
+    func validateStringContainAlphabetsOnly() -> Bool {
         do {
             let regex = try NSRegularExpression(pattern: ".*[^A-Za-z ].*", options: [])
             if regex.firstMatch(in: self, options: [], range: NSMakeRange(0, self.count)) != nil {
@@ -889,8 +892,7 @@ extension String {
             } else {
                 return true
             }
-        }
-        catch {
+        } catch {
             debugPrint("ERROR")
             return false
         }
@@ -936,13 +938,22 @@ extension NSMutableAttributedString {
                                  strokeWidth: Int? = nil,
                                  underlineStyle: NSUnderlineStyle? = nil,
                                  font: UIFont? = nil) {
-        self.append(FUNCTION().getAttributedString(string: string, color: color, backgroundColor: backgroundColor, strikethroughStyle: strikethroughStyle, shadowBlurRadius: shadowBlurRadius, shadowOffset: shadowOffset, shadowColor: shadowColor, strokeWidth: strokeWidth, underlineStyle: underlineStyle, font: font))
+        self.append(FUNCTION().getAttributedString(string: string,
+                                                   color: color,
+                                                   backgroundColor: backgroundColor,
+                                                   strikethroughStyle: strikethroughStyle,
+                                                   shadowBlurRadius: shadowBlurRadius,
+                                                   shadowOffset: shadowOffset,
+                                                   shadowColor: shadowColor,
+                                                   strokeWidth: strokeWidth,
+                                                   underlineStyle: underlineStyle,
+                                                   font: font))
     }
 }
 
 class ActivityLoader: NSObject {
-    //MARK:- Start ActivityLoader
-    class func startActivityLoader(onView : UIView) -> UIView {
+    // MARK:- Start ActivityLoader
+    class func startActivityLoader(onView: UIView) -> UIView {
         let activityLoaderView = UIView.init(frame: onView.bounds)
         activityLoaderView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
         let activityLoader = UIActivityIndicatorView.init(style: .whiteLarge)
@@ -955,8 +966,8 @@ class ActivityLoader: NSObject {
         }
         return activityLoaderView
     }
-    //MARK:- Stop ActivityLoader
-    class func stopActivityLoader(loaderView :UIView) {
+    // MARK:- Stop ActivityLoader
+    class func stopActivityLoader(loaderView: UIView) {
         DispatchQueue.main.async {
             loaderView.removeFromSuperview()
         }
@@ -979,10 +990,11 @@ extension CAGradientLayer {
     private func createGradientImage(on view: UIView) -> UIImage? {
         var gradientImage: UIImage?
         UIGraphicsBeginImageContext(view.frame.size)
-        if let context = UIGraphicsGetCurrentContext()
-        {
+        if let context = UIGraphicsGetCurrentContext() {
             render(in: context)
-            gradientImage = UIGraphicsGetImageFromCurrentImageContext()?.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
+            gradientImage = UIGraphicsGetImageFromCurrentImageContext()?.resizableImage(
+                withCapInsets: UIEdgeInsets.zero,
+                resizingMode: .stretch)
         }
         UIGraphicsEndImageContext()
         return gradientImage
@@ -1013,16 +1025,16 @@ extension String {
 }
 
 extension String {
-    func getCommaValue()->String{
+    func getCommaValue()->String {
         let formatter = NumberFormatter()
         // Set up the NumberFormatter to use a thousands separator
         formatter.usesGroupingSeparator = true
         formatter.groupingSize = 3
-        //Set it up to always display 2 decimal places.
+        // Set it up to always display 2 decimal places.
         formatter.alwaysShowsDecimalSeparator = true
         formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 2
-        if let string = formatter.string(from:NSNumber(value:Double(self) ?? 0.00)){
+        if let string = formatter.string(from: NSNumber(value: Double(self) ?? 0.00)){
             return string
         }
         return ""
@@ -1064,14 +1076,16 @@ extension String {
         return filter { $0.isEmoji }.flatMap { $0.unicodeScalars }
     }
     var encodeEmoji: String {
-        if let encodeStr = NSString(cString: self.cString(using: .nonLossyASCII)!, encoding: String.Encoding.utf8.rawValue) {
+        if let encodeStr = NSString(cString: self.cString(using: .nonLossyASCII)!,
+                                    encoding: String.Encoding.utf8.rawValue) {
             return encodeStr as String
         }
         return self
     }
     var decodeEmoji: String {
         let data = self.data(using: String.Encoding.utf8);
-        let decodedStr = NSString(data: data!, encoding: String.Encoding.nonLossyASCII.rawValue)
+        let decodedStr = NSString(data: data!,
+                                  encoding: String.Encoding.nonLossyASCII.rawValue)
         if let str = decodedStr {
             return str as String
         }
@@ -1103,8 +1117,14 @@ extension URL {
     var queryParameters: QueryParameters {
         return QueryParameters(url: self)
     }
-    func download(to directory: FileManager.SearchPathDirectory, using fileName: String? = nil, overwrite: Bool = false, completion: @escaping (URL?, Error?) -> Void) throws {
-        let directory = try FileManager.default.url(for: directory, in: .userDomainMask, appropriateFor: nil, create: true)
+    func download(to directory: FileManager.SearchPathDirectory,
+                  using fileName: String? = nil,
+                  overwrite: Bool = false,
+                  completion: @escaping (URL?, Error?) -> Void) throws {
+        let directory = try FileManager.default.url(for: directory,
+                                                    in: .userDomainMask,
+                                                    appropriateFor: nil,
+                                                    create: true)
         let destination: URL
         if let fileName = fileName {
             destination = directory
@@ -1148,14 +1168,20 @@ class QueryParameters {
 }
 
 extension StringProtocol {
-    func nsRange<S: StringProtocol>(of string: S, options: String.CompareOptions = [], range: Range<Index>? = nil, locale: Locale? = nil) -> NSRange? {
+    func nsRange<S: StringProtocol>(of string: S,
+                                    options: String.CompareOptions = [],
+                                    range: Range<Index>? = nil,
+                                    locale: Locale? = nil) -> NSRange? {
         self.range(of: string,
                    options: options,
                    range: range ?? startIndex..<endIndex,
                    locale: locale ?? .current)?
             .nsRange(in: self)
     }
-    func nsRanges<S: StringProtocol>(of string: S, options: String.CompareOptions = [], range: Range<Index>? = nil, locale: Locale? = nil) -> [NSRange] {
+    func nsRanges<S: StringProtocol>(of string: S,
+                                     options: String.CompareOptions = [],
+                                     range: Range<Index>? = nil,
+                                     locale: Locale? = nil) -> [NSRange] {
         var start = range?.lowerBound ?? startIndex
         let end = range?.upperBound ?? endIndex
         var ranges: [NSRange] = []
@@ -1178,12 +1204,12 @@ extension RangeExpression where Bound == String.Index  {
 
 extension UIScrollView {
     // Scroll to a specific view so that it's top is at the top our scrollview
-    func scrollToView(view:UIView, animated: Bool) {
+    func scrollToView(view: UIView, animated: Bool) {
         if let origin = view.superview {
             // Get the Y position of your child view
             let childStartPoint = origin.convert(view.frame.origin, to: self)
             // Scroll to a rectangle starting at the Y of your subview, with a height of the scrollview
-            self.scrollRectToVisible(CGRect(x:0, y:childStartPoint.y,width: 1,height: self.frame.height), animated: animated)
+            self.scrollRectToVisible(CGRect(x: 0, y: childStartPoint.y, width: 1, height: self.frame.height), animated: animated)
         }
     }
     // Bonus: Scroll to top
@@ -1194,7 +1220,7 @@ extension UIScrollView {
     // Bonus: Scroll to bottom
     func scrollToBottom() {
         let bottomOffset = CGPoint(x: 0, y: contentSize.height - bounds.size.height + contentInset.bottom)
-        if(bottomOffset.y > 0) {
+        if bottomOffset.y > 0 {
             setContentOffset(bottomOffset, animated: true)
         }
     }
@@ -1202,7 +1228,7 @@ extension UIScrollView {
 
 extension UIView {
     // Export pdf from Save pdf in drectory and return pdf file path
-    func exportAsPdfFromView(strPdfName : String) -> String {
+    func exportAsPdfFromView(strPdfName: String) -> String {
         let pdfPageFrame = self.bounds
         let pdfData = NSMutableData()
         UIGraphicsBeginPDFContextToData(pdfData, pdfPageFrame, nil)
@@ -1213,7 +1239,7 @@ extension UIView {
         return self.saveViewPdf(data: pdfData, strPdfName: strPdfName)
     }
     // Save pdf file in document directory
-    func saveViewPdf(data: NSMutableData,strPdfName : String) -> String {
+    func saveViewPdf(data: NSMutableData, strPdfName: String) -> String {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let docDirectoryPath = paths[0]
         let pdfPath = docDirectoryPath.appendingPathComponent("\(strPdfName).pdf")

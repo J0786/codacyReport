@@ -85,7 +85,7 @@ extension LogInVC: LoginResponse {
             if res == nil {
                 self.showAlert(message: error)
             } else {
-                appDelegate!.currentUser = CurrentUser (
+                appDelegate!.currentUser = CurrentUser(
                     id: res?.identities?.first?.id ?? "",
                     identityId: res?.identities?.first?.identityId.uuidString ?? "",
                     userId: res?.identities?.first?.userId.uuidString ?? "",

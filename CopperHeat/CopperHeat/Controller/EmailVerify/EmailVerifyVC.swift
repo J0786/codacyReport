@@ -230,7 +230,6 @@ extension EmailVerifyVC {
             let seconds = diffSeconds % 60
             let minutes = (diffSeconds / 60) % 60
             let hours = diffSeconds / 3600
-            
             if hours > 0 {
                 strPace = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
             } else if minutes > 0 {

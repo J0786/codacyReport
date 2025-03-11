@@ -611,7 +611,6 @@ extension UIImage {
         }
         return gif(data: dataAsset.data)
     }
-    
     internal class func delayForImageAtIndex(_ index: Int, source: CGImageSource!) -> Double {
         var delay = 0.1
         // Get dictionaries

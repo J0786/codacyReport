@@ -17,7 +17,7 @@ private struct TabItemVC {
 
 var lastSelTabIndex = 0
 
-class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
+class TabBarController: UITabBarController, UIGestureRecognizerDelegate {
      fileprivate var arrTabItemVC: [TabItemVC] = []
      fileprivate var arrNavVC: [UIViewController] = [] // UINavigationController
      override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -40,7 +40,8 @@ class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
           }
      }
      override var selectedViewController: UIViewController? { // Mark 2
-          didSet {
+         // Old Code
+          /* didSet {
                guard let viewControllers = viewControllers else { return }
                for viewController in viewControllers {
                     if viewController == selectedViewController {
@@ -69,7 +70,19 @@ class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
                          }
                     }
                }
-          }
+          }*/
+         // New Code
+         didSet {
+             guard let viewControllers = viewControllers else { return }
+
+             // Determine the font size based on the device type
+             let fontSize: CGFloat = isIPAD ? 14.0 : 12.0
+             let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: fontSize)]
+
+             for viewController in viewControllers {
+                 viewController.tabBarItem.setTitleTextAttributes(attributes, for: .normal)
+             }
+         }
      }
      override func viewDidLoad() {
           super.viewDidLoad()
@@ -164,7 +177,7 @@ class TabBarMaster: UITabBarController, UIGestureRecognizerDelegate {
      }
 }
 
-extension TabBarMaster: UITabBarControllerDelegate {
+extension TabBarController: UITabBarControllerDelegate {
      func tabBarController(_ tabBarController: UITabBarController,
                            shouldSelect viewController: UIViewController
      ) -> Bool {
@@ -178,7 +191,7 @@ extension TabBarMaster: UITabBarControllerDelegate {
 
 class TABBAR {
     func getTabBar(selectedIndex: Int = 0) -> UITabBarController {
-        let tabbar = TabBarMaster()
+        let tabbar = TabBarController()
         if let home = storyBoard.instantiateViewController(withIdentifier: "HomeVC") as? HomeVC {
             tabbar.addVC(viewController: home, title: "Home", selectedImage: "home", normalImage: "home")
         }

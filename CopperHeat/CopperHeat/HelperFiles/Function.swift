@@ -307,7 +307,6 @@ struct AppInfo {
     }
     // lets hold a reference to the Info.plist of the app as Dictionary
     private let infoPlistDictionary = Bundle.main.infoDictionary
-    
     /// Retrieves and returns associated values (of Type String) from info.Plist of the app.
     private func readFromInfoPlist(withKey key: String) -> String? {
         return infoPlistDictionary?[key] as? String

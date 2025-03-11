@@ -16,7 +16,7 @@ class CmsVC: BaseVC {
     var strTitle: String?
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.StartLoader()
+        self.startLoader()
         lbltitle.text = strTitle
         let url = URL(string: strUrl ?? "")
         self.web.navigationDelegate = self
@@ -29,9 +29,9 @@ class CmsVC: BaseVC {
 
 extension CmsVC: WKNavigationDelegate {
      func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-          self.StopLoader()
+          self.stopLoader()
      }
      func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-          self.StopLoader()
+          self.stopLoader()
      }
 }

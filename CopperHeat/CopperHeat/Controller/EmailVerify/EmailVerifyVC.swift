@@ -106,70 +106,58 @@ extension EmailVerifyVC {
     @objc func editingChanged(_ textField: SingleDigitField) {
         if textField.pressedDelete {
             textField.pressedDelete = false
-            if textField.hasText {
-                textField.text = ""
-            } else {
-                switch textField {
-                case txtTwo, txtThree, txtFour, txtFive, txtSix:
-                    switch textField {
-                    case txtTwo:
-                        txtOne.isUserInteractionEnabled = true
-                        txtOne.becomeFirstResponder()
-                        txtOne.text = ""
-                    case txtThree:
-                        txtTwo.isUserInteractionEnabled = true
-                        txtTwo.becomeFirstResponder()
-                        txtTwo.text = ""
-                    case txtFour:
-                        txtThree.isUserInteractionEnabled = true
-                        txtThree.becomeFirstResponder()
-                        txtThree.text = ""
-                    case txtFive:
-                        txtFour.isUserInteractionEnabled = true
-                        txtFour.becomeFirstResponder()
-                        txtFour.text = ""
-                    case txtSix:
-                        txtFive.isUserInteractionEnabled = true
-                        txtFive.becomeFirstResponder()
-                        txtFive.text = ""
-                    default:
-                        break
-                    }
-                    textField.resignFirstResponder()
-                    textField.isUserInteractionEnabled = false
-                default: break
-                }
-            }
+            handleDeleteAction(for: textField)
+            return
         }
-        guard textField.text?.count == 1, textField.text?.last?.isWholeNumber == true else {
+        // Ensure valid single-digit input
+        guard let text = textField.text, text.count == 1, text.last?.isWholeNumber == true else {
             textField.text = ""
             return
         }
+        handleInputAction(for: textField)
+    }
+    // Handle deleting behavior when backspace is pressed
+    private func handleDeleteAction(for textField: SingleDigitField) {
+        if textField.hasText {
+            textField.text = ""
+            return
+        }
+        let previousField = getPreviousField(for: textField)
+        previousField?.isUserInteractionEnabled = true
+        previousField?.becomeFirstResponder()
+        previousField?.text = ""
+        textField.resignFirstResponder()
+        textField.isUserInteractionEnabled = false
+    }
+
+    // Handle moving to the next field when a digit is entered
+    private func handleInputAction(for textField: SingleDigitField) {
+        let nextField = getNextField(for: textField)
+        nextField?.isUserInteractionEnabled = true
+        nextField?.becomeFirstResponder()
+        textField.resignFirstResponder()
+        textField.isUserInteractionEnabled = false
+    }
+    // Determine the previous field for backspacing
+    private func getPreviousField(for textField: SingleDigitField) -> SingleDigitField? {
         switch textField {
-        case txtOne, txtTwo, txtThree, txtFour, txtFive:
-            switch textField {
-            case txtOne:
-                txtTwo.isUserInteractionEnabled = true
-                txtTwo.becomeFirstResponder()
-            case txtTwo:
-                txtThree.isUserInteractionEnabled = true
-                txtThree.becomeFirstResponder()
-            case txtThree:
-                txtFour.isUserInteractionEnabled = true
-                txtFour.becomeFirstResponder()
-            case txtFour:
-                txtFive.isUserInteractionEnabled = true
-                txtFive.becomeFirstResponder()
-            case txtFive:
-                txtSix.isUserInteractionEnabled = true
-                txtSix.becomeFirstResponder()
-            default: break
-            }
-            textField.resignFirstResponder()
-            textField.isUserInteractionEnabled = false
-        case txtSix:
-            txtSix.resignFirstResponder()
-        default: break
+        case txtTwo: return txtOne
+        case txtThree: return txtTwo
+        case txtFour: return txtThree
+        case txtFive: return txtFour
+        case txtSix: return txtFive
+        default: return nil
+        }
+    }
+    // Determine the next field when typing a digit
+    private func getNextField(for textField: SingleDigitField) -> SingleDigitField? {
+        switch textField {
+        case txtOne: return txtTwo
+        case txtTwo: return txtThree
+        case txtThree: return txtFour
+        case txtFour: return txtFive
+        case txtFive: return txtSix
+        default: return nil
         }
     }
     @objc private func txtEditingDidBeginAction(_ sender: SingleDigitField) {
@@ -193,7 +181,6 @@ extension EmailVerifyVC {
         txtFour.text = ""
         txtFive.text = ""
         txtSix.text = ""
-        
         let coolerFutureDate = Date() + (2 * 60)
         expireDate = coolerFutureDate
         timerStart()
@@ -261,12 +248,12 @@ extension EmailVerifyVC {
 
 extension EmailVerifyVC: EmailVerifyResponse {
     func verifyUserCall(otp: String) {
-        self.StartLoader()
+        self.startLoader()
         self.objEmailVerifyVM.verifyUser(email: strEmail, otp: otp)
     }
     func verifyUserhandle(isVerify: Bool?, error: String) {
         DispatchQueue.main.async {
-            self.StopLoader()
+            self.stopLoader()
             if isVerify ?? false {
                 appDelegate!.currentUser?.isEmailVerify = "1"
                 appDelegate!.currentUser?.syncronize()
@@ -277,12 +264,12 @@ extension EmailVerifyVC: EmailVerifyResponse {
         }
     }
     func resendOTPCall() {
-        self.StartLoader()
+        self.startLoader()
         self.objEmailVerifyVM.resendOTP(email: strEmail)
     }
     func resendOTPHandle(isSent: Bool?, error: String) {
         DispatchQueue.main.async {
-            self.StopLoader()
+            self.stopLoader()
             if isSent ?? false {
                 self.setData()
             } else {

@@ -46,12 +46,12 @@ extension DeleteAccountVC {
 
 extension DeleteAccountVC: DeleteAccountResponse {
     func accountDelete() {
-        StartLoader()
+        startLoader()
         objDeleteAccountVM.deleteAccount(id: appDelegate!.currentUser?.userId ?? "")
     }
     func accountDeleteHandle(isDeleted: Bool?, error: String) {
         DispatchQueue.main.sync {
-            self.StopLoader()
+            self.stopLoader()
             if isDeleted ?? false {
                 appDelegate!.currentUser?.logout()
             } else {

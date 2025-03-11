@@ -49,7 +49,7 @@ extension LogInVC {
 
 extension LogInVC: LoginResponse {
     func loginCall() {
-        self.StartLoader()
+        self.startLoader()
         objLoginVM.logIn(email: txtEmail.text ?? "")
     }
     func loginResponseHandle(res: User?, error: String) {
@@ -60,12 +60,12 @@ extension LogInVC: LoginResponse {
                 } else if error == "Email not confirmed" {
                     resendOtpCall()
                 } else {
-                    self.StopLoader()
+                    self.stopLoader()
                     self.showAlert(message: error)
                 }
             } else {
-                self.StopLoader()
-                appDelegate!.currentUser = CurrentUser (
+                self.stopLoader()
+                appDelegate!.currentUser = CurrentUser(
                     id: res?.identities?.first?.id ?? "",
                     identityId: res?.identities?.first?.identityId.uuidString ?? "",
                     userId: res?.identities?.first?.userId.uuidString ?? "", email: txtEmail.text ?? "",
@@ -81,7 +81,7 @@ extension LogInVC: LoginResponse {
     }
     func signupResponsehandle(res: User?, error: String) {
         DispatchQueue.main.sync {
-            self.StopLoader()
+            self.stopLoader()
             if res == nil {
                 self.showAlert(message: error)
             } else {
@@ -108,7 +108,7 @@ extension LogInVC: LoginResponse {
     }
     func resendOTPHandle(res: Bool?, error: String) {
         DispatchQueue.main.sync {
-            self.StopLoader()
+            self.stopLoader()
             if res == nil {
                 self.showAlert(message: error)
             } else {

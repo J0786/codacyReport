@@ -33,13 +33,18 @@ extension UIViewController {
         }
     }
     func showAlert(message: String) {
-        let alert = UIAlertController(title: "Copper Master", message: message, preferredStyle: UIAlertController.Style.alert)
+        let alertTitle = "Copper Master"
+        let alert = UIAlertController(title: alertTitle,
+            message: message,
+            preferredStyle: UIAlertController.Style.alert)
         let acOK = UIAlertAction(title: "Ok".uppercased(), style: UIAlertAction.Style.default, handler: nil)
         alert.addAction(acOK)
         self.present(alert, animated: true, completion: nil)
     }
     func showPopAlert(message: String) {
-        let alert = UIAlertController(title: "Copper Master", message: message, preferredStyle: UIAlertController.Style.alert)
+        let alert = UIAlertController(title: "Copper Master",
+            message: message,
+            preferredStyle: UIAlertController.Style.alert)
         let acOK = UIAlertAction(title: "Ok".uppercased(), style: UIAlertAction.Style.default) { _ in
             if self.isModal() {
                 self.dismiss(animated: true, completion: nil)
@@ -51,7 +56,9 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     func showAlert(attributedText: NSAttributedString) {
-        let alert = UIAlertController(title: "Copper Master", message: "", preferredStyle: UIAlertController.Style.alert)
+        let alert = UIAlertController(title: "Copper Master",
+            message: "",
+            preferredStyle: UIAlertController.Style.alert)
         alert.setValue(attributedText, forKey: "attributedTitle")
         let acOK = UIAlertAction(title: "Ok".uppercased(), style: UIAlertAction.Style.default, handler: nil)
         alert.addAction(acOK)
@@ -66,15 +73,20 @@ extension UIViewController {
         self.present(alertController, animated: true)
     }
     func showAlert(message: String, completion: @escaping () -> Void) {
-        let alert = UIAlertController(title: "Copper Master", message: message, preferredStyle: UIAlertController.Style.alert)
-        let acOK = UIAlertAction(title: "Ok".uppercased(), style: UIAlertAction.Style.default) { _ in
+        let alert = UIAlertController(title: "Copper Master",
+            message: message,
+            preferredStyle: UIAlertController.Style.alert)
+        let acOK = UIAlertAction(title: "Ok".uppercased(),
+            style: UIAlertAction.Style.default) { _ in
             completion()
         }
         alert.addAction(acOK)
         self.present(alert, animated: true, completion: nil)
     }
     func showAlert(title: String, message: String, completion: @escaping () -> Void) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        let alert = UIAlertController(title: title,
+            message: message,
+            preferredStyle: UIAlertController.Style.alert)
         let acOK = UIAlertAction(title: "Ok".uppercased(), style: UIAlertAction.Style.default) { (action) in
             completion()
         }
@@ -82,7 +94,9 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     func showAlert(message: String, yes: @escaping () -> Void, no: @escaping () -> Void) {
-        let alert = UIAlertController(title: "Copper Master", message: message, preferredStyle: UIAlertController.Style.alert)
+        let alert = UIAlertController(title: "Copper Master",
+            message: message,
+            preferredStyle: UIAlertController.Style.alert)
         let acYes = UIAlertAction(title: "Yes", style: UIAlertAction.Style.default) { _ in
             yes()
         }
@@ -94,7 +108,9 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     @objc public func setGradientNavigation() {
-        guard let navigationController = navigationController,let flareGradientImage = CAGradientLayer.primaryNavigationGradient(on: navigationController.navigationBar)
+        guard let navigationController = navigationController,
+                let flareGradientImage = CAGradientLayer.primaryNavigationGradient(
+                    on: navigationController.navigationBar)
         else {
             debugPrint("Error creating gradient color!")
             return
@@ -103,15 +119,24 @@ extension UIViewController {
     }
 }
 
-
 extension UIViewController: NVActivityIndicatorViewable {
-    func StartLoaderwithMsg(message: String) {
-        startAnimating(indecatorSize, message: message, type: indicatorType, color: UIColor.colorRed, backgroundColor: UIColor.clear, fadeInAnimation: nil)
+    func startLoaderwithMsg(message: String) {
+        startAnimating(indecatorSize,
+            message: message,
+            type: indicatorType,
+            color: UIColor.colorRed,
+            backgroundColor: UIColor.clear,
+            fadeInAnimation: nil)
     }
-    func StartLoader() {
-         startAnimating(indecatorSize, message: "", type: indicatorType, color: UIColor.colorRed, backgroundColor: UIColor.clear, fadeInAnimation: nil)
+    func startLoader() {
+         startAnimating(indecatorSize,
+            message: "",
+            type: indicatorType,
+            color: UIColor.colorRed,
+            backgroundColor: UIColor.clear,
+            fadeInAnimation: nil)
     }
-    func StopLoader() {
+    func stopLoader() {
         self.stopAnimating(nil)
     }
 }
@@ -123,7 +148,9 @@ extension UIApplication {
         var topWindow: UIWindow? = UIWindow(frame: UIScreen.main.bounds)
         topWindow?.rootViewController = UIViewController()
         topWindow?.windowLevel = UIWindow.Level.alert + 1
-        let alert: UIAlertController =  UIAlertController(title: "Copper Master", message: message, preferredStyle: .alert)
+        let alert: UIAlertController =  UIAlertController(title: "Copper Master",
+                                                          message: message,
+                                                          preferredStyle: .alert)
         alert.addAction(UIAlertAction.init(title: "Ok", style: .default, handler: { _ in
             topWindow?.isHidden = true
             topWindow = nil
@@ -261,7 +288,10 @@ extension UILabel {
         size.height += extra.height
         return size
     }
-    class func textSize(font: UIFont, text: String, width: CGFloat = .greatestFiniteMagnitude, height: CGFloat = .greatestFiniteMagnitude) -> CGSize {
+    class func textSize(font: UIFont,
+                        text: String,
+                        width: CGFloat = .greatestFiniteMagnitude,
+                        height: CGFloat = .greatestFiniteMagnitude) -> CGSize {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: height))
         label.numberOfLines = 0
         label.font = font
@@ -269,11 +299,17 @@ extension UILabel {
         label.sizeToFit()
         return label.frame.size
     }
-    class func countLines(font: UIFont, text: String, width: CGFloat, height: CGFloat = .greatestFiniteMagnitude) -> Int {
+    class func countLines(font: UIFont,
+                          text: String,
+                          width: CGFloat,
+                          height: CGFloat = .greatestFiniteMagnitude) -> Int {
         // Call self.layoutIfNeeded() if your view uses auto layout
         let myText = text as NSString
         let rect = CGSize(width: width, height: height)
-        let labelSize = myText.boundingRect(with: rect, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
+        let labelSize = myText.boundingRect(with: rect,
+                                            options: .usesLineFragmentOrigin,
+                                            attributes: [NSAttributedString.Key.font: font],
+                                            context: nil)
         return Int(ceil(CGFloat(labelSize.height) / font.lineHeight))
     }
     var numberOfVisibleLines: Int {
@@ -287,7 +323,10 @@ extension UILabel {
         // self.layoutIfNeeded()
         let myText = (self.text ?? "") as NSString
         let rect = CGSize(width: width, height: height)
-        let labelSize = myText.boundingRect(with: rect, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: self.font], context: nil)
+        let labelSize = myText.boundingRect(with: rect,
+                                            options: .usesLineFragmentOrigin,
+                                            attributes: [NSAttributedString.Key.font: self.font],
+                                            context: nil)
         return Int(ceil(CGFloat(labelSize.height) / self.font.lineHeight))
     }
 }
@@ -298,7 +337,8 @@ extension UITapGestureRecognizer {
         let targetRange = (lblText as NSString).range(of: targetText)
         // IMPORTANT label correct font for NSTextStorage needed
         let mutableAttribString = NSMutableAttributedString(attributedString: attributedString)
-        mutableAttribString.addAttributes([NSAttributedString.Key.font: label.font ?? UIFont.smallSystemFontSize], range: NSRange(location: 0, length: attributedString.length))
+        mutableAttribString.addAttributes([NSAttributedString.Key.font: label.font ?? UIFont.smallSystemFontSize],
+                                          range: NSRange(location: 0, length: attributedString.length))
         // Create instances of NSLayoutManager, NSTextContainer and NSTextStorage
         let layoutManager = NSLayoutManager()
         let textContainer = NSTextContainer(size: CGSize.zero)
@@ -315,9 +355,13 @@ extension UITapGestureRecognizer {
         // Find the tapped character location and compare it to the specified range
         let locationOfTouchInLabel = self.location(in: label)
         let textBoundingBox = layoutManager.usedRect(for: textContainer)
-        let textContainerOffset = CGPoint(x: (labelSize.width - textBoundingBox.size.width) * 0.5 - textBoundingBox.origin.x, y: (labelSize.height - textBoundingBox.size.height) * 0.5 - textBoundingBox.origin.y)
-        let locationOfTouchInTextContainer = CGPoint(x: locationOfTouchInLabel.x - textContainerOffset.x, y: locationOfTouchInLabel.y - textContainerOffset.y)
-        let indexOfCharacter = layoutManager.characterIndex(for: locationOfTouchInTextContainer, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+        let textContainerOffset = CGPoint(x: (labelSize.width - textBoundingBox.size.width) * 0.5 - textBoundingBox.origin.x,
+                                          y: (labelSize.height - textBoundingBox.size.height) * 0.5 - textBoundingBox.origin.y)
+        let locationOfTouchInTextContainer = CGPoint(x: locationOfTouchInLabel.x - textContainerOffset.x,
+                                                     y: locationOfTouchInLabel.y - textContainerOffset.y)
+        let indexOfCharacter = layoutManager.characterIndex(for: locationOfTouchInTextContainer,
+                                                            in: textContainer,
+                                                            fractionOfDistanceBetweenInsertionPoints: nil)
         return NSLocationInRange(indexOfCharacter, targetRange)
     }
 }
@@ -333,7 +377,7 @@ extension UITableView {
 
 extension UIColor {
     public convenience init(hex: String) {
-        let r, g, b, a: CGFloat
+        let red, green, blue, alpha: CGFloat
         var hex = hex
         if hex.hasPrefix("#") == false {
             hex = "#" + hex
@@ -344,21 +388,21 @@ extension UIColor {
             let scanner = Scanner(string: hexColor)
             var hexNumber: UInt64 = 0
             if scanner.scanHexInt64(&hexNumber) {
-                r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
-                g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
-                b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
-                a = CGFloat(hexNumber & 0x000000ff) / 255
-                self.init(red: r, green: g, blue: b, alpha: a)
+                red = CGFloat((hexNumber & 0xff000000) >> 24) / 255
+                green = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
+                blue = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
+                alpha = CGFloat(hexNumber & 0x000000ff) / 255
+                self.init(red: red, green: green, blue: blue, alpha: alpha)
                 return
             }
         } else if hexColor.count == 6 {
             let scanner = Scanner(string: hexColor)
             var hexNumber: UInt64 = 0
             if scanner.scanHexInt64(&hexNumber) {
-                r = CGFloat((hexNumber & 0xFF0000) >> 16) / 255.0
-                g = CGFloat((hexNumber & 0x00FF00) >> 8) / 255.0
-                b = CGFloat(hexNumber & 0x0000FF) / 255.0
-                self.init(red: r, green: g, blue: b, alpha: 1)
+                red = CGFloat((hexNumber & 0xFF0000) >> 16) / 255.0
+                green = CGFloat((hexNumber & 0x00FF00) >> 8) / 255.0
+                blue = CGFloat(hexNumber & 0x0000FF) / 255.0
+                self.init(red: red, green: green, blue: blue, alpha: 1)
                 return
             }
         }
@@ -374,16 +418,22 @@ extension UIColor {
 }
 
 extension UIImageView {
-    //    func setImageWith(urlString: String, displayIndicater: Bool = false, placeholder: String = IMAGE().placeholder) {
+    //    func setImageWith(urlString: String,
+    //                      displayIndicater: Bool = false,
+    //                      placeholder: String = IMAGE().placeholder) {
     //
     //        if displayIndicater {
     //            self.sd_imageIndicator = SDWebImageActivityIndicator.gray
     //        }
     //
-    //        self.sd_setImage(with: URL(string: urlString), placeholderImage: UIImage(named: placeholder), options: SDWebImageOptions.refreshCached, context: nil)
+    //        self.sd_setImage(with: URL(string: urlString),
+    //                          placeholderImage: UIImage(named: placeholder),
+    //                          options: SDWebImageOptions.refreshCached, context: nil)
     //    }
-    
-    //    func setImageDocWith(urlString: String? = nil, urlURL: URL? = nil, displayIndicater: Bool = false, placeholder: String = IMAGE().placeholder) {
+    //    func setImageDocWith(urlString: String? = nil,
+    //                          urlURL: URL? = nil,
+    //                          displayIndicater: Bool = false,
+    //                          placeholder: String = IMAGE().placeholder) {
     //
     //        if displayIndicater {
     //            self.sd_imageIndicator = SDWebImageActivityIndicator.gray
@@ -408,7 +458,8 @@ extension UIImageView {
     //
     //                let width: CGFloat = 240
     //
-    //                guard let data = try? Data(contentsOf: finalURL), let page = PDFDocument(data: data)?.page(at: 0) else {
+    //                guard let data = try? Data(contentsOf: finalURL),
+    //                           let page = PDFDocument(data: data)?.page(at: 0) else {
     //                    return
     //                }
     //
@@ -470,10 +521,10 @@ extension UIImage {
                 // adjust width according to maxHeight
                 currentRatio = maxHeight / actualHeight
                 actualWidth = currentRatio * actualWidth
-                actualHeight = maxHeight;
+                actualHeight = maxHeight
             } else if currentRatio > maxRatio {
                 // adjust height according to maxWidth
-                currentRatio = maxWidth / actualWidth;
+                currentRatio = maxWidth / actualWidth
                 actualHeight = currentRatio * actualHeight
                 actualWidth = maxWidth
             } else {
@@ -490,14 +541,14 @@ extension UIImage {
         guard let tempData: Data = newImage.jpegData(compressionQuality: compressionQuality) else {
             UIGraphicsEndImageContext(); return (image: self, data: jpegData(compressionQuality: compressionQuality))
         }
-        UIGraphicsEndImageContext();
+        UIGraphicsEndImageContext()
         if let finalImage: UIImage = UIImage(data: tempData) {
             return (image: finalImage, data: tempData)
         } else {
             return (image: self, data: jpegData(compressionQuality: compressionQuality))
         }
     }
-    //For load gif file
+    // For load gif file
     public class func gif(data: Data) -> UIImage? {
         // Create source from data
         guard let source = CGImageSourceCreateWithData(data as CFData, nil) else {
@@ -506,7 +557,7 @@ extension UIImage {
         }
         return UIImage.animatedImageWithSource(source)
     }
-    //For load gif file
+    // For load gif file
     public class func gifByUrl(url: URL?) -> UIImage? {
         guard let imgUrl = url else {
             debugPrint("SwiftGif: url doesn't exist")
@@ -570,10 +621,12 @@ extension UIImage {
         }
         let gifProperties: CFDictionary = unsafeBitCast(gifPropertiesPointer.pointee, to: CFDictionary.self)
         // Get delay time
-        var delayObject: AnyObject = unsafeBitCast(CFDictionaryGetValue(gifProperties, Unmanaged.passUnretained(kCGImagePropertyGIFUnclampedDelayTime).toOpaque()), to: AnyObject.self)
+        var delayObject: AnyObject = unsafeBitCast(CFDictionaryGetValue(gifProperties, Unmanaged.passUnretained(kCGImagePropertyGIFUnclampedDelayTime).toOpaque()),
+                                                   to: AnyObject.self)
         if delayObject.doubleValue == 0 {
             delayObject = unsafeBitCast(CFDictionaryGetValue(gifProperties,
-                                                             Unmanaged.passUnretained(kCGImagePropertyGIFDelayTime).toOpaque()), to: AnyObject.self)
+                                                             Unmanaged.passUnretained(kCGImagePropertyGIFDelayTime).toOpaque()),
+                                        to: AnyObject.self)
         }
         if let delayObject = delayObject as? Double, delayObject > 0 {
             delay = delayObject
@@ -671,14 +724,14 @@ extension Data {
     var imageType: String {
         let array = [UInt8](self)
         let ext: String
-        switch (array[0]) {
+        switch array[0] {
         case 0xFF:
             ext = "jpg"
         case 0x89:
             ext = "png"
         case 0x47:
             ext = "gif"
-        case 0x49, 0x4D :
+        case 0x49, 0x4D:
             ext = "tiff"
         default:
             ext = "png"
@@ -698,7 +751,7 @@ extension Dictionary {
         }
         return nil
     }
-    func decode<T:Codable>() throws -> T {
+    func decode<T: Codable>() throws -> T {
         return try JSONDecoder().decode(T.self, from: jsonData ?? Data())
     }
 }
@@ -707,15 +760,15 @@ extension URL {
     func getInfo() -> (bytes: Double, kb: Double, mb: Double, gb: Double) {
         do {
             let res = try self.resourceValues(forKeys: [.fileSizeKey])
-            if let resBytes : Int = res.fileSize {
+            if let resBytes: Int = res.fileSize {
                 let resBytesInt64 : Int64 = Int64(resBytes)
                 return (bytes: Double(Units(bytes: resBytesInt64).bytes),
                         kb: Double(Units(bytes: resBytesInt64).kilobytes),
                         mb: Double(Units(bytes: resBytesInt64).megabytes),
-                        gb: Double(Units(bytes: resBytesInt64).gigabytes));
+                        gb: Double(Units(bytes: resBytesInt64).gigabytes))
             }
         } catch { }
-        return (bytes: 0.0, kb: 0.0, mb: 0.0, gb: 0.0);
+        return (bytes: 0.0, kb: 0.0, mb: 0.0, gb: 0.0)
     }
 }
 
@@ -753,7 +806,9 @@ extension String {
     func getHtml() -> (string: String?, attributedString: NSAttributedString?) {
         guard let data = data(using: .utf8) else { return (string: nil, attributedString: nil) }
         do {
-            let attStr = try NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil)
+            let attStr = try NSAttributedString(data: data,
+                                                options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue],
+                                                documentAttributes: nil)
             return (string: attStr.string, attributedString: attStr)
         } catch {
             debugPrint("error:", error)
@@ -768,16 +823,16 @@ extension String {
     }
     func nsRange(from range: Range<String.Index>) -> NSRange? {
         let from = range.lowerBound.samePosition(in: utf16)
-        let to = range.upperBound.samePosition(in: utf16)
-        if from != nil && to != nil {
+        let toRange = range.upperBound.samePosition(in: utf16)
+        if from != nil && toRange != nil {
             return NSRange(location: utf16.distance(from: utf16.startIndex, to: from!),
-                           length: utf16.distance(from: from!, to: to!))
+                           length: utf16.distance(from: from!, to: toRange!))
         }
         return nil
     }
     func between(left: String, right: String) -> String? {
-        guard let leftRange = range(of: left), let rightRange = range(of: right, options: .backwards)
-                ,leftRange.upperBound <= rightRange.lowerBound else { return nil }
+        guard let leftRange = range(of: left), let rightRange = range(of: right, options: .backwards),
+              leftRange.upperBound <= rightRange.lowerBound else { return nil }
         let sub = self[leftRange.upperBound...]
         let closestToLeftRange = sub.range(of: right)!
         return String(sub[..<closestToLeftRange.lowerBound])
@@ -796,32 +851,33 @@ extension String {
             }
             return tempUrl.lastPathComponent
         } else {
-            return "";
+            return ""
         }
     }
     func isEN() -> Bool {
-        return (CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789").isSuperset(of: CharacterSet(charactersIn: self)))
+        let characterString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        return (CharacterSet(charactersIn: characterString).isSuperset(of: CharacterSet(charactersIn: self)))
     }
     func getArToEnDigit() -> String {
         struct EnAr {
-            let en : String
-            let ar : String
+            let english: String
+            let arabic: String
         }
         let arDigit: [EnAr] = [
-            EnAr(en: "0", ar: "٠"),
-            EnAr(en: "1", ar: "١"),
-            EnAr(en: "2", ar: "٢"),
-            EnAr(en: "3", ar: "٣"),
-            EnAr(en: "4", ar: "٤"),
-            EnAr(en: "5", ar: "٥"),
-            EnAr(en: "6", ar: "٦"),
-            EnAr(en: "7", ar: "٧"),
-            EnAr(en: "8", ar: "٨"),
-            EnAr(en: "9", ar: "٩")
+            EnAr(english: "0", arabic: "٠"),
+            EnAr(english: "1", arabic: "١"),
+            EnAr(english: "2", arabic: "٢"),
+            EnAr(english: "3", arabic: "٣"),
+            EnAr(english: "4", arabic: "٤"),
+            EnAr(english: "5", arabic: "٥"),
+            EnAr(english: "6", arabic: "٦"),
+            EnAr(english: "7", arabic: "٧"),
+            EnAr(english: "8", arabic: "٨"),
+            EnAr(english: "9", arabic: "٩")
         ]
         var res = self
         for digit in arDigit {
-            res = res.replacingOccurrences(of: digit.ar, with: digit.en)
+            res = res.replacingOccurrences(of: digit.arabic, with: digit.english)
         }
         return res;
     }
